@@ -1,0 +1,2879 @@
+ DBCSR| CPU Multiplication driver                                           XSMM
+ DBCSR| Multrec recursion limit                                              512
+ DBCSR| Multiplication stack size                                           1000
+ DBCSR| Maximum elements for images                                    UNLIMITED
+ DBCSR| Multiplicative factor virtual images                                   1
+ DBCSR| Use multiplication densification                                       T
+ DBCSR| Multiplication size stacks                                             3
+ DBCSR| Use memory pool for CPU allocation                                     F
+ DBCSR| Number of 3D layers                                               SINGLE
+ DBCSR| Use MPI memory allocation                                              F
+ DBCSR| Use RMA algorithm                                                      F
+ DBCSR| Use Communication thread                                               T
+ DBCSR| Communication thread load                                             87
+ DBCSR| MPI: My node id                                                        0
+ DBCSR| MPI: Number of nodes                                                  40
+ DBCSR| OMP: Current number of threads                                         1
+ DBCSR| OMP: Max number of threads                                             1
+ DBCSR| Split modifier for TAS multiplication algorithm                  1.0E+00
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2024-11-11 09:55:52.150
+ ***** ** ***  *** **   PROGRAM STARTED ON        bc12016.int.ets1.calculquebec.
+ **    ****   ******    PROGRAM STARTED BY                              ekadashi
+ ***** **    ** ** **   PROGRAM PROCESS ID                               3078428
+  **** **  *******  **  PROGRAM STARTED IN /scratch/ekadashi/Libra_CP2K/SiGe_Het
+                                           ero/step2_B3LYP/SET2/job2
+
+ CP2K| version string:                                          CP2K version 9.1
+ CP2K| source code revision number:                                  git:d8d7100
+ CP2K| cp2kflags: omp libint fftw3 libxc parallel mpi3 scalapack xsmm plumed2   
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                       Thu 20 Jan 2022 10:47:29 PM UTC
+ CP2K| Program compiled on                           build-node.computecanada.ca
+ CP2K| Program compiled for                                   Linux-x86-64-gofbf
+ CP2K| Data directory path    /cvmfs/soft.computecanada.ca/easybuild/software/20
+ CP2K| Input file name                                       Diag_libra-2006.inp
+
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                        BASIS_MOLOPT
+ GLOBAL| Potential file name                                           POTENTIAL
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                     coord-2006.xyz
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                            Diag_libra-2006
+ GLOBAL| Run type                                                         ENERGY
+ GLOBAL| FFT library                                                       FFTW3
+ GLOBAL| Diagonalization library                                       ScaLAPACK
+ GLOBAL| Orthonormality check for eigenvectors                          DISABLED
+ GLOBAL| Matrix multiplication library                                 ScaLAPACK
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| FFTs using library dependent lengths                                  F
+ GLOBAL| Grid backend                                                       AUTO
+ GLOBAL| Global print level                                               MEDIUM
+ GLOBAL| MPI I/O enabled                                                       T
+ GLOBAL| Total number of message passing processes                            40
+ GLOBAL| Number of threads for this process                                    1
+ GLOBAL| This output is from process                                           0
+ GLOBAL| Stack size for threads created by OpenMP (OMP_STACKSIZE)        default
+ GLOBAL| CPU model name                 Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz
+ GLOBAL| CPUID                                                              1003
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal            196639208     196639208     196639208     196639208
+ MEMORY| MemFree             178769764     178769764     178769764     178769764
+ MEMORY| Buffers                    76            76            76            76
+ MEMORY| Cached                5238432       5238432       5238432       5238432
+ MEMORY| Slab                  1535476       1535476       1535476       1535476
+ MEMORY| SReclaimable           345356        345356        345356        345356
+ MEMORY| MemLikelyFree       184353628     184353628     184353628     184353628
+
+
+ *** Fundamental physical constants (SI units) ***
+
+ *** Literature: B. J. Mohr and B. N. Taylor,
+ ***             CODATA recommended values of the fundamental physical
+ ***             constants: 2006, Web Version 5.1
+ ***             http://physics.nist.gov/constants
+
+ Speed of light in vacuum [m/s]                             2.99792458000000E+08
+ Magnetic constant or permeability of vacuum [N/A**2]       1.25663706143592E-06
+ Electric constant or permittivity of vacuum [F/m]          8.85418781762039E-12
+ Planck constant (h) [J*s]                                  6.62606896000000E-34
+ Planck constant (h-bar) [J*s]                              1.05457162825177E-34
+ Elementary charge [C]                                      1.60217648700000E-19
+ Electron mass [kg]                                         9.10938215000000E-31
+ Electron g factor [ ]                                     -2.00231930436220E+00
+ Proton mass [kg]                                           1.67262163700000E-27
+ Fine-structure constant                                    7.29735253760000E-03
+ Rydberg constant [1/m]                                     1.09737315685270E+07
+ Avogadro constant [1/mol]                                  6.02214179000000E+23
+ Boltzmann constant [J/K]                                   1.38065040000000E-23
+ Atomic mass unit [kg]                                      1.66053878200000E-27
+ Bohr radius [m]                                            5.29177208590000E-11
+
+ *** Conversion factors ***
+
+ [u] -> [a.u.]                                              1.82288848426455E+03
+ [Angstrom] -> [Bohr] = [a.u.]                              1.88972613288564E+00
+ [a.u.] = [Bohr] -> [Angstrom]                              5.29177208590000E-01
+ [a.u.] -> [s]                                              2.41888432650478E-17
+ [a.u.] -> [fs]                                             2.41888432650478E-02
+ [a.u.] -> [J]                                              4.35974393937059E-18
+ [a.u.] -> [N]                                              8.23872205491840E-08
+ [a.u.] -> [K]                                              3.15774647902944E+05
+ [a.u.] -> [kJ/mol]                                         2.62549961709828E+03
+ [a.u.] -> [kcal/mol]                                       6.27509468713739E+02
+ [a.u.] -> [Pa]                                             2.94210107994716E+13
+ [a.u.] -> [bar]                                            2.94210107994716E+08
+ [a.u.] -> [atm]                                            2.90362800883016E+08
+ [a.u.] -> [eV]                                             2.72113838565563E+01
+ [a.u.] -> [Hz]                                             6.57968392072181E+15
+ [a.u.] -> [1/cm] (wave numbers)                            2.19474631370540E+05
+ [a.u./Bohr**2] -> [1/cm]                                   5.14048714338585E+03
+ 
+
+ CELL_TOP| Volume [angstrom^3]:                                      6540.008810
+ CELL_TOP| Vector a [angstrom    15.928     0.000     0.000   |a| =    15.927500
+ CELL_TOP| Vector b [angstrom    -7.965    13.786     0.000   |b| =    15.921700
+ CELL_TOP| Vector c [angstrom    -0.000     0.000    29.784   |c| =    29.783600
+ CELL_TOP| Angle (b,c), alpha [degree]:                                89.999800
+ CELL_TOP| Angle (a,c), beta  [degree]:                                90.000200
+ CELL_TOP| Angle (a,b), gamma [degree]:                               120.015200
+ CELL_TOP| Numerically orthorhombic:                                          NO
+
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ CELL| Volume [angstrom^3]:                                          6540.008810
+ CELL| Vector a [angstrom]:      15.928     0.000     0.000   |a| =    15.927500
+ CELL| Vector b [angstrom]:      -7.965    13.786     0.000   |b| =    15.921700
+ CELL| Vector c [angstrom]:      -0.000     0.000    29.784   |c| =    29.783600
+ CELL| Angle (b,c), alpha [degree]:                                    89.999800
+ CELL| Angle (a,c), beta  [degree]:                                    90.000200
+ CELL| Angle (a,b), gamma [degree]:                                   120.015200
+ CELL| Numerically orthorhombic:                                              NO
+
+ CELL_REF| Volume [angstrom^3]:                                      6540.008810
+ CELL_REF| Vector a [angstrom    15.928     0.000     0.000   |a| =    15.927500
+ CELL_REF| Vector b [angstrom    -7.965    13.786     0.000   |b| =    15.921700
+ CELL_REF| Vector c [angstrom    -0.000     0.000    29.784   |c| =    29.783600
+ CELL_REF| Angle (b,c), alpha [degree]:                                89.999800
+ CELL_REF| Angle (a,c), beta  [degree]:                                90.000200
+ CELL_REF| Angle (a,b), gamma [degree]:                               120.015200
+ CELL_REF| Numerically orthorhombic:                                          NO
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2021)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+ DFT| Spin restricted Kohn-Sham (RKS) calculation                            RKS
+ DFT| Multiplicity                                                             1
+ DFT| Number of spin states                                                    1
+ DFT| Charge                                                                   0
+ DFT| Self-interaction correction (SIC)                                       NO
+ DFT| Cutoffs: density                                              1.000000E-10
+ DFT|          gradient                                             1.000000E-10
+ DFT|          tau                                                  1.000000E-10
+ DFT|          cutoff_smoothing_range                               0.000000E+00
+ DFT| XC density smoothing                                                  NONE
+ DFT| XC derivatives                                                          PW
+ FUNCTIONAL| ROUTINE=NEW
+ FUNCTIONAL| BECKE88:
+ FUNCTIONAL| A. Becke, Phys. Rev. A 38, 3098 (1988) {LDA version}               
+ FUNCTIONAL| LYP:
+ FUNCTIONAL| C. Lee, W. Yang, R.G. Parr, Phys. Rev. B, 37, 785 (1988) {LDA versi
+ FUNCTIONAL| on}                                                                
+ FUNCTIONAL| VWN:
+ FUNCTIONAL| S. H. Vosko, L. Wilk and M. Nusair, Can. J. Phys. 58, 1200 (1980) {
+ FUNCTIONAL| LDA version}                                                       
+ FUNCTIONAL| XALPHA:
+ FUNCTIONAL| Dirac/Slater local exchange; parameter=  0.666 {LDA}               
+ vdW POTENTIAL|                                                   Pair Potential
+ vdW POTENTIAL|          DFT-D3 (Version 3.1)
+ vdW POTENTIAL|          Potential Form: S. Grimme et al, JCP 132: 154104 (2010)
+ vdW POTENTIAL|          Zero Damping
+ vdW POTENTIAL|          Cutoff Radius [Bohr]:                             20.00
+ vdW POTENTIAL|          s6 Scaling Factor:                               1.0000
+ vdW POTENTIAL|          sr6 Scaling Factor:                              1.2610
+ vdW POTENTIAL|          s8 Scaling Factor:                               1.7030
+ vdW POTENTIAL|          Cutoff for CN calculation:                   0.1000E-05
+
+ QS| Method:                                                                 GPW
+ QS| Density plane wave grid type                        NON-SPHERICAL FULLSPACE
+ QS| Number of grid levels:                                                    4
+ QS| Density cutoff [a.u.]:                                                175.0
+ QS| Multi grid cutoff [a.u.]: 1) grid level                               175.0
+ QS|                           2) grid level                                58.3
+ QS|                           3) grid level                                19.4
+ QS|                           4) grid level                                 6.5
+ QS| Grid level progression factor:                                          3.0
+ QS| Relative density cutoff [a.u.]:                                        25.0
+ QS| Interaction thresholds: eps_pgf_orb:                                1.0E-05
+ QS|                         eps_filter_matrix:                          0.0E+00
+ QS|                         eps_core_charge:                            1.0E-12
+ QS|                         eps_rho_gspace:                             1.0E-10
+ QS|                         eps_rho_rspace:                             1.0E-10
+ QS|                         eps_gvg_rspace:                             1.0E-05
+ QS|                         eps_ppl:                                    1.0E-02
+ QS|                         eps_ppnl:                                   1.0E-07
+
+
+ ATOMIC KIND INFORMATION
+
+  1. Atomic kind: Si                                    Number of atoms:      32
+
+     Orbital Basis Set                                     DZVP-MOLOPT-SR-GTH-q4
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               5
+       Number of primitive Cartesian functions:                                4
+       Number of Cartesian basis functions:                                   14
+       Number of spherical basis functions:                                   13
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s                1.256768       0.294045
+                                                         0.506394      -0.015884
+                                                         0.238884      -0.207657
+                                                         0.087337      -0.036225
+
+                          1       2    3s                1.256768      -1.532347
+                                                         0.506394       0.524539
+                                                         0.238884       0.025013
+                                                         0.087337      -0.052203
+
+                          1       3    3px               1.256768       0.152274
+                                                         0.506394      -0.154145
+                                                         0.238884      -0.115581
+                                                         0.087337      -0.028372
+                          1       3    3py               1.256768       0.152274
+                                                         0.506394      -0.154145
+                                                         0.238884      -0.115581
+                                                         0.087337      -0.028372
+                          1       3    3pz               1.256768       0.152274
+                                                         0.506394      -0.154145
+                                                         0.238884      -0.115581
+                                                         0.087337      -0.028372
+
+                          1       4    4px               1.256768       0.313378
+                                                         0.506394      -0.415360
+                                                         0.238884      -0.022539
+                                                         0.087337       0.078473
+                          1       4    4py               1.256768       0.313378
+                                                         0.506394      -0.415360
+                                                         0.238884      -0.022539
+                                                         0.087337       0.078473
+                          1       4    4pz               1.256768       0.313378
+                                                         0.506394      -0.415360
+                                                         0.238884      -0.022539
+                                                         0.087337       0.078473
+
+                          1       5    4dx2              1.256768       0.325879
+                                                         0.506394       0.163831
+                                                         0.238884       0.044076
+                                                         0.087337       0.010608
+                          1       5    4dxy              1.256768       0.564439
+                                                         0.506394       0.283764
+                                                         0.238884       0.076342
+                                                         0.087337       0.018373
+                          1       5    4dxz              1.256768       0.564439
+                                                         0.506394       0.283764
+                                                         0.238884       0.076342
+                                                         0.087337       0.018373
+                          1       5    4dy2              1.256768       0.325879
+                                                         0.506394       0.163831
+                                                         0.238884       0.044076
+                                                         0.087337       0.010608
+                          1       5    4dyz              1.256768       0.564439
+                                                         0.506394       0.283764
+                                                         0.238884       0.076342
+                                                         0.087337       0.018373
+                          1       5    4dz2              1.256768       0.325879
+                                                         0.506394       0.163831
+                                                         0.238884       0.044076
+                                                         0.087337       0.010608
+
+     Auxiliary Fit Basis Set                                               cFIT3
+
+       Number of orbital shell sets:                                           4
+       Number of orbital shells:                                               4
+       Number of primitive Cartesian functions:                                6
+       Number of Cartesian basis functions:                                    8
+       Number of spherical basis functions:                                    8
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    1s                0.096480       0.123378
+
+                          2       1    1s                0.246960      -0.309315
+                                                         1.277560       0.429908
+
+                          3       1    1px               0.089490       0.069768
+                          3       1    1py               0.089490       0.069768
+                          3       1    1pz               0.089490       0.069768
+
+                          4       1    1px               0.295630       0.313983
+                                                         2.202470      -0.124968
+                          4       1    1py               0.295630       0.313983
+                                                         2.202470      -0.124968
+                          4       1    1pz               0.295630       0.313983
+                                                         2.202470      -0.124968
+
+       Atomic covalent radius [Angstrom]:                                  1.110
+
+       Atomic van der Waals radius [Angstrom]:                             2.100
+
+     GTH Potential information for                                       GTH-PBE
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:               2.582645
+       Electronic configuration (s p d ...):                               2   2
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.440000   -6.269288
+
+       Parameters of the non-local part of the GTH pseudopotential:
+
+                   l      r(l)      h(i,j,l)
+
+                   0    0.435634    8.951742   -2.706271
+                                   -2.706271    3.493781
+                   1    0.497942    2.431277
+
+  2. Atomic kind: H                                     Number of atoms:      64
+
+     Orbital Basis Set                                     DZVP-MOLOPT-SR-GTH-q1
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               3
+       Number of primitive Cartesian functions:                                5
+       Number of Cartesian basis functions:                                    5
+       Number of spherical basis functions:                                    5
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s               10.068468      -0.133023
+                                                         2.680223      -0.177618
+                                                         0.791502      -0.258419
+                                                         0.239116      -0.107525
+                                                         0.082193      -0.014019
+
+                          1       2    3s               10.068468       0.344673
+                                                         2.680223       1.819821
+                                                         0.791502      -0.999069
+                                                         0.239116       0.017430
+                                                         0.082193       0.082660
+
+                          1       3    3px              10.068468       0.155326
+                                                         2.680223       0.367157
+                                                         0.791502       0.311480
+                                                         0.239116       0.080105
+                                                         0.082193       0.033440
+                          1       3    3py              10.068468       0.155326
+                                                         2.680223       0.367157
+                                                         0.791502       0.311480
+                                                         0.239116       0.080105
+                                                         0.082193       0.033440
+                          1       3    3pz              10.068468       0.155326
+                                                         2.680223       0.367157
+                                                         0.791502       0.311480
+                                                         0.239116       0.080105
+                                                         0.082193       0.033440
+
+     Auxiliary Fit Basis Set                                               cFIT3
+
+       Number of orbital shell sets:                                           2
+       Number of orbital shells:                                               2
+       Number of primitive Cartesian functions:                                3
+       Number of Cartesian basis functions:                                    2
+       Number of spherical basis functions:                                    2
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    1s                0.113290       0.139173
+
+                          2       1    1s                0.551250       0.404894
+                                                         3.585030       0.334062
+
+       Atomic covalent radius [Angstrom]:                                  0.320
+
+       Atomic van der Waals radius [Angstrom]:                             1.090
+
+     GTH Potential information for                                       GTH-PBE
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:              12.500000
+       Electronic configuration (s p d ...):                                   1
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.200000   -4.178900    0.724463
+
+  3. Atomic kind: Ge                                    Number of atoms:      32
+
+     Orbital Basis Set                                     DZVP-MOLOPT-SR-GTH-q4
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               5
+       Number of primitive Cartesian functions:                                4
+       Number of Cartesian basis functions:                                   14
+       Number of spherical basis functions:                                   13
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s                3.751626      -0.120003
+                                                         1.419172       0.428185
+                                                         0.322428      -0.228255
+                                                         0.110740      -0.068975
+
+                          1       2    3s                3.751626       0.273885
+                                                         1.419172      -0.836040
+                                                         0.322428       0.584240
+                                                         0.110740      -0.261045
+
+                          1       3    3px               3.751626       0.064521
+                                                         1.419172       0.216179
+                                                         0.322428      -0.253385
+                                                         0.110740      -0.035002
+                          1       3    3py               3.751626       0.064521
+                                                         1.419172       0.216179
+                                                         0.322428      -0.253385
+                                                         0.110740      -0.035002
+                          1       3    3pz               3.751626       0.064521
+                                                         1.419172       0.216179
+                                                         0.322428      -0.253385
+                                                         0.110740      -0.035002
+
+                          1       4    4px               3.751626      -0.201632
+                                                         1.419172      -0.391570
+                                                         0.322428       0.486065
+                                                         0.110740      -0.127990
+                          1       4    4py               3.751626      -0.201632
+                                                         1.419172      -0.391570
+                                                         0.322428       0.486065
+                                                         0.110740      -0.127990
+                          1       4    4pz               3.751626      -0.201632
+                                                         1.419172      -0.391570
+                                                         0.322428       0.486065
+                                                         0.110740      -0.127990
+
+                          1       5    4dx2              3.751626      -0.158822
+                                                         1.419172       0.193543
+                                                         0.322428       0.178643
+                                                         0.110740       0.009408
+                          1       5    4dxy              3.751626      -0.275088
+                                                         1.419172       0.335227
+                                                         0.322428       0.309418
+                                                         0.110740       0.016296
+                          1       5    4dxz              3.751626      -0.275088
+                                                         1.419172       0.335227
+                                                         0.322428       0.309418
+                                                         0.110740       0.016296
+                          1       5    4dy2              3.751626      -0.158822
+                                                         1.419172       0.193543
+                                                         0.322428       0.178643
+                                                         0.110740       0.009408
+                          1       5    4dyz              3.751626      -0.275088
+                                                         1.419172       0.335227
+                                                         0.322428       0.309418
+                                                         0.110740       0.016296
+                          1       5    4dz2              3.751626      -0.158822
+                                                         1.419172       0.193543
+                                                         0.322428       0.178643
+                                                         0.110740       0.009408
+
+     Auxiliary Fit Basis Set                                               cFIT6
+
+       Number of orbital shell sets:                                           4
+       Number of orbital shells:                                               4
+       Number of primitive Cartesian functions:                                6
+       Number of Cartesian basis functions:                                    8
+       Number of spherical basis functions:                                    8
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    1s                0.110750       0.136826
+
+                          2       1    1s                0.308366      -0.415436
+                                                         1.178430       0.610195
+
+                          3       1    1px               0.110745       0.091064
+                          3       1    1py               0.110745       0.091064
+                          3       1    1pz               0.110745       0.091064
+
+                          4       1    1px               0.339941       0.397306
+                                                         1.591237      -0.423312
+                          4       1    1py               0.339941       0.397306
+                                                         1.591237      -0.423312
+                          4       1    1pz               0.339941       0.397306
+                                                         1.591237      -0.423312
+
+       Atomic covalent radius [Angstrom]:                                  1.220
+
+       Atomic van der Waals radius [Angstrom]:                             2.110
+
+     GTH Potential information for                                       GTH-PBE
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:               1.714678
+       Electronic configuration (s p d ...):                               2   2
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.540000
+
+       Parameters of the non-local part of the GTH pseudopotential:
+
+                   l      r(l)      h(i,j,l)
+
+                   0    0.421865    7.510241   -0.588108   -1.447976
+                                   -0.588108   -1.595888    3.738657
+                                   -1.447976    3.738657   -2.967467
+                   1    0.567529    0.913860    0.546875
+                                    0.546875   -0.647072
+                   2    0.813914    0.197177
+
+
+ MOLECULE KIND INFORMATION
+
+
+ All atoms are their own molecule, skipping detailed information
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   3
+                             - Atoms:                                        128
+                             - Shell sets:                                   128
+                             - Shells:                                       512
+                             - Primitive Cartesian functions:                576
+                             - Cartesian basis functions:                   1216
+                             - Spherical basis functions:                   1152
+
+  Maximum angular momentum of- Orbital basis functions:                        2
+                             - Local part of the GTH pseudopotential:          2
+                             - Non-local part of the GTH pseudopotential:      4
+
+  AUX_FIT ADMM-Basis: 
+  Total number of            - Shell sets:                                   384
+                             - Shells:                                       384
+                             - Primitive Cartesian functions:                576
+                             - Cartesian basis functions:                    640
+                             - Spherical basis functions:                    640
+                               Maximum angular momentum                        1
+
+
+ MODULE QUICKSTEP:  ATOMIC COORDINATES IN angstrom
+
+ Atom  Kind  Element       X           Y           Z          Z(eff)       Mass
+    1   1 Si  14       0.279453    2.351814    1.864873       4.0000     28.0855
+    2   1 Si  14       2.213833    1.113783    2.347936       4.0000     28.0855
+    3   1 Si  14       4.055502    2.253496    1.531373       4.0000     28.0855
+    4   1 Si  14       6.009917    1.163190    2.341227       4.0000     28.0855
+    5   1 Si  14      -1.875768    5.693235    1.865890       4.0000     28.0855
+    6   1 Si  14       0.086286    4.527245    2.653637       4.0000     28.0855
+    7   1 Si  14       1.974067    5.811416    1.832215       4.0000     28.0855
+    8   1 Si  14       4.096694    4.595773    2.326306       4.0000     28.0855
+    9   2 H    1       0.571655    2.478103    0.448638       1.0000      1.0079
+   10   2 H    1       2.296735    0.889153    3.805979       1.0000      1.0079
+   11   2 H    1       1.802441    3.492304    5.311207       1.0000      1.0079
+   12   2 H    1       3.672032    2.295546    8.963524       1.0000      1.0079
+   13   2 H    1       4.041657    2.306062    0.058448       1.0000      1.0079
+   14   2 H    1       5.754567    0.870681    3.813878       1.0000      1.0079
+   15   2 H    1      -1.686361    3.513054    5.034910       1.0000      1.0079
+   16   2 H    1      -0.273030    2.875550    9.286369       1.0000      1.0079
+   17   2 H    1      -1.683316    5.575689    0.465158       1.0000      1.0079
+   18   2 H    1       0.122327    4.469765    4.121470       1.0000      1.0079
+   19   2 H    1       4.005065    0.010493    5.153848       1.0000      1.0079
+   20   2 H    1       1.777265    6.023344    9.089192       1.0000      1.0079
+   21   2 H    1       1.729508    5.885901    0.372772       1.0000      1.0079
+   22   2 H    1       4.286458    4.377942    3.843267       1.0000      1.0079
+   23   2 H    1       0.150321    0.250118    5.593134       1.0000      1.0079
+   24   2 H    1      -2.266541    6.028687    8.752742       1.0000      1.0079
+   25   3 Ge  32       1.869139    3.657234    6.846430       4.0000     72.6400
+   26   3 Ge  32       3.876374    2.383377    7.393579       4.0000     72.6400
+   27   3 Ge  32      -1.942668    3.418524    6.546502       4.0000     72.6400
+   28   3 Ge  32      -0.109080    2.614263    7.801537       4.0000     72.6400
+   29   3 Ge  32       3.957823    0.066911    6.656944       4.0000     72.6400
+   30   3 Ge  32       1.775424    5.973277    7.564689       4.0000     72.6400
+   31   3 Ge  32       0.047126    0.258100    7.151288       4.0000     72.6400
+   32   3 Ge  32      -2.204991    5.778817    7.241383       4.0000     72.6400
+   33   1 Si  14       8.046626    2.279167    1.779247       4.0000     28.0855
+   34   1 Si  14      10.075436    1.125906    2.291868       4.0000     28.0855
+   35   1 Si  14      12.174710    2.289911    1.801464       4.0000     28.0855
+   36   1 Si  14      14.237662    1.207936    2.424690       4.0000     28.0855
+   37   1 Si  14       6.161100    5.742270    1.663727       4.0000     28.0855
+   38   1 Si  14       8.173481    4.629318    2.463651       4.0000     28.0855
+   39   1 Si  14      10.036576    5.742015    1.630342       4.0000     28.0855
+   40   1 Si  14      11.980078    4.548802    2.279379       4.0000     28.0855
+   41   2 H    1       7.940444    2.592575    0.290526       1.0000      1.0079
+   42   2 H    1       9.968299    0.983852    3.810252       1.0000      1.0079
+   43   2 H    1       9.484184    3.233124    5.135141       1.0000      1.0079
+   44   2 H    1      12.068732    2.039292    8.793933       1.0000      1.0079
+   45   2 H    1      12.107262    2.275466    0.337603       1.0000      1.0079
+   46   2 H    1      14.179439    0.846441    3.831462       1.0000      1.0079
+   47   2 H    1       6.228280    3.457073    5.271008       1.0000      1.0079
+   48   2 H    1       7.900114    2.341753    9.119231       1.0000      1.0079
+   49   2 H    1       6.341434    5.756030    0.167789       1.0000      1.0079
+   50   2 H    1       8.037926    4.706017    4.006467       1.0000      1.0079
+   51   2 H    1      12.418269   -0.818492    5.337076       1.0000      1.0079
+   52   2 H    1      10.142169    5.809050    8.683610       1.0000      1.0079
+   53   2 H    1       9.886734    5.497843    0.128286       1.0000      1.0079
+   54   2 H    1      12.017707    4.632485    3.800211       1.0000      1.0079
+   55   2 H    1       7.953070    0.175139    5.182389       1.0000      1.0079
+   56   2 H    1       5.883292    5.976090    9.007835       1.0000      1.0079
+   57   3 Ge  32       9.976900    3.237301    6.614606       4.0000     72.6400
+   58   3 Ge  32      12.110568    2.100503    7.214732       4.0000     72.6400
+   59   3 Ge  32       6.070371    3.261152    6.737686       4.0000     72.6400
+   60   3 Ge  32       8.061921    2.249815    7.622998       4.0000     72.6400
+   61   3 Ge  32      12.204538   -0.348642    6.819943       4.0000     72.6400
+   62   3 Ge  32       9.749060    5.626131    7.277425       4.0000     72.6400
+   63   3 Ge  32       7.934233   -0.003409    6.687853       4.0000     72.6400
+   64   3 Ge  32       5.869875    5.675884    7.494902       4.0000     72.6400
+   65   1 Si  14      -3.829628    9.156786    1.493423       4.0000     28.0855
+   66   1 Si  14      -1.795034    8.090599    2.306611       4.0000     28.0855
+   67   1 Si  14       0.178012    9.201234    1.531241       4.0000     28.0855
+   68   1 Si  14       2.233505    8.258765    2.134289       4.0000     28.0855
+   69   1 Si  14      -5.850457   12.656664    1.431110       4.0000     28.0855
+   70   1 Si  14      -3.934616   11.442276    2.105597       4.0000     28.0855
+   71   1 Si  14      -1.803927   12.721939    1.525689       4.0000     28.0855
+   72   1 Si  14       0.165094   11.557651    2.250560       4.0000     28.0855
+   73   2 H    1      -4.098331    8.818941    0.014598       1.0000      1.0079
+   74   2 H    1      -2.003851    8.203988    3.798832       1.0000      1.0079
+   75   2 H    1      -1.646470   10.475577    5.060638       1.0000      1.0079
+   76   2 H    1      -0.411685    8.899014    9.155745       1.0000      1.0079
+   77   2 H    1      -0.083687    9.354311    0.100114       1.0000      1.0079
+   78   2 H    1       2.092196    8.331120    3.660749       1.0000      1.0079
+   79   2 H    1      -6.713533   10.565271    5.473299       1.0000      1.0079
+   80   2 H    1      -3.890445    8.825845    8.691908       1.0000      1.0079
+   81   2 H    1      -5.838358   12.898718   -0.110853       1.0000      1.0079
+   82   2 H    1      -4.008753   11.114773    3.608231       1.0000      1.0079
+   83   2 H    1       0.016170    7.564995    5.009035       1.0000      1.0079
+   84   2 H    1      -2.163083   12.662204    8.837088       1.0000      1.0079
+   85   2 H    1      -1.990490   12.643603   -0.025873       1.0000      1.0079
+   86   2 H    1       0.219313   11.691845    3.797237       1.0000      1.0079
+   87   2 H    1      -4.126447    6.631789    4.803396       1.0000      1.0079
+   88   2 H    1      -5.483727   12.713819    9.183334       1.0000      1.0079
+   89   3 Ge  32      -2.059773   10.307190    6.578255       4.0000     72.6400
+   90   3 Ge  32      -0.252905    9.099367    7.571589       4.0000     72.6400
+   91   3 Ge  32      -6.211652   10.223047    6.931820       4.0000     72.6400
+   92   3 Ge  32      -4.082068    9.047467    7.181754       4.0000     72.6400
+   93   3 Ge  32      -0.260770    6.988677    6.452785       4.0000     72.6400
+   94   3 Ge  32      -2.038796   12.686612    7.360646       4.0000     72.6400
+   95   3 Ge  32      -4.188487    6.815200    6.308449       4.0000     72.6400
+   96   3 Ge  32      -5.925568   12.726716    7.714131       4.0000     72.6400
+   97   1 Si  14       4.194301    9.255352    1.296885       4.0000     28.0855
+   98   1 Si  14       6.048568    8.043631    2.184176       4.0000     28.0855
+   99   1 Si  14       8.091204    9.044527    1.467106       4.0000     28.0855
+  100   1 Si  14      10.118414    8.084688    2.259571       4.0000     28.0855
+  101   1 Si  14       2.074819   12.634469    1.419947       4.0000     28.0855
+  102   1 Si  14       4.207014   11.531910    1.996938       4.0000     28.0855
+  103   1 Si  14       6.226403   12.659706    1.402107       4.0000     28.0855
+  104   1 Si  14       8.118622   11.330255    1.968676       4.0000     28.0855
+  105   2 H    1       4.042814    9.187961   -0.220148       1.0000      1.0079
+  106   2 H    1       5.867901    8.280622    3.714714       1.0000      1.0079
+  107   2 H    1       6.211636   10.197200    5.797359       1.0000      1.0079
+  108   2 H    1       8.037296    9.105760    9.719191       1.0000      1.0079
+  109   2 H    1       8.052400    8.815483   -0.062402       1.0000      1.0079
+  110   2 H    1      10.109574    8.105054    3.718078       1.0000      1.0079
+  111   2 H    1       1.888254   10.119514    5.337083       1.0000      1.0079
+  112   2 H    1       3.565099    8.964365    9.172765       1.0000      1.0079
+  113   2 H    1       1.969928   12.778368   -0.039567       1.0000      1.0079
+  114   2 H    1       4.324465   11.308637    3.469506       1.0000      1.0079
+  115   2 H    1       8.143904    7.560403    5.539745       1.0000      1.0079
+  116   2 H    1       6.221917   12.840146    9.587954       1.0000      1.0079
+  117   2 H    1       6.434904   12.938913   -0.027052       1.0000      1.0079
+  118   2 H    1       8.096426   11.232688    3.492181       1.0000      1.0079
+  119   2 H    1       3.949468    6.776721    5.332396       1.0000      1.0079
+  120   2 H    1       2.169410   12.679610    9.013626       1.0000      1.0079
+  121   3 Ge  32       6.018473   10.349474    7.394971       4.0000     72.6400
+  122   3 Ge  32       7.906662    8.999996    8.229914       4.0000     72.6400
+  123   3 Ge  32       1.785923   10.181093    6.921194       4.0000     72.6400
+  124   3 Ge  32       3.863624    9.083824    7.713342       4.0000     72.6400
+  125   3 Ge  32       7.783565    6.917263    6.829846       4.0000     72.6400
+  126   3 Ge  32       6.231178   12.636498    8.015085       4.0000     72.6400
+  127   3 Ge  32       3.874842    6.884531    6.857671       4.0000     72.6400
+  128   3 Ge  32       2.061029   12.607472    7.487057       4.0000     72.6400
+
+
+
+
+ SCF PARAMETERS         Density guess:                                   RESTART
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-06
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                                 0.00
+                        added MOs                                        50    0
+                        --------------------------------------------------------
+                        Mixing method:                            BROYDEN_MIXING
+                                                charge density mixing in g-space
+                        --------------------------------------------------------
+                        No outer SCF
+
+ PW_GRID| Information for grid number                                          1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                    175.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -90      89                Points:         180
+ PW_GRID|   Bounds   2            -90      89                Points:         180
+ PW_GRID|   Bounds   3           -180     179                Points:         360
+ PW_GRID| Volume element (a.u.^3)  0.3784E-02     Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                           291600.0      291600      291600
+ PW_GRID|   G-Rays                                1620.0        1620        1620
+ PW_GRID|   Real Space Points                   291600.0      324000      259200
+
+ PW_GRID| Information for grid number                                          2
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     58.3
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -54      53                Points:         108
+ PW_GRID|   Bounds   2            -54      53                Points:         108
+ PW_GRID|   Bounds   3           -100      99                Points:         200
+ PW_GRID| Volume element (a.u.^3)  0.1892E-01     Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                            58320.0       59724       57024
+ PW_GRID|   G-Rays                                 540.0         553         528
+ PW_GRID|   Real Space Points                    58320.0       64800       43200
+
+ PW_GRID| Information for grid number                                          3
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     19.4
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -30      29                Points:          60
+ PW_GRID|   Bounds   2            -30      29                Points:          60
+ PW_GRID|   Bounds   3            -60      59                Points:         120
+ PW_GRID| Volume element (a.u.^3)  0.1022         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                            10800.0       11040       10380
+ PW_GRID|   G-Rays                                 180.0         184         173
+ PW_GRID|   Real Space Points                    10800.0       14400        7200
+
+ PW_GRID| Information for grid number                                          4
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      6.5
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -18      17                Points:          36
+ PW_GRID|   Bounds   2            -18      17                Points:          36
+ PW_GRID|   Bounds   3            -36      35                Points:          72
+ PW_GRID| Volume element (a.u.^3)  0.4730         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                             2332.8        2520        2160
+ PW_GRID|   G-Rays                                  64.8          70          60
+ PW_GRID|   Real Space Points                     2332.8        2880        2016
+
+ POISSON| Solver                                                        PERIODIC
+ POISSON| Periodicity                                                        XYZ
+
+ RS_GRID| Information for grid number                                          1
+ RS_GRID|   Bounds   1            -90      89                Points:         180
+ RS_GRID|   Bounds   2            -90      89                Points:         180
+ RS_GRID|   Bounds   3           -180     179                Points:         360
+ RS_GRID| Real space distribution over                                  4 groups
+ RS_GRID| Real space distribution along direction                              2
+ RS_GRID| Border size                                                         38
+ RS_GRID| Real space distribution over                                 10 groups
+ RS_GRID| Real space distribution along direction                              3
+ RS_GRID| Border size                                                         38
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 121.0         121         121
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 112.0         112         112
+
+ RS_GRID| Information for grid number                                          2
+ RS_GRID|   Bounds   1            -54      53                Points:         108
+ RS_GRID|   Bounds   2            -54      53                Points:         108
+ RS_GRID|   Bounds   3           -100      99                Points:         200
+ RS_GRID| Real space distribution over                                  4 groups
+ RS_GRID| Real space distribution along direction                              2
+ RS_GRID| Border size                                                         38
+ RS_GRID| Real space distribution over                                 10 groups
+ RS_GRID| Real space distribution along direction                              3
+ RS_GRID| Border size                                                         38
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 103.0         103         103
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                  96.0          96          96
+
+ RS_GRID| Information for grid number                                          3
+ RS_GRID|   Bounds   1            -30      29                Points:          60
+ RS_GRID|   Bounds   2            -30      29                Points:          60
+ RS_GRID|   Bounds   3            -60      59                Points:         120
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          4
+ RS_GRID|   Bounds   1            -18      17                Points:          36
+ RS_GRID|   Bounds   2            -18      17                Points:          36
+ RS_GRID|   Bounds   3            -36      35                Points:          72
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+  HFX_INFO| Replica ID:                                                        1
+  HFX_INFO| FRACTION:                                               0.2000000000
+  HFX_INFO| Interaction Potential:                                     TRUNCATED
+  HFX_INFO| Cutoff Radius [angstrom]:                               6.0000000000
+  HFX_INFO| EPS_SCHWARZ:                                                 1.0E-08
+  HFX_INFO| EPS_SCHWARZ_FORCES                                           1.0E-06
+  HFX_INFO| EPS_STORAGE_SCALING:                                         1.0E-01
+  HFX_INFO| NBINS:                                                            64
+  HFX_INFO| BLOCK_SIZE:                                                        2
+  HFX_INFO| NUMBER_OF_SHELLS:                                               AUTO
+  HFX_INFO| Number of periodic shells considered:                             -1
+  HFX_INFO| Number of periodic cells considered:                              27
+
+
+ Number of electrons:                                                        320
+ Number of occupied orbitals:                                                160
+ Number of molecular orbitals:                                               210
+
+ Number of orbital functions:                                               1152
+ Number of independent orbital functions:                                   1152
+
+ Extrapolation method: initial_guess
+
+ *** WARNING in qs_initial_guess.F:309 :: User requested to restart the    ***
+ *** wavefunction from the file named: Diag_libra-2006-RESTART.wfn. This   ***
+ *** file does not exist. Please check the existence of the file or change ***
+ *** properly the value of the keyword WFN_RESTART_FILE_NAME. Calculation  ***
+ *** continues using ATOMIC GUESS.                                         ***
+
+
+ Atomic guess: The first density matrix is obtained in terms of atomic orbitals
+               and electronic configurations assigned to each atomic kind
+
+ Guess for atomic kind: Si
+
+ Electronic structure
+    Total number of core electrons                                         10.00
+    Total number of valence electrons                                       4.00
+    Total number of electrons                                              14.00
+    Multiplicity                                                   not specified
+    S   [  2.00  2.00] 2.00
+    P   [  6.00] 2.00
+
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.526541E-01                  -3.659692963728
+                          2        0.125823E-01                  -3.661785675622
+                          3        0.408986E-04                  -3.661911567360
+                          4        0.675570E-07                  -3.661911568709
+
+ Energy components [Hartree]           Total Energy ::           -3.661911568709
+                                        Band Energy ::           -0.941881516273
+                                     Kinetic Energy ::            1.409736465412
+                                   Potential Energy ::           -5.071648034121
+                                      Virial (-V/T) ::            3.597585902439
+                                        Core Energy ::           -5.690149137281
+                                          XC Energy ::           -0.992569238249
+                                     Coulomb Energy ::            3.020806806821
+                       Total Pseudopotential Energy ::           -7.143143335066
+                       Local Pseudopotential Energy ::           -8.006124475851
+                    Nonlocal Pseudopotential Energy ::            0.862981140786
+                                        Confinement ::            0.432577323720
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          2.000      -0.357276           -9.721984
+
+                       1     1          2.000      -0.113664           -3.092965
+
+
+ Total Electron Density at R=0:                                         0.000026
+
+ Guess for atomic kind: H
+
+ Electronic structure
+    Total number of core electrons                                          0.00
+    Total number of valence electrons                                       1.00
+    Total number of electrons                                               1.00
+    Multiplicity                                                   not specified
+    S      1.00
+
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.250972E-02                  -0.375256815885
+                          2        0.570752E-04                  -0.375258666164
+                          3        0.832405E-09                  -0.375258667122
+
+ Energy components [Hartree]           Total Energy ::           -0.375258667122
+                                        Band Energy ::           -0.076317618391
+                                     Kinetic Energy ::            0.771356566341
+                                   Potential Energy ::           -1.146615233463
+                                      Virial (-V/T) ::            1.486491829455
+                                        Core Energy ::           -0.456090715790
+                                          XC Energy ::           -0.314218627334
+                                     Coulomb Energy ::            0.395050676003
+                       Total Pseudopotential Energy ::           -1.238482237174
+                       Local Pseudopotential Energy ::           -1.238482237174
+                    Nonlocal Pseudopotential Energy ::            0.000000000000
+                                        Confinement ::            0.110349550431
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          1.000      -0.076318           -2.076708
+
+
+ Total Electron Density at R=0:                                         0.425022
+
+ Guess for atomic kind: Ge
+
+ Electronic structure
+    Total number of core electrons                                         28.00
+    Total number of valence electrons                                       4.00
+    Total number of electrons                                              32.00
+    Multiplicity                                                   not specified
+    S   [  2.00  2.00  2.00] 2.00
+    P   [  6.00  6.00] 2.00
+    D   [ 10.00]
+
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.142224                      -3.669910672039
+                          2        0.333188E-01                  -3.687823698339
+                          3        0.522642E-04                  -3.688875018994
+                          4        0.333285E-05                  -3.688875020047
+                          5        0.154106E-05                  -3.688875020053
+                          6        0.996835E-06                  -3.688875020055
+
+ Energy components [Hartree]           Total Energy ::           -3.688875020055
+                                        Band Energy ::           -0.991816616960
+                                     Kinetic Energy ::            1.446010121603
+                                   Potential Energy ::           -5.134885141658
+                                      Virial (-V/T) ::            3.551071368687
+                                        Core Energy ::           -5.696847161393
+                                          XC Energy ::           -0.988567154744
+                                     Coulomb Energy ::            2.996539296082
+                       Total Pseudopotential Energy ::           -7.185566698510
+                       Local Pseudopotential Energy ::           -7.622158091196
+                    Nonlocal Pseudopotential Energy ::            0.436591392686
+                                        Confinement ::            0.427094155139
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          2.000      -0.391724          -10.659354
+
+                       1     1          2.000      -0.104184           -2.834997
+
+
+ Total Electron Density at R=0:                                         0.000078
+ Re-scaling the density matrix to get the right number of electrons
+                  # Electrons              Trace(P)               Scaling factor
+                          320               320.000                        1.000
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+
+  HFX_MEM_INFO| Est. max. program size before HFX [MiB]:                     522
+
+ *** WARNING in hfx_energy_potential.F:591 :: The Kohn Sham matrix is not  ***
+ *** 100% occupied. This may result in incorrect Hartree-Fock results. Try ***
+ *** to decrease EPS_PGF_ORB and EPS_FILTER_MATRIX in the QS section. For  ***
+ *** more information see FAQ: https://www.cp2k.org/faq:hfx_eps_warning    ***
+
+  HFX_MEM_INFO| Number of cart. primitive ERI's calculated:          16115359123
+  HFX_MEM_INFO| Number of sph. ERI's calculated:                      4155057995
+  HFX_MEM_INFO| Number of sph. ERI's stored in-core:                  4155057656
+  HFX_MEM_INFO| Number of sph. ERI's stored on disk:                           0
+  HFX_MEM_INFO| Number of sph. ERI's calculated on the fly:                    0
+  HFX_MEM_INFO| Total memory consumption ERI's RAM [MiB]:                   6529
+  HFX_MEM_INFO| Whereof max-vals [MiB]:                                      278
+  HFX_MEM_INFO| Total compression factor ERI's RAM:                         4.86
+  HFX_MEM_INFO| Total memory consumption ERI's disk [MiB]:                     0
+  HFX_MEM_INFO| Total compression factor ERI's disk:                        0.00
+  HFX_MEM_INFO| Size of density/Fock matrix [MiB]:                             2
+  HFX_MEM_INFO| Size of buffers [MiB]:                                         1
+  HFX_MEM_INFO| Number of periodic image cells considered:                    27
+  HFX_MEM_INFO| Est. max. program size after HFX  [MiB]:                     683
+
+     1 NoMix/Diag. 0.30E+00   47.5     1.29004830      -266.0212460556 -2.66E+02
+     2 Broy./Diag. 0.30E+00    6.4     0.68124164      -276.6981884318 -1.07E+01
+     3 Broy./Diag. 0.30E+00    6.2     0.42219879      -281.7732518138 -5.08E+00
+     4 Broy./Diag. 0.30E+00    6.2     0.08452386      -284.5714928593 -2.80E+00
+     5 Broy./Diag. 0.30E+00    6.5     0.03567183      -286.3125354279 -1.74E+00
+     6 Broy./Diag. 0.30E+00    6.3     0.01613594      -287.3928217287 -1.08E+00
+     7 Broy./Diag. 0.30E+00    6.5     0.00702511      -287.7912881588 -3.98E-01
+     8 Broy./Diag. 0.30E+00    6.3     0.00759032      -287.7930922513 -1.80E-03
+     9 Broy./Diag. 0.30E+00    6.5     0.00502435      -287.8370390038 -4.39E-02
+    10 Broy./Diag. 0.30E+00    6.4     0.00769062      -287.8391500807 -2.11E-03
+    11 Broy./Diag. 0.30E+00    6.4     0.00467076      -287.8390883675  6.17E-05
+    12 Broy./Diag. 0.30E+00    6.7     0.00270585      -287.9149714864 -7.59E-02
+    13 Broy./Diag. 0.30E+00    6.3     0.00116739      -287.9524640537 -3.75E-02
+    14 Broy./Diag. 0.30E+00    6.5     0.00183890      -287.9452683631  7.20E-03
+    15 Broy./Diag. 0.30E+00    6.3     0.00071162      -287.9536931544 -8.42E-03
+    16 Broy./Diag. 0.30E+00    6.5     0.00131416      -287.9498595571  3.83E-03
+    17 Broy./Diag. 0.30E+00    6.3     0.00051862      -287.9463732768  3.49E-03
+    18 Broy./Diag. 0.30E+00    6.3     0.00045949      -287.9425470241  3.83E-03
+    19 Broy./Diag. 0.30E+00    6.6     0.00044200      -287.9416478570  8.99E-04
+    20 Broy./Diag. 0.30E+00    6.3     0.00009321      -287.9472104731 -5.56E-03
+    21 Broy./Diag. 0.30E+00    6.5     0.00011297      -287.9492199538 -2.01E-03
+    22 Broy./Diag. 0.30E+00    6.3     0.00007166      -287.9490428819  1.77E-04
+    23 Broy./Diag. 0.30E+00    6.5     0.00007297      -287.9494302315 -3.87E-04
+    24 Broy./Diag. 0.30E+00    6.4     0.00006281      -287.9495947561 -1.65E-04
+    25 Broy./Diag. 0.30E+00    6.4     0.00004366      -287.9503377289 -7.43E-04
+    26 Broy./Diag. 0.30E+00    6.6     0.00006071      -287.9506441928 -3.06E-04
+    27 Broy./Diag. 0.30E+00    6.3     0.00002511      -287.9509517108 -3.08E-04
+    28 Broy./Diag. 0.30E+00    6.5     0.00001061      -287.9514253797 -4.74E-04
+    29 Broy./Diag. 0.30E+00    6.3     0.00000784      -287.9517541241 -3.29E-04
+    30 Broy./Diag. 0.30E+00    6.5     0.00001462      -287.9519090448 -1.55E-04
+    31 Broy./Diag. 0.30E+00    6.3     0.00000775      -287.9519302533 -2.12E-05
+    32 Broy./Diag. 0.30E+00    6.3     0.00000726      -287.9517659861  1.64E-04
+    33 Broy./Diag. 0.30E+00    6.7     0.00000349      -287.9516905822  7.54E-05
+    34 Broy./Diag. 0.30E+00    6.4     0.00000527      -287.9517442072 -5.36E-05
+    35 Broy./Diag. 0.30E+00    6.5     0.00000179      -287.9518123303 -6.81E-05
+    36 Broy./Diag. 0.30E+00    6.3     0.00000233      -287.9518485002 -3.62E-05
+    37 Broy./Diag. 0.30E+00    6.5     0.00000053      -287.9518631560 -1.47E-05
+
+  *** SCF run converged in    37 steps ***
+
+
+  Electronic density on regular grids:       -319.9999999982        0.0000000018
+  Core density on regular grids:              319.9999999278       -0.0000000722
+  Total charge density on r-space grids:       -0.0000000704
+  Total charge density g-space grids:          -0.0000000704
+
+  Overlap energy of the core charge distribution:               0.00002392368299
+  Self energy of the core charge distribution:               -685.99374549079380
+  Core Hamiltonian energy:                                    163.82567527885925
+  Hartree energy:                                             331.66466379631845
+  Exchange-correlation energy:                                -79.83074682083398
+  Hartree-Fock Exchange energy:                               -17.17043476378777
+  Dispersion energy:                                           -0.44729907948761
+
+  Total energy:                                              -287.95186315604246
+
+   Calculate PDOS at iteration step                                  0
+
+              ---- PDOS: start iteration on the KS states --- 
+
+ *******************************************************************************
+ **                                                                           **
+ **         ######## #######   #######   ######## #######  ########           **
+ **            ##    ##     ## ##     ## ##       ##   ##     ##              **
+ **            ##    ##     ## ##     ## ######   #######     ##              **
+ **            ##    ##     ## ##     ## ##       ##          ##              **
+ **            ##    #######   #######   ##       ##          ##              **
+ **                                                                           **
+ *******************************************************************************
+ 
+ -------------------------------------------------------------------------------
+ -                            TDDFPT Initial Guess                             -
+ -------------------------------------------------------------------------------
+          State         Occupied      ->      Virtual          Excitation
+          number         orbital              orbital          energy (eV)
+ -------------------------------------------------------------------------------
+             1              160                  161              1.89321
+             2              159                  161              2.02952
+             3              160                  162              2.06163
+             4              160                  163              2.10557
+             5              160                  164              2.16853
+             6              159                  162              2.19794
+             7              160                  165              2.23637
+             8              159                  163              2.24189
+             9              159                  164              2.30485
+            10              159                  165              2.37269
+            11              160                  166              2.43947
+            12              160                  167              2.48759
+            13              160                  168              2.55609
+            14              159                  166              2.57579
+            15              160                  169              2.58678
+            16              159                  167              2.62390
+            17              160                  170              2.62788
+            18              160                  171              2.65741
+            19              160                  172              2.68009
+            20              159                  168              2.69241
+
+      Number of active states:                                     158720
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                      TDDFPT WAVEFUNCTION OPTIMIZATION                       -
+ -------------------------------------------------------------------------------
+
+          Step            Time         Convergence           Conv. states
+ -------------------------------------------------------------------------------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.6338773            -2.5933E-01
+        2       1.7673903            -2.6213E-01
+        3       1.8642257            -1.9740E-01
+        4       2.0034896            -1.0208E-01
+        5       2.0206878            -1.4785E-01
+        6       2.0642289            -1.3371E-01
+        7       2.1322403            -1.0413E-01
+        8       2.1624476            -7.9439E-02
+        9       2.2083106            -9.6536E-02
+       10       2.2373860            -1.3530E-01
+       11       2.2782276            -1.6125E-01
+       12       2.2896814            -1.9791E-01
+       13       2.3779265            -1.7817E-01
+       14       2.3881138            -1.8767E-01
+       15       2.4129190            -1.7386E-01
+       16       2.4910358            -1.3287E-01
+       17       2.5021265            -1.2576E-01
+       18       2.5450399            -1.1237E-01
+       19       2.5504255            -1.2967E-01
+       20       2.5887732            -1.0363E-01
+
+             1           123.9          9.6331E-03                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5970244            -3.6853E-02
+        2       1.7282932            -3.9097E-02
+        3       1.8580707            -6.1549E-03
+        4       1.9968465            -6.6430E-03
+        5       2.0100852            -1.0603E-02
+        6       2.0494223            -1.4807E-02
+        7       2.1165258            -1.5715E-02
+        8       2.1535431            -8.9045E-03
+        9       2.1870736            -2.1237E-02
+       10       2.2085859            -2.8800E-02
+       11       2.2520787            -2.6149E-02
+       12       2.2600947            -2.9587E-02
+       13       2.3540546            -2.3872E-02
+       14       2.3614461            -2.6668E-02
+       15       2.4059995            -6.9195E-03
+       16       2.4358929            -5.5143E-02
+       17       2.4486015            -5.3525E-02
+       18       2.4973245            -4.7715E-02
+       19       2.5303451            -2.0080E-02
+       20       2.5519273            -3.6846E-02
+
+             2           123.2          2.0265E-03                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5905349            -6.4894E-03
+        2       1.7213374            -6.9558E-03
+        3       1.8575507            -5.2006E-04
+        4       1.9962613            -5.8528E-04
+        5       2.0090200            -1.0652E-03
+        6       2.0474577            -1.9647E-03
+        7       2.1142329            -2.2929E-03
+        8       2.1518092            -1.7339E-03
+        9       2.1833054            -3.7682E-03
+       10       2.2047502            -3.8357E-03
+       11       2.2438872            -8.1915E-03
+       12       2.2554879            -4.6068E-03
+       13       2.3494569            -4.5977E-03
+       14       2.3502876            -1.1159E-02
+       15       2.3806369            -2.5363E-02
+       16       2.3979319            -3.7961E-02
+       17       2.4081853            -4.0416E-02
+       18       2.4696249            -2.7700E-02
+       19       2.4901542            -4.0191E-02
+       20       2.5225475            -2.9380E-02
+
+             3           124.1          1.4853E-03                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5900458            -4.8916E-04
+        2       1.7207721            -5.6532E-04
+        3       1.8575031            -4.7533E-05
+        4       1.9961910            -7.0210E-05
+        5       2.0088692            -1.5080E-04
+        6       2.0472790            -1.7866E-04
+        7       2.1138906            -3.4233E-04
+        8       2.1515334            -2.7580E-04
+        9       2.1827343            -5.7106E-04
+       10       2.2041801            -5.7006E-04
+       11       2.2425517            -1.3355E-03
+       12       2.2545542            -9.3376E-04
+       13       2.3469087            -2.5482E-03
+       14       2.3485733            -1.7143E-03
+       15       2.3722730            -8.3640E-03
+       16       2.3936295            -4.3024E-03
+       17       2.4062005            -1.9847E-03
+       18       2.4446280            -2.4997E-02
+       19       2.4824639            -7.6903E-03
+       20       2.5064083            -1.6139E-02
+
+             4           123.2          9.1862E-04                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5899935            -5.2275E-05
+        2       1.7207128            -5.9233E-05
+        3       1.8574968            -6.3847E-06
+        4       1.9961831            -7.9073E-06
+        5       2.0088572            -1.1991E-05
+        6       2.0472627            -1.6318E-05
+        7       2.1138590            -3.1511E-05
+        8       2.1515173            -1.6163E-05
+        9       2.1826750            -5.9249E-05
+       10       2.2041121            -6.8044E-05
+       11       2.2423282            -2.2347E-04
+       12       2.2543989            -1.5527E-04
+       13       2.3461315            -7.7720E-04
+       14       2.3484166            -1.5669E-04
+       15       2.3706895            -1.5835E-03
+       16       2.3922896            -1.3399E-03
+       17       2.4055106            -6.8992E-04
+       18       2.4363672            -8.2607E-03
+       19       2.4703909            -1.2073E-02
+       20       2.4799345            -2.6474E-02
+
+             5           123.8          9.7289E-04                      2
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5899908            -2.7426E-06
+        2       1.7207099            -2.9805E-06
+        3       1.8574964            -3.9916E-07
+        4       1.9961825            -6.1698E-07
+        5       2.0088563            -8.9128E-07
+        6       2.0472614            -1.2826E-06
+        7       2.1138567            -2.3520E-06
+        8       2.1515156            -1.6387E-06
+        9       2.1826686            -6.4412E-06
+       10       2.2041041            -7.9873E-06
+       11       2.2423079            -2.0309E-05
+       12       2.2543751            -2.3840E-05
+       13       2.3459937            -1.3776E-04
+       14       2.3483919            -2.4715E-05
+       15       2.3702638            -4.2569E-04
+       16       2.3921094            -1.8023E-04
+       17       2.4053615            -1.4908E-04
+       18       2.4337816            -2.5857E-03
+       19       2.4646079            -5.7830E-03
+       20       2.4772929            -2.6417E-03
+
+             6           123.7          2.1252E-04                     10
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5899907            -1.1423E-07
+        2       1.7207097            -1.2227E-07
+        3       1.8574963            -1.7643E-08
+        4       1.9961825            -4.0358E-08
+        5       2.0088563            -4.3440E-08
+        6       2.0472613            -9.6339E-08
+        7       2.1138565            -1.4536E-07
+        8       2.1515155            -1.2712E-07
+        9       2.1826681            -4.9020E-07
+       10       2.2041034            -6.6872E-07
+       11       2.2423063            -1.6177E-06
+       12       2.2543729            -2.1964E-06
+       13       2.3459788            -1.4876E-05
+       14       2.3483896            -2.3208E-06
+       15       2.3702118            -5.2014E-05
+       16       2.3920859            -2.3511E-05
+       17       2.4053466            -1.4957E-05
+       18       2.4333590            -4.2258E-04
+       19       2.4639111            -6.9678E-04
+       20       2.4767534            -5.3948E-04
+
+             7           123.3          2.5606E-05                     13
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5899906            -5.9259E-09
+        2       1.7207097            -7.8549E-09
+        3       1.8574963            -9.2002E-10
+        4       1.9961825            -2.9272E-09
+        5       2.0088563            -2.8859E-09
+        6       2.0472613            -7.1933E-09
+        7       2.1138565            -1.0197E-08
+        8       2.1515155            -1.3047E-08
+        9       2.1826681            -4.3857E-08
+       10       2.2041034            -5.9233E-08
+       11       2.2423062            -1.3143E-07
+       12       2.2543727            -1.8123E-07
+       13       2.3459775            -1.3670E-06
+       14       2.3483893            -2.9433E-07
+       15       2.3702068            -4.9904E-06
+       16       2.3920834            -2.4397E-06
+       17       2.4053453            -1.3341E-06
+       18       2.4333071            -5.1873E-05
+       19       2.4638522            -5.8905E-05
+       20       2.4766875            -6.5938E-05
+
+             8           124.3          2.4232E-06                     17
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5899906            -2.9280E-10
+        2       1.7207097            -3.5915E-10
+        3       1.8574963            -5.2238E-11
+        4       1.9961825            -2.0605E-10
+        5       2.0088563            -1.5836E-10
+        6       2.0472613            -5.0125E-10
+        7       2.1138565            -5.8325E-10
+        8       2.1515155            -8.9055E-10
+        9       2.1826681            -4.5699E-09
+       10       2.2041034            -5.9119E-09
+       11       2.2423062            -8.2323E-09
+       12       2.2543727            -2.1070E-08
+       13       2.3459773            -1.7243E-07
+       14       2.3483892            -3.5369E-08
+       15       2.3702060            -7.6709E-07
+       16       2.3920832            -2.7043E-07
+       17       2.4053452            -9.2836E-08
+       18       2.4332995            -7.6097E-06
+       19       2.4638465            -5.6904E-06
+       20       2.4766795            -7.9500E-06
+
+             9           123.2          2.9216E-07                     20
+ ------------------------- Restart Davidson iterations -------------------------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       1.5899906             1.6994E-15
+        2       1.7207097            -9.4408E-15
+        3       1.8574963             3.3987E-15
+        4       1.9961825             1.8882E-15
+        5       2.0088563             2.2658E-15
+        6       2.0472613             3.3987E-15
+        7       2.1138565             6.4198E-15
+        8       2.1515155            -3.7763E-16
+        9       2.1826681             3.7763E-16
+       10       2.2041034             3.0211E-15
+       11       2.2423062             2.6434E-15
+       12       2.2543727             4.1540E-15
+       13       2.3459773             4.9092E-15
+       14       2.3483892            -2.2658E-15
+       15       2.3702060             5.2869E-15
+       16       2.3920832             1.8882E-15
+       17       2.4053452             7.5527E-16
+       18       2.4332995             1.1329E-15
+       19       2.4638465             3.7763E-15
+       20       2.4766795            -1.5105E-15
+
+            10           158.2          3.4694E-16                     20
+ 
+ -------------------------------------------------------------------------------
+ -  TDDFPT run converged in 10 iteration(s) 
+ -------------------------------------------------------------------------------
+
+ R-TDDFPT states of multiplicity 1
+
+         State    Excitation        Transition dipole (a.u.)        Oscillator
+         number   energy (eV)       x           y           z     strength (a.u.)
+         ------------------------------------------------------------------------
+ TDDFPT|      1       1.58999   5.7049E-01 -1.1107E+01  1.8957E-03   4.81851E+00
+ TDDFPT|      2       1.72071   1.0678E+01  3.6483E-01  2.6822E-02   4.81245E+00
+ TDDFPT|      3       1.85750  -1.4089E-02 -2.3392E+00  9.7723E-03   2.49035E-01
+ TDDFPT|      4       1.99618  -2.2275E+00 -1.1073E-01  2.4465E-03   2.43259E-01
+ TDDFPT|      5       2.00886   3.4304E-02 -4.4120E-01 -5.5548E-03   9.63980E-03
+ TDDFPT|      6       2.04726  -1.4020E-01  1.1979E+00  9.1018E-03   7.29661E-02
+ TDDFPT|      7       2.11386  -2.7159E-01  4.9311E-01 -1.9536E-02   1.64328E-02
+ TDDFPT|      8       2.15152  -7.4964E-02  8.7741E-02 -1.3245E-02   7.11267E-04
+ TDDFPT|      9       2.18267  -9.4165E-01 -2.4204E-01  1.5392E-02   5.05618E-02
+ TDDFPT|     10       2.20410  -4.7564E-02  8.8247E-01  1.8266E-02   4.21927E-02
+ TDDFPT|     11       2.24231  -1.1266E-01  1.7856E-03  1.6456E-03   6.97614E-04
+ TDDFPT|     12       2.25437   3.4395E-01  6.6814E-01 -1.7468E-02   3.12065E-02
+ TDDFPT|     13       2.34598   4.1578E-01 -5.2442E-02  1.5971E-03   1.00942E-02
+ TDDFPT|     14       2.34839   3.3796E-01  3.4432E-01 -4.1932E-03   1.33935E-02
+ TDDFPT|     15       2.37021   3.2316E-01 -7.2269E-01  1.2734E-02   3.64017E-02
+ TDDFPT|     16       2.39208   1.9339E-01 -2.7255E-03  1.5720E-02   2.20664E-03
+ TDDFPT|     17       2.40535  -5.5205E-02 -1.6108E-02 -9.5211E-03   2.00228E-04
+ TDDFPT|     18       2.43330   8.3310E-01 -1.4096E-01 -5.1800E-03   4.25620E-02
+ TDDFPT|     19       2.46385  -9.0264E-01  4.9185E-01  2.8948E-02   6.38352E-02
+ TDDFPT|     20       2.47668   1.8571E-01 -2.8329E-02 -1.1813E-02   2.14976E-03
+
+ TDDFPT : CheckSum  =  0.360537E+00
+ 
+ -------------------------------------------------------------------------------
+ -                            Excitation analysis                              -
+ -------------------------------------------------------------------------------
+        State             Occupied              Virtual             Excitation
+        number             orbital              orbital             amplitude
+ -------------------------------------------------------------------------------
+             1   1.58999 eV
+                               160                  162               0.764543
+                               160                  161               0.624119
+                               160                  163               0.085128
+                               160                  164              -0.054648
+                               156                  179              -0.036419
+                               153                  175              -0.033079
+                               158                  178              -0.028670
+                               157                  178              -0.026916
+                               158                  177              -0.024223
+                               153                  177              -0.021213
+                               160                  165               0.020593
+                               157                  175              -0.019200
+                               156                  180              -0.018495
+                               158                  175               0.017548
+                               154                  178               0.017431
+                               151                  175              -0.016870
+                               160                  175              -0.016079
+                               154                  176              -0.014234
+                               160                  166              -0.013838
+                               159                  162               0.013797
+                               159                  175               0.013266
+                               153                  162              -0.012690
+                               158                  180              -0.011349
+                               154                  177              -0.010910
+                               160                  177              -0.010809
+                               153                  173               0.010691
+                               160                  171              -0.010667
+                               150                  168              -0.010403
+                               157                  180               0.010067
+             2   1.72071 eV
+                               159                  162               0.770493
+                               159                  161               0.614186
+                               159                  163               0.082837
+                               159                  164              -0.056412
+                               157                  176              -0.039858
+                               151                  177              -0.027818
+                               156                  175              -0.026269
+                               159                  168              -0.026170
+                               159                  165               0.025967
+                               154                  180               0.024468
+                               159                  166              -0.023729
+                               151                  168              -0.023388
+                               154                  176              -0.022558
+                               153                  178              -0.022342
+                               154                  171               0.021601
+                               151                  171               0.019223
+                               159                  180               0.018690
+                               158                  176               0.017225
+                               154                  177               0.016748
+                               154                  175               0.016061
+                               160                  175               0.016036
+                               160                  161              -0.015635
+                               159                  171               0.015051
+                               151                  173              -0.014958
+                               151                  180               0.014791
+                               153                  176               0.014514
+                               151                  179              -0.014377
+                               158                  180               0.013997
+                               158                  179               0.011316
+                               147                  173              -0.011118
+                               153                  175              -0.011116
+                               147                  168               0.010742
+                               156                  178               0.010531
+                               159                  170              -0.010465
+                               158                  177              -0.010435
+                               157                  180               0.010128
+             3   1.85750 eV
+                               160                  161              -0.777899
+                               160                  162               0.624368
+                               160                  163               0.037417
+                               160                  164              -0.024651
+                               160                  168               0.012853
+                               156                  161              -0.011652
+                               158                  169              -0.010982
+             4   1.99618 eV
+                               159                  161               0.785273
+                               159                  162              -0.613487
+                               159                  163              -0.036545
+                               159                  164               0.021577
+                               159                  173               0.020371
+                               160                  163              -0.020051
+                               159                  171              -0.016364
+                               159                  170               0.015494
+                               159                  166               0.013807
+                               154                  166               0.013711
+                               159                  165              -0.013357
+                               154                  161              -0.011532
+                               157                  166               0.010927
+                               160                  164              -0.010642
+             5   2.00886 eV
+                               160                  163              -0.939706
+                               160                  168              -0.198117
+                               160                  164              -0.190578
+                               160                  173              -0.099640
+                               160                  165               0.079485
+                               160                  170               0.077776
+                               160                  162               0.072628
+                               160                  171              -0.057186
+                               160                  169               0.037869
+                               160                  174               0.035751
+                               158                  178              -0.020494
+                               159                  161              -0.019070
+                               159                  168              -0.018944
+                               156                  175               0.018648
+                               156                  163              -0.016514
+                               160                  161               0.016422
+                               160                  167               0.015875
+                               159                  171               0.014038
+                               159                  163              -0.013564
+                               157                  179               0.013264
+                               159                  162               0.013043
+                               158                  177              -0.012359
+                               153                  172               0.010507
+                               156                  180              -0.010361
+                               160                  179               0.010323
+                               159                  165               0.010245
+                               160                  172               0.010192
+                               156                  164              -0.010015
+             6   2.04726 eV
+                               160                  164               0.813867
+                               160                  168               0.417547
+                               160                  163              -0.283140
+                               160                  165              -0.218463
+                               160                  162               0.079619
+                               160                  170              -0.076181
+                               160                  169              -0.070327
+                               160                  171               0.066817
+                               160                  167              -0.047758
+                               160                  161               0.029956
+                               160                  166               0.028172
+                               158                  178               0.027158
+                               160                  172               0.024055
+                               156                  175              -0.022504
+                               160                  173              -0.020138
+                               159                  168               0.018763
+                               159                  165              -0.018595
+                               158                  177               0.018564
+                               159                  163               0.015875
+                               157                  179              -0.014966
+                               156                  180               0.014503
+                               156                  179               0.014170
+                               160                  179              -0.014150
+                               159                  171              -0.014101
+                               153                  179              -0.013878
+                               159                  180               0.013591
+                               158                  175              -0.011102
+                               153                  175              -0.010869
+                               150                  162              -0.010584
+                               157                  175              -0.010032
+                               157                  168              -0.010032
+             7   2.11386 eV
+                               160                  165              -0.773936
+                               160                  164              -0.406103
+                               160                  168               0.365897
+                               160                  171              -0.221104
+                               160                  166               0.088968
+                               159                  168               0.075958
+                               160                  170               0.074745
+                               159                  164               0.074716
+                               159                  163               0.067928
+                               160                  163              -0.054395
+                               160                  169              -0.052785
+                               160                  167              -0.046990
+                               160                  173               0.039178
+                               159                  170              -0.030814
+                               156                  178              -0.024654
+                               159                  165              -0.022473
+                               153                  171               0.022351
+                               157                  162              -0.022063
+                               160                  179              -0.021836
+                               159                  173               0.020222
+                               160                  180               0.020182
+                               157                  175              -0.019506
+                               160                  178               0.019071
+                               158                  179              -0.017767
+                               160                  175               0.017564
+                               156                  177              -0.017482
+                               154                  162               0.016520
+                               153                  175              -0.014767
+                               158                  173              -0.014689
+                               159                  175               0.014400
+                               153                  179              -0.014037
+                               150                  162              -0.013826
+                               158                  180              -0.013667
+                               157                  168              -0.013529
+                               157                  179              -0.012974
+                               154                  175               0.012836
+                               158                  162               0.012656
+                               159                  169              -0.012638
+                               158                  177               0.012418
+                               159                  171               0.011872
+                               158                  178               0.011832
+                               156                  175              -0.011591
+                               153                  177               0.011516
+                               156                  166               0.011351
+                               156                  162              -0.011001
+                               159                  174              -0.010991
+                               153                  173              -0.010786
+                               159                  166               0.010725
+                               153                  166              -0.010267
+             8   2.15152 eV
+                               159                  163              -0.974819
+                               159                  173              -0.114131
+                               160                  165              -0.094125
+                               159                  162               0.078929
+                               159                  168              -0.073373
+                               159                  164              -0.060085
+                               159                  170               0.046366
+                               159                  174               0.044406
+                               160                  168               0.026536
+                               159                  171              -0.024770
+                               159                  165               0.024709
+                               160                  171               0.024471
+                               160                  170              -0.023559
+                               159                  161               0.021530
+                               160                  164              -0.021274
+                               159                  166              -0.018828
+                               159                  172               0.013365
+                               158                  163               0.012932
+                               159                  169               0.011503
+                               158                  173               0.010538
+                               157                  166              -0.010535
+                               157                  173              -0.010346
+             9   2.18267 eV
+                               159                  164               0.810072
+                               159                  168               0.452907
+                               159                  165              -0.249590
+                               160                  165               0.137696
+                               159                  163              -0.092675
+                               159                  169              -0.086261
+                               159                  173              -0.079677
+                               159                  162               0.066658
+                               159                  170              -0.066135
+                               159                  167              -0.059999
+                               159                  171               0.046666
+                               159                  172               0.044544
+                               159                  161               0.031101
+                               159                  174               0.028993
+                               154                  168              -0.028921
+                               157                  168              -0.028421
+                               151                  162              -0.026074
+                               151                  176              -0.024683
+                               159                  166               0.020955
+                               154                  177              -0.020903
+                               157                  177              -0.020813
+                               160                  164               0.020133
+                               160                  171              -0.019287
+                               154                  175               0.019022
+                               151                  168              -0.018336
+                               157                  178               0.017892
+                               160                  168               0.017866
+                               159                  176              -0.017621
+                               154                  176               0.017562
+                               160                  173               0.017354
+                               160                  180               0.016993
+                               157                  176               0.016668
+                               151                  161              -0.016136
+                               147                  162               0.015683
+                               158                  176              -0.015529
+                               151                  180               0.015282
+                               158                  179              -0.014858
+                               153                  175              -0.014347
+                               151                  171               0.014259
+                               156                  178              -0.013821
+                               157                  166              -0.012509
+                               159                  178              -0.012501
+                               156                  177              -0.012483
+                               160                  170               0.012298
+                               154                  166              -0.012106
+                               160                  163              -0.012106
+                               151                  170              -0.011819
+                               151                  173               0.011559
+                               160                  178               0.011299
+                               158                  177               0.011101
+                               154                  164              -0.011020
+                               157                  162              -0.010617
+                               154                  174              -0.010596
+                               153                  173              -0.010309
+                               154                  165               0.010138
+            10   2.20410 eV
+                               160                  168               0.695330
+                               160                  165               0.433097
+                               160                  164              -0.345923
+                               160                  170              -0.254968
+                               160                  171               0.242093
+                               159                  164              -0.109951
+                               160                  169              -0.105624
+                               160                  163              -0.102793
+                               159                  165              -0.088598
+                               160                  173               0.087419
+                               159                  171              -0.086447
+                               160                  174              -0.050452
+                               159                  170               0.045925
+                               160                  167              -0.045325
+                               158                  178               0.043921
+                               156                  175              -0.039332
+                               159                  168               0.030713
+                               159                  166               0.026814
+                               160                  172               0.026603
+                               158                  177               0.026467
+                               160                  180              -0.025555
+                               156                  180               0.024253
+                               158                  175              -0.024189
+                               157                  179              -0.023825
+                               159                  180               0.023631
+                               160                  179              -0.021553
+                               156                  179               0.020976
+                               160                  162              -0.020775
+                               149                  162               0.018207
+                               153                  179              -0.017838
+                               160                  166              -0.017817
+                               153                  175              -0.017474
+                               153                  176              -0.017359
+                               153                  177              -0.017312
+                               159                  173               0.016692
+                               160                  178               0.016232
+                               157                  168              -0.016230
+                               153                  171              -0.015977
+                               150                  162              -0.015429
+                               153                  180              -0.014885
+                               154                  179               0.014565
+                               159                  177               0.014000
+                               154                  178               0.013519
+                               160                  177              -0.013463
+                               157                  171               0.013293
+                               159                  178               0.013289
+                               153                  178               0.012544
+                               157                  162              -0.012522
+                               157                  176               0.011887
+                               158                  180               0.011840
+                               160                  176              -0.011333
+                               157                  161              -0.011222
+                               154                  176              -0.011089
+                               157                  175              -0.010959
+                               157                  177               0.010864
+                               154                  173               0.010327
+                               153                  161              -0.010189
+                               159                  176               0.010067
+                               157                  173              -0.010003
+            11   2.24231 eV
+                               160                  171              -0.674546
+                               160                  166               0.388650
+                               160                  170               0.362738
+                               160                  165               0.348208
+                               160                  168               0.222312
+                               160                  167              -0.133732
+                               159                  165               0.090241
+                               159                  171               0.087588
+                               160                  164               0.072673
+                               159                  164              -0.060787
+                               160                  173               0.059696
+                               159                  163              -0.058983
+                               160                  174               0.057355
+                               158                  162               0.055916
+                               159                  170              -0.055837
+                               153                  171               0.054346
+                               154                  162               0.041307
+                               160                  163               0.037541
+                               158                  161               0.037288
+                               157                  162              -0.036487
+                               153                  162               0.029740
+                               159                  166              -0.028801
+                               153                  177               0.028475
+                               153                  170              -0.028260
+                               159                  175               0.027095
+                               158                  180              -0.026690
+                               159                  168              -0.025772
+                               158                  175               0.024095
+                               159                  174              -0.023550
+                               156                  178              -0.023522
+                               153                  176               0.022861
+                               156                  162              -0.022456
+                               157                  175              -0.021410
+                               149                  162              -0.020834
+                               158                  179              -0.020029
+                               157                  161              -0.019538
+                               154                  161               0.019537
+                               156                  177              -0.019294
+                               159                  173               0.018996
+                               154                  171               0.018972
+                               156                  179              -0.018778
+                               160                  169               0.018774
+                               157                  171              -0.018398
+                               156                  171              -0.017151
+                               160                  172              -0.017101
+                               154                  175               0.016721
+                               153                  173              -0.016515
+                               154                  177               0.016104
+                               159                  167               0.015657
+                               158                  168              -0.015090
+                               153                  165               0.014707
+                               154                  178              -0.014702
+                               159                  178              -0.014687
+                               158                  178              -0.014325
+                               153                  178              -0.013804
+                               157                  170               0.012964
+                               156                  175               0.012859
+                               156                  180              -0.012764
+                               154                  170              -0.012261
+                               149                  161              -0.012232
+                               153                  161               0.012064
+                               158                  173              -0.011751
+                               154                  168               0.011576
+                               157                  176              -0.011190
+                               154                  176               0.011118
+                               160                  177              -0.011102
+                               158                  164              -0.011035
+                               157                  163              -0.010955
+            12   2.25437 eV
+                               159                  165               0.741290
+                               159                  164               0.430662
+                               159                  168              -0.363331
+                               159                  171               0.232340
+                               160                  168               0.131887
+                               160                  171               0.100795
+                               159                  166              -0.100583
+                               159                  170              -0.090550
+                               160                  166              -0.070382
+                               159                  167               0.051197
+                               159                  169               0.049055
+                               151                  162               0.046795
+                               160                  170              -0.045763
+                               160                  173              -0.042921
+                               160                  164              -0.039569
+                               159                  173              -0.033367
+                               160                  169              -0.030024
+                               160                  165               0.028634
+                               157                  168               0.027738
+                               154                  162               0.027449
+                               157                  162               0.025980
+                               154                  168               0.023369
+                               160                  175              -0.023238
+                               151                  168               0.022519
+                               151                  161               0.022014
+                               160                  172               0.021745
+                               159                  163               0.021501
+                               154                  173              -0.018134
+                               151                  173              -0.015318
+                               154                  161               0.014578
+                               159                  177              -0.013715
+                               159                  172              -0.013405
+                               157                  171              -0.013293
+                               159                  162              -0.012995
+                               153                  175               0.012935
+                               157                  161               0.012736
+                               156                  178               0.011672
+                               154                  175              -0.011224
+                               157                  176              -0.010782
+                               154                  169              -0.010634
+                               153                  173               0.010400
+                               160                  174               0.010303
+                               157                  167              -0.010177
+            13   2.34598 eV
+                               160                  166               0.617273
+                               160                  173               0.488105
+                               159                  168              -0.257885
+                               159                  171              -0.230949
+                               160                  170              -0.193598
+                               159                  164               0.190839
+                               160                  174              -0.173482
+                               159                  170               0.154541
+                               160                  168              -0.143343
+                               160                  167               0.141809
+                               160                  171               0.125690
+                               160                  172              -0.100590
+                               159                  166               0.097232
+                               159                  173               0.088212
+                               158                  162               0.080735
+                               160                  163              -0.061609
+                               159                  169               0.059250
+                               160                  165              -0.054480
+                               158                  161               0.049924
+                               160                  169               0.049488
+                               159                  176               0.046988
+                               160                  177              -0.045667
+                               160                  180              -0.041309
+                               159                  165              -0.036511
+                               159                  172              -0.036005
+                               160                  178              -0.033784
+                               159                  175              -0.031192
+                               153                  162               0.030074
+                               158                  168              -0.028506
+                               157                  177               0.026150
+                               158                  164              -0.023701
+                               158                  178               0.022909
+                               159                  162               0.021744
+                               159                  177               0.021349
+                               153                  177              -0.020840
+                               159                  174              -0.020834
+                               156                  180               0.020229
+                               157                  162              -0.019401
+                               156                  161               0.018784
+                               158                  175              -0.018708
+                               156                  175              -0.018141
+                               160                  176              -0.016990
+                               154                  162              -0.016942
+                               154                  176              -0.016244
+                               154                  161              -0.015696
+                               159                  179               0.015276
+                               151                  176               0.015078
+                               153                  161               0.014581
+                               160                  162               0.014536
+                               157                  178              -0.014244
+                               153                  176              -0.013025
+                               149                  162               0.012784
+                               158                  179               0.012385
+                               157                  161               0.011935
+                               156                  162               0.011767
+                               151                  180              -0.011324
+                               151                  171              -0.011248
+                               154                  179               0.011149
+                               156                  166               0.010776
+                               158                  180               0.010344
+                               151                  173               0.010202
+                               156                  168               0.010184
+            14   2.34839 eV
+                               159                  168              -0.687752
+                               159                  165              -0.559013
+                               159                  164               0.253373
+                               160                  173              -0.211485
+                               160                  166              -0.131708
+                               159                  169               0.100405
+                               159                  166              -0.098771
+                               160                  167              -0.086351
+                               160                  174               0.085733
+                               160                  170               0.077618
+                               159                  167               0.076743
+                               160                  168               0.069896
+                               160                  171              -0.064803
+                               159                  170               0.058856
+                               151                  162               0.049717
+                               160                  172               0.042325
+                               158                  162               0.040164
+                               157                  168               0.036001
+                               158                  161               0.035861
+                               154                  168               0.035296
+                               159                  171               0.033745
+                               159                  172              -0.031940
+                               160                  169              -0.031551
+                               160                  163               0.030433
+                               159                  163               0.029966
+                               151                  161               0.029063
+                               159                  180               0.023233
+                               151                  168               0.021677
+                               159                  176               0.020230
+                               160                  180              -0.019399
+                               153                  175               0.019398
+                               154                  175              -0.019222
+                               151                  176               0.017614
+                               156                  178               0.017377
+                               154                  177               0.017028
+                               154                  173              -0.016420
+                               160                  178              -0.015936
+                               159                  178               0.015665
+                               159                  162               0.015496
+                               154                  176              -0.014355
+                               147                  162              -0.014298
+                               157                  176              -0.013800
+                               157                  178              -0.013787
+                               151                  171              -0.013592
+                               153                  162              -0.013590
+                               156                  175               0.013263
+                               154                  162               0.013039
+                               158                  171              -0.012591
+                               156                  177               0.012412
+                               157                  171              -0.012411
+                               150                  162               0.011942
+                               158                  179               0.011785
+                               159                  177              -0.011760
+                               151                  180              -0.011720
+                               157                  179               0.011658
+                               158                  177              -0.011652
+                               158                  176               0.011506
+                               160                  164              -0.010863
+                               157                  165              -0.010823
+                               154                  174               0.010795
+                               153                  173               0.010552
+                               159                  174              -0.010532
+                               157                  173              -0.010357
+                               154                  161               0.010326
+                               154                  171              -0.010311
+                               157                  177               0.010289
+            15   2.37021 eV
+                               159                  171              -0.620549
+                               159                  166               0.382371
+                               159                  170               0.327323
+                               159                  173               0.278030
+                               160                  166              -0.276892
+                               159                  165               0.203609
+                               160                  171              -0.169344
+                               159                  164               0.155559
+                               160                  170               0.130716
+                               160                  173              -0.121890
+                               154                  162              -0.099955
+                               160                  167              -0.087241
+                               159                  172              -0.080659
+                               151                  162              -0.079082
+                               159                  169               0.078451
+                               157                  162              -0.051050
+                               159                  174              -0.047239
+                               160                  175               0.043937
+                               159                  175              -0.042780
+                               151                  161              -0.042613
+                               159                  162               0.042548
+                               159                  180              -0.040984
+                               154                  161              -0.040453
+                               159                  176               0.039521
+                               159                  167              -0.039491
+                               160                  174               0.038771
+                               154                  173               0.037316
+                               159                  177               0.036656
+                               160                  172               0.032314
+                               157                  177               0.030770
+                               159                  179               0.029778
+                               159                  168              -0.028470
+                               160                  168               0.027717
+                               157                  161              -0.026351
+                               151                  176               0.026288
+                               160                  165               0.026045
+                               154                  171              -0.024600
+                               157                  173               0.024073
+                               151                  173               0.020175
+                               157                  171               0.019919
+                               159                  163              -0.018924
+                               151                  168              -0.018309
+                               158                  162              -0.017609
+                               154                  177               0.017535
+                               160                  176               0.017299
+                               158                  161              -0.016635
+                               156                  171               0.015776
+                               156                  173              -0.014682
+                               160                  177               0.014594
+                               157                  178              -0.014417
+                               160                  164               0.014282
+                               149                  162               0.013778
+                               157                  174              -0.013405
+                               160                  178              -0.013207
+                               160                  163               0.013153
+                               157                  168              -0.012868
+                               151                  174              -0.012310
+                               151                  171              -0.011896
+                               153                  173              -0.011713
+                               151                  180              -0.011573
+                               154                  170               0.011009
+                               156                  164               0.010939
+                               158                  168              -0.010607
+                               157                  180              -0.010601
+                               157                  170              -0.010491
+                               154                  176              -0.010442
+                               154                  174              -0.010117
+            16   2.39208 eV
+                               160                  173               0.634662
+                               160                  166              -0.583982
+                               160                  171              -0.249847
+                               160                  174              -0.195665
+                               160                  167               0.172636
+                               160                  169               0.161051
+                               160                  172              -0.142918
+                               157                  162              -0.081657
+                               159                  171               0.075300
+                               158                  162               0.074709
+                               157                  161              -0.073412
+                               159                  168              -0.070040
+                               159                  166              -0.068421
+                               160                  163              -0.067524
+                               158                  161               0.065381
+                               160                  164               0.050038
+                               159                  170              -0.049908
+                               156                  161              -0.049674
+                               154                  162               0.049537
+                               159                  165              -0.043712
+                               160                  178               0.042882
+                               159                  176               0.042628
+                               160                  177              -0.039992
+                               156                  162              -0.038627
+                               153                  162               0.037645
+                               154                  161               0.035707
+                               159                  175               0.031909
+                               153                  171               0.031467
+                               160                  168               0.029432
+                               159                  174              -0.026748
+                               153                  161               0.026000
+                               158                  168              -0.022051
+                               160                  179               0.020748
+                               160                  176              -0.020695
+                               154                  168               0.019027
+                               158                  163               0.018196
+                               159                  167               0.017790
+                               154                  171               0.016331
+                               157                  175              -0.016092
+                               160                  165               0.015545
+                               156                  175              -0.015452
+                               153                  170              -0.015177
+                               160                  175               0.014344
+                               157                  171              -0.014030
+                               158                  178               0.013730
+                               157                  163              -0.013031
+                               157                  179              -0.012749
+                               157                  170               0.012602
+                               159                  163              -0.012502
+                               156                  178              -0.012382
+                               153                  168              -0.012381
+                               150                  162              -0.012333
+                               158                  180              -0.012113
+                               157                  168              -0.011531
+                               160                  161              -0.011443
+                               154                  170              -0.011382
+                               151                  162               0.010911
+                               159                  169               0.010885
+                               159                  178              -0.010485
+                               156                  173               0.010441
+            17   2.40535 eV
+                               160                  167              -0.934659
+                               160                  173               0.185691
+                               160                  168              -0.140785
+                               158                  162               0.116398
+                               160                  170              -0.104492
+                               158                  161               0.100417
+                               160                  177              -0.091691
+                               160                  171               0.068933
+                               160                  174              -0.057852
+                               160                  166              -0.051205
+                               159                  173              -0.042785
+                               160                  172              -0.041536
+                               160                  178              -0.034154
+                               156                  161               0.032465
+                               160                  165              -0.029653
+                               158                  168              -0.026097
+                               159                  166              -0.025768
+                               153                  162               0.025540
+                               157                  161               0.024084
+                               160                  163              -0.023953
+                               159                  168               0.020948
+                               158                  165               0.020598
+                               156                  165              -0.019061
+                               157                  162               0.018832
+                               159                  165               0.018592
+                               159                  180               0.018316
+                               159                  175              -0.017624
+                               159                  172               0.017145
+                               158                  164              -0.017046
+                               157                  164              -0.014345
+                               159                  169              -0.013511
+                               159                  176               0.013139
+                               159                  174               0.012802
+                               156                  164               0.012530
+                               159                  164              -0.012419
+                               156                  167              -0.012117
+                               159                  163               0.010838
+                               154                  164               0.010301
+            18   2.43330 eV
+                               159                  173               0.513351
+                               158                  162              -0.414628
+                               158                  161              -0.321732
+                               160                  175              -0.258412
+                               159                  170              -0.217418
+                               159                  171               0.195268
+                               157                  162               0.190369
+                               159                  174              -0.182886
+                               159                  166               0.174338
+                               157                  161               0.147500
+                               159                  167               0.146616
+                               160                  173               0.144446
+                               160                  169              -0.122455
+                               159                  172              -0.101758
+                               159                  163              -0.099832
+                               160                  167              -0.094327
+                               159                  165              -0.084031
+                               160                  177               0.075468
+                               160                  180               0.070144
+                               160                  176               0.069916
+                               159                  180              -0.064322
+                               159                  176              -0.063862
+                               160                  172              -0.063312
+                               153                  162               0.062543
+                               157                  173               0.058264
+                               160                  178               0.053179
+                               158                  164               0.052949
+                               160                  170               0.051939
+                               160                  171               0.047959
+                               158                  163              -0.046961
+                               157                  163               0.043808
+                               160                  179              -0.043453
+                               159                  179              -0.042668
+                               158                  168               0.041926
+                               159                  178              -0.040978
+                               151                  176               0.040410
+                               159                  177               0.038142
+                               153                  161               0.035661
+                               154                  177               0.032150
+                               158                  171               0.030677
+                               160                  174              -0.030576
+                               157                  168               0.030373
+                               157                  171              -0.028611
+                               151                  168               0.028526
+                               159                  162               0.028389
+                               154                  162              -0.027294
+                               153                  179              -0.026023
+                               157                  175              -0.025730
+                               156                  168               0.024531
+                               151                  171              -0.024438
+                               157                  176              -0.022701
+                               147                  162              -0.022309
+                               157                  177               0.021782
+                               156                  171               0.021483
+                               154                  178              -0.021348
+                               158                  175               0.021346
+                               159                  168              -0.021179
+                               157                  164              -0.020357
+                               158                  173              -0.020248
+                               159                  169               0.019890
+                               158                  180              -0.019826
+                               156                  170              -0.019610
+                               158                  170              -0.019246
+                               151                  173              -0.019229
+                               153                  180               0.018997
+                               154                  180              -0.018601
+                               156                  162               0.018508
+                               151                  177              -0.018334
+                               149                  175               0.017703
+                               156                  161               0.017511
+                               147                  176               0.017369
+                               150                  178               0.016848
+                               158                  176               0.016555
+                               150                  175               0.016277
+                               149                  178              -0.015793
+                               156                  173               0.015392
+                               151                  180              -0.015246
+                               147                  177              -0.015200
+                               149                  179              -0.014876
+                               154                  173               0.014637
+                               151                  175              -0.014108
+                               158                  165              -0.014032
+                               156                  178              -0.013907
+                               157                  174              -0.013784
+                               160                  163              -0.013544
+                               147                  161              -0.013344
+                               156                  177              -0.011858
+                               158                  177              -0.011792
+                               149                  180              -0.011611
+                               157                  179              -0.011502
+                               157                  166               0.011298
+                               156                  163               0.011017
+                               156                  164               0.010896
+                               151                  170               0.010834
+                               156                  203              -0.010822
+                               160                  165               0.010742
+                               156                  179              -0.010730
+                               160                  168              -0.010161
+            19   2.46385 eV
+                               158                  162               0.537056
+                               158                  161               0.410406
+                               159                  173               0.407572
+                               157                  162               0.255438
+                               160                  178              -0.196995
+                               157                  161               0.191710
+                               159                  170              -0.176429
+                               159                  174              -0.148014
+                               159                  171               0.145799
+                               160                  169              -0.127924
+                               160                  167               0.113208
+                               160                  170              -0.109328
+                               159                  166               0.107711
+                               160                  172               0.101777
+                               160                  175               0.101048
+                               159                  167               0.094476
+                               160                  173              -0.085575
+                               159                  168               0.084536
+                               160                  177              -0.076617
+                               159                  163              -0.073001
+                               158                  168              -0.072413
+                               158                  164              -0.057409
+                               159                  175              -0.056927
+                               159                  172              -0.049033
+                               160                  166              -0.044347
+                               158                  173              -0.043454
+                               159                  179               0.041038
+                               158                  163               0.036902
+                               157                  163               0.034937
+                               153                  162              -0.034630
+                               159                  180               0.031587
+                               160                  176               0.030769
+                               160                  171              -0.030508
+                               151                  162              -0.029108
+                               151                  168               0.028852
+                               160                  168              -0.028503
+                               154                  177               0.027061
+                               154                  162              -0.027027
+                               150                  178              -0.025892
+                               156                  171              -0.025543
+                               154                  171              -0.024876
+                               158                  165               0.024833
+                               158                  170               0.023746
+                               153                  168              -0.022846
+                               159                  177              -0.022409
+                               150                  179               0.021655
+                               157                  177               0.021498
+                               159                  169               0.020679
+                               158                  171              -0.020566
+                               157                  164              -0.020528
+                               158                  174               0.019607
+                               153                  161              -0.019291
+                               156                  168               0.019266
+                               160                  179               0.018820
+                               157                  165               0.017852
+                               159                  165              -0.016282
+                               158                  166              -0.016179
+                               149                  177               0.015844
+                               151                  176               0.015629
+                               156                  175               0.015366
+                               159                  178              -0.015344
+                               156                  180               0.015230
+                               149                  180               0.014807
+                               157                  168              -0.014399
+                               157                  176              -0.014125
+                               147                  162              -0.013871
+                               159                  162               0.013618
+                               149                  175              -0.013551
+                               153                  180               0.013406
+                               151                  180              -0.013357
+                               156                  179              -0.013239
+                               150                  177              -0.012967
+                               159                  176              -0.012522
+                               154                  170               0.012341
+                               149                  171               0.012251
+                               150                  180               0.011887
+                               151                  161              -0.011886
+                               157                  180              -0.011751
+                               156                  165              -0.011667
+                               157                  173               0.011564
+                               154                  161              -0.011236
+                               149                  176               0.011077
+                               158                  178               0.011033
+                               147                  171               0.010783
+            20   2.47668 eV
+                               160                  169              -0.672897
+                               157                  162               0.302035
+                               159                  173              -0.297557
+                               160                  175              -0.296939
+                               157                  161               0.203090
+                               159                  174               0.156522
+                               159                  170               0.155893
+                               160                  173               0.153749
+                               159                  167              -0.115933
+                               160                  178              -0.107428
+                               160                  170               0.103705
+                               153                  162               0.102846
+                               159                  171              -0.092592
+                               160                  171              -0.089879
+                               160                  166              -0.088749
+                               156                  162               0.084905
+                               159                  175              -0.083443
+                               160                  167               0.077846
+                               160                  179              -0.073024
+                               156                  161               0.069039
+                               159                  169              -0.066902
+                               159                  176              -0.061738
+                               159                  172               0.058401
+                               157                  163               0.058019
+                               153                  161               0.057424
+                               160                  177              -0.054694
+                               160                  172              -0.052356
+                               160                  168              -0.051403
+                               159                  163               0.051165
+                               158                  162               0.050756
+                               151                  162               0.043583
+                               156                  168               0.038623
+                               154                  168              -0.037953
+                               154                  162              -0.033524
+                               159                  180               0.032715
+                               159                  177              -0.031203
+                               159                  178              -0.030561
+                               150                  175               0.030173
+                               156                  163               0.029649
+                               160                  174               0.029450
+                               153                  168               0.029289
+                               156                  173               0.028490
+                               151                  161               0.027736
+                               159                  168              -0.027077
+                               154                  177              -0.022171
+                               156                  165              -0.021873
+                               158                  161              -0.021505
+                               151                  176              -0.021377
+                               150                  179               0.021180
+                               154                  161              -0.021020
+                               159                  179              -0.020914
+                               153                  163               0.020863
+                               154                  163              -0.020553
+                               159                  165               0.020220
+                               154                  171               0.019170
+                               154                  173              -0.017930
+                               157                  176               0.017490
+                               158                  171               0.017392
+                               160                  180               0.016947
+                               153                  165              -0.016537
+                               157                  177              -0.016134
+                               151                  180               0.015249
+                               158                  168              -0.015139
+                               157                  180               0.014994
+                               158                  176              -0.014101
+                               156                  176               0.013707
+                               158                  164              -0.013426
+                               150                  162               0.013379
+                               153                  173               0.013174
+                               151                  163               0.013090
+                               156                  174              -0.013082
+                               147                  162               0.012990
+                               151                  179              -0.012906
+                               153                  171              -0.012586
+                               151                  168               0.012429
+                               160                  163              -0.011877
+                               159                  164              -0.011753
+                               157                  179              -0.011586
+                               158                  179               0.011320
+                               157                  175               0.011290
+                               151                  175               0.011082
+                               154                  164              -0.011077
+                               158                  177               0.010892
+                               156                  180               0.010738
+                               160                  165               0.010467
+                               151                  173               0.010237
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                            Natural Orbital analysis                         -
+ -------------------------------------------------------------------------------
+   STATE NR.   1                1.58999 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.98646   Sum Eigv: 0.98646
+   STATE NR.   2                1.72071 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.98459   Sum Eigv: 0.98459
+   STATE NR.   3                1.85750 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99777   Sum Eigv: 0.99777
+   STATE NR.   4                1.99618 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99672   Sum Eigv: 0.99672
+   STATE NR.   5                2.00886 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99395   Sum Eigv: 0.99395
+   STATE NR.   6                2.04726 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99163   Sum Eigv: 0.99163
+   STATE NR.   7                2.11386 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.97168   Sum Eigv: 0.97168
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.01907   Sum Eigv: 0.99075
+   STATE NR.   8                2.15152 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.98568   Sum Eigv: 0.98568
+   STATE NR.   9                2.18267 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.96727   Sum Eigv: 0.96727
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.02109   Sum Eigv: 0.98836
+   STATE NR.  10                2.20410 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.95206   Sum Eigv: 0.95206
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.03277   Sum Eigv: 0.98483
+   STATE NR.  11                2.24231 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.95051   Sum Eigv: 0.95051
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.02503   Sum Eigv: 0.97554
+   STATE NR.  12                2.25437 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.94767   Sum Eigv: 0.94767
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.04176   Sum Eigv: 0.98943
+   STATE NR.  13                2.34598 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.78389   Sum Eigv: 0.78389
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.19368   Sum Eigv: 0.97757
+   STATE NR.  14                2.34839 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.88903   Sum Eigv: 0.88903
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.09478   Sum Eigv: 0.98382
+   STATE NR.  15                2.37021 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.81073   Sum Eigv: 0.81073
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.15268   Sum Eigv: 0.96340
+     Particle-Hole state: 3   Spin:1     Eigenvalue: 0.02795   Sum Eigv: 0.99135
+   STATE NR.  16                2.39208 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.93497   Sum Eigv: 0.93497
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.03547   Sum Eigv: 0.97044
+     Particle-Hole state: 3   Spin:1     Eigenvalue: 0.02293   Sum Eigv: 0.99337
+   STATE NR.  17                2.40535 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.96285   Sum Eigv: 0.96285
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.02745   Sum Eigv: 0.99030
+   STATE NR.  18                2.43330 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.49527   Sum Eigv: 0.49527
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.35153   Sum Eigv: 0.84680
+     Particle-Hole state: 3   Spin:1     Eigenvalue: 0.13203   Sum Eigv: 0.97883
+   STATE NR.  19                2.46385 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.57930   Sum Eigv: 0.57930
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.28770   Sum Eigv: 0.86701
+     Particle-Hole state: 3   Spin:1     Eigenvalue: 0.11654   Sum Eigv: 0.98355
+   STATE NR.  20                2.47668 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.63015   Sum Eigv: 0.63015
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.18472   Sum Eigv: 0.81487
+     Particle-Hole state: 3   Spin:1     Eigenvalue: 0.16890   Sum Eigv: 0.98377
+ -------------------------------------------------------------------------------
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy [a.u.]:             -287.951863156042464
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBCSR STATISTICS                             -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ COUNTER                                    TOTAL       BLAS       SMM       ACC
+ flops     5 x    18 x     5              7358400       0.0%    100.0%      0.0%
+ flops     2 x     2 x    18              9670320       0.0%    100.0%      0.0%
+ flops    13 x    18 x     5             19169280       0.0%    100.0%      0.0%
+ flops     5 x    18 x    13             19169280       0.0%    100.0%      0.0%
+ flops     8 x     2 x    18             41558400       0.0%    100.0%      0.0%
+ flops     2 x     8 x    18             41728896       0.0%    100.0%      0.0%
+ flops    13 x    18 x    13             49840128       0.0%    100.0%      0.0%
+ flops     5 x     1 x     5             66634400       0.0%    100.0%      0.0%
+ flops     5 x     5 x    18             70999200       0.0%    100.0%      0.0%
+ flops     2 x     2 x    32            103150080       0.0%    100.0%      0.0%
+ flops     5 x     1 x    13            173588480       0.0%    100.0%      0.0%
+ flops    13 x     1 x     5            173588480       0.0%    100.0%      0.0%
+ flops     8 x     8 x    18            177315840       0.0%    100.0%      0.0%
+ flops     5 x    13 x    18            182108160       0.0%    100.0%      0.0%
+ flops    13 x     5 x    18            182108160       0.0%    100.0%      0.0%
+ flops   283 x   111 x    32            381982080       0.0%    100.0%      0.0%
+ flops   286 x   111 x    32            386031360       0.0%    100.0%      0.0%
+ flops   288 x   111 x    32            388730880       0.0%    100.0%      0.0%
+ flops   295 x   111 x    32            398179200       0.0%    100.0%      0.0%
+ flops     8 x     2 x    32            443289600       0.0%    100.0%      0.0%
+ flops     2 x     8 x    32            445108224       0.0%    100.0%      0.0%
+ flops    13 x     1 x    13            451330048       0.0%    100.0%      0.0%
+ flops    13 x    13 x    18            480879360       0.0%    100.0%      0.0%
+ flops     5 x     5 x    32            757324800       0.0%    100.0%      0.0%
+ flops   283 x   113 x    32           1166593920       0.0%    100.0%      0.0%
+ flops   286 x   113 x    32           1178960640       0.0%    100.0%      0.0%
+ flops   288 x   113 x    32           1187205120       0.0%    100.0%      0.0%
+ flops   283 x   116 x    32           1197565440       0.0%    100.0%      0.0%
+ flops   286 x   116 x    32           1210260480       0.0%    100.0%      0.0%
+ flops   295 x   113 x    32           1216060800       0.0%    100.0%      0.0%
+ flops   283 x   118 x    32           1218213120       0.0%    100.0%      0.0%
+ flops   288 x   116 x    32           1218723840       0.0%    100.0%      0.0%
+ flops   286 x   118 x    32           1231127040       0.0%    100.0%      0.0%
+ flops   288 x   118 x    32           1239736320       0.0%    100.0%      0.0%
+ flops   295 x   116 x    32           1248345600       0.0%    100.0%      0.0%
+ flops   295 x   118 x    32           1269868800       0.0%    100.0%      0.0%
+ flops     8 x     8 x    32           1891368960       0.0%    100.0%      0.0%
+ flops     5 x    13 x    32           1942487040       0.0%    100.0%      0.0%
+ flops    13 x     5 x    32           1942487040       0.0%    100.0%      0.0%
+ flops    13 x    13 x    32           5129379840       0.0%    100.0%      0.0%
+ flops     2 x    32 x     2           6572851200       0.0%    100.0%      0.0%
+ flops     5 x    32 x     5          28053491200       0.0%    100.0%      0.0%
+ flops     2 x    32 x     8          28812902400       0.0%    100.0%      0.0%
+ flops     8 x    32 x     2          28812902400       0.0%    100.0%      0.0%
+ flops     5 x    32 x    13          73081815040       0.0%    100.0%      0.0%
+ flops    13 x    32 x     5          73081815040       0.0%    100.0%      0.0%
+ flops     8 x    32 x     8         120795955200       0.0%    100.0%      0.0%
+ flops    13 x    32 x    13         190012719104       0.0%    100.0%      0.0%
+ flops inhomo. stacks                           0       0.0%      0.0%      0.0%
+ flops total                       580.163679E+09       0.0%    100.0%      0.0%
+ flops max/rank                     24.634807E+09       0.0%    100.0%      0.0%
+ matmuls inhomo. stacks                         0       0.0%      0.0%      0.0%
+ matmuls total                          191273201       0.0%    100.0%      0.0%
+ number of processed stacks               2195600       0.0%    100.0%      0.0%
+ average stack size                                     0.0      87.1       0.0
+ marketing flops                   591.116763E+09
+ -------------------------------------------------------------------------------
+ # multiplications                           1486
+ max memory usage/rank             865.660928E+06
+ # max total images/rank                        5
+ # max 3D layers                                1
+ # MPI messages exchanged                 1961520
+ MPI messages size (bytes):
+  total size                       127.231050E+09
+  min size                           0.000000E+00
+  max size                         176.800000E+03
+  average size                      64.863500E+03
+ MPI breakdown and total messages size (bytes):
+             size <=      128              531270                        0
+       128 < size <=     8192               19620                  9472896
+      8192 < size <=    32768              386862               7385968512
+     32768 < size <=   131072              601488              59517356976
+    131072 < size <=  4194304              422280              60309185040
+   4194304 < size <= 16777216                   0                        0
+  16777216 < size                               0                        0
+ -------------------------------------------------------------------------------
+
+ *** WARNING in dbcsr_mm.F:294 :: Using a non-square number of MPI ranks ***
+ *** might lead to poor performance. Used ranks: 40 Suggested: 36 81     ***
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                      DBCSR MESSAGE PASSING PERFORMANCE                      -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Bcast               49                     12.
+ MP_Allreduce         5111                      8.
+ MP_Alltoall         46543                  33018.
+ MP_ISend           112710                  32009.
+ MP_IRecv           118428                  29978.
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                GRID STATISTICS                              -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ LP    KERNEL             BACKEND                              COUNT     PERCENT
+ 1     collocate general  REF                                8883112      16.34%
+ 3     collocate general  REF                                8753614      16.10%
+ 3     integrate general  REF                                8680362      15.97%
+ 0     collocate general  REF                                7293156      13.42%
+ 2     collocate general  REF                                7264238      13.36%
+ 2     integrate general  REF                                4569360       8.41%
+ 4     collocate general  REF                                4475036       8.23%
+ 4     integrate general  REF                                4437588       8.16%
+ -------------------------------------------------------------------------------
+
+ MEMORY| Estimated peak process memory [MiB]                                 826
+
+ -------------------------------------------------------------------------------
+ ----                             MULTIGRID INFO                            ----
+ -------------------------------------------------------------------------------
+ count for grid        1:         222303          cutoff [a.u.]          175.00
+ count for grid        2:         200169          cutoff [a.u.]           58.33
+ count for grid        3:         186237          cutoff [a.u.]           19.44
+ count for grid        4:          73840          cutoff [a.u.]            6.48
+ total gridlevel count  :         682549
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                         MESSAGE PASSING PERFORMANCE                         -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Group                4
+ MP_Bcast              640                1738860.
+ MP_Allreduce        22054                    305.
+ MP_Sync              1330
+ MP_Alltoall          7127               10107501.
+ MP_ISendRecv        74256                  63193.
+ MP_Wait            148670
+ MP_comm_split          69
+ MP_ISend            67162                 299674.
+ MP_IRecv            67984                 297153.
+ MP_Recv               378                 149650.
+ -------------------------------------------------------------------------------
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                           R E F E R E N C E S                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ 
+ CP2K version 9.1, the CP2K developers group (2021).
+ CP2K is freely available from https://www.cp2k.org/ .
+
+ Kuehne,Thomas D.; Iannuzzi,Marcella; Del Ben,Mauro;
+ Rybkin,Vladimir V.; Seewald,Patrick; Stein,Frederick; Laino,Teodoro;
+ Khaliullin,Rustam Z.; Schuett,Ole; Schiffmann,Florian; Golze,Dorothea;
+ Wilhelm,Jan; Chulkov,Sergey; Bani-Hashemian,Mohammad Hossein;
+ Weber,Valery; Borstnik,Urban; Taillefumier,Mathieu;
+ Jakobovits,Alice Shoshana; Lazzaro,Alfio; Pabst,Hans; Mueller,Tiziano;
+ Schade,Robert; Guidon,Manuel; Andermatt,Samuel; Holmberg,Nico;
+ Schenter,Gregory K.; Hehn,Anna; Bussy,Augustin; Belleflamme,Fabian;
+ Tabacchi,Gloria; Gloess,Andreas; Lass,Michael; Bethune,Iain;
+ Mundy,Christopher J.; Plessl,Christian; Watkins,Matt;
+ VandeVondele,Joost; Krack,Matthias; Hutter,Juerg. 
+ The Journal of Chemical Physics, 152 (19), (2020). 
+ CP2K: An electronic structure and molecular dynamics software package -
+ Quickstep: Efficient and accurate electronic structure calculations.
+ https://doi.org/10.1063/5.0007045
+
+ Goerigk, Lars; Hansen, Andreas; Bauer, Christoph; Ehrlich, Stephan;
+ Najibi, Asim; Grimme, Stefan. , 19 (48), (2017). 
+ A look at the density functional theory zoo with the advanced GMTKN55 database
+ for general main group thermochemistry, kinetics and noncovalent interactions.
+ https://doi.org/10.1039/C7CP04913G
+
+ Schuett, Ole; Messmer, Peter; Hutter, Juerg; VandeVondele, Joost. 
+ Electronic Structure Calculations on Graphics Processing Units, John
+ Wiley & Sons, Ltd, 173-190 (2016). 
+ GPU-Accelerated Sparse Matrix-Matrix Multiplication for
+ Linear Scaling Density Functional Theory.
+ https://doi.org/10.1002/9781118670712.ch8
+
+ Heinecke, A; Henry, G; Hutchinson, M; Pabst, H. 
+ Proceedings of Intl. Supercomputing Conference, 981-991 (2016). 
+ LIBXSMM: Accelerating Small Matrix Multiplications
+ by Runtime Code Generation.
+ https://doi.org/10.1109/SC.2016.83
+
+ Borstnik, U; VandeVondele, J; Weber, V; Hutter, J. 
+ PARALLEL COMPUTING, 40 (5-6), 47-58 (2014). 
+ Sparse matrix multiplication: The distributed block-compressed sparse
+ row library.
+ https://doi.org/10.1016/j.parco.2014.03.012
+
+ Hutter, J; Iannuzzi, M; Schiffmann, F; VandeVondele, J. 
+ WIREs Comput Mol Sci., 4 (1), 15-25 (2014). 
+ CP2K: atomistic simulations of condensed matter systems.
+ https://doi.org/10.1002/wcms.1159
+
+ Grimme, S; Ehrlich, S; Goerigk, L. 
+ JOURNAL OF COMPUTATIONAL CHEMISTRY, 32, 1456 (2011). 
+ Effect of the damping function in dispersion corrected density functional theory.
+ https://doi.org/10.1002/jcc.21759
+
+ Guidon, M; Hutter, J; VandeVondele, J. 
+ JOURNAL OF CHEMICAL THEORY AND COMPUTATION, 6 (8), 2348-2364 (2010). 
+ Auxiliary Density Matrix Methods for Hartree-Fock Exchange Calculations.
+ https://doi.org/10.1021/ct1002225
+
+ Grimme, S; Antony, J; Ehrlich, S; Krieg, H. 
+ JOURNAL OF CHEMICAL PHYSICS, 132 (15), 154104 (2010). 
+ A consistent and accurate ab initio parametrization of density
+ functional dispersion correction (DFT-D) for the 94 elements H-Pu.
+ https://doi.org/10.1063/1.3382344
+
+ Guidon, M; Hutter, J; VandeVondele, J. 
+ JOURNAL OF CHEMICAL THEORY AND COMPUTATION, 5 (11), 3010-3021 (2009). 
+ Robust Periodic Hartree-Fock Exchange for Large-Scale Simulations Using
+ Gaussian Basis Sets.
+ https://doi.org/10.1021/ct900494g
+
+ Guidon, M; Schiffmann, F; Hutter, J; VandeVondele, J. 
+ JOURNAL OF CHEMICAL PHYSICS, 128 (21), 214104 (2008). 
+ Ab initio molecular dynamics using hybrid density functionals.
+ https://doi.org/10.1063/1.2931945
+
+ VandeVondele, J; Hutter, J. 
+ JOURNAL OF CHEMICAL PHYSICS, 127 (11), 114105 (2007). 
+ Gaussian basis sets for accurate calculations on molecular systems in
+ gas and condensed phases.
+ https://doi.org/10.1063/1.2770708
+
+ Krack, M. 
+ THEORETICAL CHEMISTRY ACCOUNTS, 114 (1-3), 145-152 (2005). 
+ Pseudopotentials for H to Kr optimized for gradient-corrected
+ exchange-correlation functionals.
+ https://doi.org/10.1007/s00214-005-0655-y
+
+ VandeVondele, J; Krack, M; Mohamed, F; Parrinello, M; Chassaing, T;
+ Hutter, J. COMPUTER PHYSICS COMMUNICATIONS, 167 (2), 103-128 (2005). 
+ QUICKSTEP: Fast and accurate density functional calculations using a
+ mixed Gaussian and plane waves approach.
+ https://doi.org/10.1016/j.cpc.2004.12.014
+
+ Frigo, M; Johnson, SG. 
+ PROCEEDINGS OF THE IEEE, 93 (2), 216-231 (2005). 
+ The design and implementation of FFTW3.
+ https://doi.org/10.1109/JPROC.2004.840301
+
+ Iannuzzi, M; Chassaing, T; Wallman, T; Hutter, J. 
+ CHIMIA, 59 (7-8), 499-503 (2005). 
+ Ground and excited state density functional calculations with the
+ Gaussian and augmented-plane-wave method.
+ https://doi.org/10.2533/000942905777676164
+
+ Martin,Richard L.. 
+ The Journal of Chemical Physics, 118 (11), 4775-4777 (2003). 
+ Natural transition orbitals.
+ https://doi.org/10.1063/1.1558471
+
+ Hartwigsen, C; Goedecker, S; Hutter, J. 
+ PHYSICAL REVIEW B, 58 (7), 3641-3662 (1998). 
+ Relativistic separable dual-space Gaussian pseudopotentials from H to Rn.
+ https://doi.org/10.1103/PhysRevB.58.3641
+
+ Lippert, G; Hutter, J; Parrinello, M. 
+ MOLECULAR PHYSICS, 92 (3), 477-487 (1997). 
+ A hybrid Gaussian and plane wave density functional scheme.
+ https://doi.org/10.1080/002689797170220
+
+ Goedecker, S; Teter, M; Hutter, J. 
+ PHYSICAL REVIEW B, 54 (3), 1703-1710 (1996). 
+ Separable dual-space Gaussian pseudopotentials.
+ https://doi.org/10.1103/PhysRevB.54.1703
+
+ BECKE, AD. PHYSICAL REVIEW A, 38 (6), 3098-3100 (1988). 
+ DENSITY-FUNCTIONAL EXCHANGE-ENERGY APPROXIMATION WITH CORRECT
+ ASYMPTOTIC-BEHAVIOR.
+ https://doi.org/10.1103/PhysRevA.38.3098
+
+ LEE, CT; YANG, WT; PARR, RG. 
+ PHYSICAL REVIEW B, 37 (2), 785-789 (1988). 
+ DEVELOPMENT OF THE COLLE-SALVETTI CORRELATION-ENERGY FORMULA INTO A
+ FUNCTIONAL OF THE ELECTRON-DENSITY.
+ https://doi.org/10.1103/PhysRevB.37.785
+
+ VOSKO, SH; WILK, L; NUSAIR, M. 
+ CANADIAN JOURNAL OF PHYSICS, 58 (8), 1200-1211 (1980). 
+ ACCURATE SPIN-DEPENDENT ELECTRON LIQUID CORRELATION ENERGIES FOR LOCAL
+ SPIN-DENSITY CALCULATIONS - A CRITICAL ANALYSIS.
+ https://doi.org/10.1139/p80-159
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                T I M I N G                                  -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ SUBROUTINE                       CALLS  ASD         SELF TIME        TOTAL TIME
+                                MAXIMUM       AVERAGE  MAXIMUM  AVERAGE  MAXIMUM
+ CP2K                                 1  1.0    0.059    0.065 1558.275 1558.281
+ qs_energies                          1  2.0    0.000    0.001 1557.627 1557.633
+ qs_energies_properties               1  3.0    0.000    0.000 1277.080 1277.092
+ tddfpt                               1  4.0    0.002    0.002 1277.080 1277.091
+ tddfpt_davidson_solver               2  5.0    0.002    0.005 1271.093 1271.098
+ tddfpt_compute_Aop_evects           10  6.0    0.000    0.000 1232.070 1232.075
+ integrate_four_center              237  9.0    0.302    0.848 1103.063 1103.067
+ integrate_four_center_main         237 10.0    0.075    0.081 1057.695 1075.821
+ integrate_four_center_bin        15168 11.0 1057.621 1075.745 1057.621 1075.745
+ tddfpt_apply_hfx                    10  7.0    0.004    0.004  899.862  899.866
+ tddft_hfx_matrix                   200  8.0    0.004    0.005  895.135  895.138
+ fhxc_kernel                         10  7.0    0.009    0.010  330.905  330.906
+ scf_env_do_scf                       1  3.0    0.000    0.000  278.972  279.001
+ scf_env_do_scf_inner_loop           37  4.0    0.002    0.006  278.972  279.001
+ qs_ks_update_qs_env                 37  5.0    0.000    0.000  251.238  251.241
+ rebuild_ks_matrix                   37  6.0    0.000    0.000  251.228  251.229
+ qs_ks_build_kohn_sham_matrix        37  7.0    0.006    0.007  251.227  251.229
+ hfx_ks_matrix                       37  8.0    0.001    0.010  207.945  207.947
+ calculate_rho_elec                 477  8.8    0.953    1.108  170.790  170.798
+ pw_transfer                       6144 10.2    0.504    0.568  152.118  152.896
+ fft_wrap_pw1pw2                   5670 11.2    0.067    0.073  150.308  151.018
+ fft_wrap_pw1pw2_180               3528 12.0   13.003   14.449  143.840  144.234
+ fft3d_ps                          5670 13.2   62.140   67.263  110.592  112.769
+ qs_rho_update_rho                  239  7.5    0.002    0.002  100.000  100.005
+ density_rs2pw                      477  9.8    0.029    0.033   90.956   98.459
+ integrate_v_rspace                 237  8.2    0.008    0.009   95.218   95.743
+ tddfpt_apply_xc_analytic           400  8.0    1.563    1.761   90.700   91.289
+ grid_collocate_task_list           477  9.8   76.556   81.389   76.556   81.389
+ rs_pw_transfer                    2857 10.6    0.038    0.047   71.555   80.016
+ tddfpt_construct_aux_fit_densi     201  8.0    0.004    0.006   62.237   62.786
+ xc_calc_2nd_deriv_analytical       400  9.0    4.568    5.307   59.459   59.620
+ mp_sync                           1330 10.7   38.852   58.327   38.852   58.327
+ grid_integrate_task_list           237  9.2   52.546   55.166   52.546   55.166
+ mp_alltoall_z22v                  5670 15.2   33.130   42.063   33.130   42.063
+ potential_pw2rs                    237  9.2    0.038    0.042   39.000   39.526
+ rs_pw_transfer_RS2PW_180           478 11.7   17.118   18.995   29.936   38.096
+ cp_fm_write_unformatted             42  6.5   35.878   36.750   35.887   36.757
+ tddfpt_write_restart                 2  5.5    0.866   34.592   36.687   36.693
+ mp_waitany                       67162 12.6   21.100   32.888   21.100   32.888
+ -------------------------------------------------------------------------------
+
+ The number of warnings for this run is : 3
+ 
+ -------------------------------------------------------------------------------
+  **** **** ******  **  PROGRAM ENDED AT                 2024-11-11 10:21:53.929
+ ***** ** ***  *** **   PROGRAM RAN ON            bc12016.int.ets1.calculquebec.
+ **    ****   ******    PROGRAM RAN BY                                  ekadashi
+ ***** **    ** ** **   PROGRAM PROCESS ID                               3078428
+  **** **  *******  **  PROGRAM STOPPED IN /scratch/ekadashi/Libra_CP2K/SiGe_Het
+                                           ero/step2_B3LYP/SET2/job2

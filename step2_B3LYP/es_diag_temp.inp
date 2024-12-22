@@ -1,0 +1,169 @@
+ &GLOBAL
+   PRINT_LEVEL  MEDIUM
+   PROJECT_NAME SiH_GeH_A
+   RUN_TYPE  ENERGY
+ &END GLOBAL
+ &FORCE_EVAL
+  METHOD  QS
+  &PROPERTIES
+    &TDDFPT #TDDFT calculation
+      NSTATES    20
+      RKS_TRIPLETS .F. #If calculating triplet rather than singlet excited states
+      CONVERGENCE [eV] 1E-5 #Convergence criterion of all excitation energies
+      MIN_AMPLITUDE 0.01 #The smallest excitation amplitude to print
+      &XC
+        &XC_GRID
+          XC_DERIV SPLINE2_SMOOTH #The method used to compute the derivatives
+        &END XC_GRID
+      &END XC
+      !RESTART     .TRUE.
+      !WFN_RESTART_FILE_NAME RESTART.tdwfn
+    &END TDDFPT
+  &END PROPERTIES
+
+  &DFT
+    BASIS_SET_FILE_NAME  BASIS_MOLOPT
+    BASIS_SET_FILE_NAME  BASIS_ADMM
+    BASIS_SET_FILE_NAME  BASIS_ADMM_MOLOPT
+    POTENTIAL_FILE_NAME  POTENTIAL
+    CHARGE    0 #Net charge
+    MULTIPLICITY    1 #Spin multiplicity
+    &QS
+      EPS_DEFAULT 1E-10 #This is default. Set all EPS_xxx to values such that the energy will be correct up to this value
+    &END QS
+    &POISSON
+      PERIODIC XYZ #Direction(s) of PBC for calculating electrostatics
+      PSOLVER PERIODIC #The way to solve Poisson equation
+    &END POISSON
+    &AUXILIARY_DENSITY_MATRIX_METHOD
+      METHOD BASIS_PROJECTION
+      EXCH_SCALING_MODEL NONE
+      EXCH_CORRECTION_FUNC NONE
+      ADMM_PURIFICATION_METHOD NONE
+    &END AUXILIARY_DENSITY_MATRIX_METHOD
+    &XC
+      &XC_FUNCTIONAL
+        &LYP
+          SCALE_C 0.81
+        &END
+        &BECKE88
+          SCALE_X 0.72
+        &END
+        &VWN
+          FUNCTIONAL_TYPE VWN3 #Adapt Gaussian's B3LYP definition
+          SCALE_C 0.19
+        &END
+        &XALPHA
+          SCALE_X 0.08
+        &END
+      &END XC_FUNCTIONAL
+      &HF
+        FRACTION 0.20
+        &SCREENING
+          EPS_SCHWARZ 1E-8 #Important to improve scaling. The larger the value, the lower the cost and lower the accuracy
+          SCREEN_ON_INITIAL_P T #Screening on product between maximum of density matrix elements and ERI
+        &END SCREENING
+        &INTERACTION_POTENTIAL
+          POTENTIAL_TYPE TRUNCATED
+          CUTOFF_RADIUS 6.0 #Cutoff radius for truncated 1/r potential
+          T_C_G_DATA t_c_g.dat
+        &END INTERACTION_POTENTIAL
+        &MEMORY
+          MAX_MEMORY 3000 #Memory(MB) per MPI process for calculating HF exchange
+          EPS_STORAGE_SCALING 0.1
+        &END MEMORY
+      &END HF
+      &VDW_POTENTIAL
+        POTENTIAL_TYPE PAIR_POTENTIAL
+        &PAIR_POTENTIAL
+          PARAMETER_FILE_NAME dftd3.dat
+          TYPE DFTD3
+          REFERENCE_FUNCTIONAL B3LYP
+        &END PAIR_POTENTIAL
+      &END VDW_POTENTIAL
+    &END XC
+    &MGRID
+      CUTOFF 350
+      REL_CUTOFF 50
+    &END MGRID
+    &SCF
+      &DIAGONALIZATION ON
+      &END DIAGONALIZATION
+      &MIXING
+        ALPHA 0.3
+        METHOD BROYDEN_MIXING
+        NBROYDEN 8
+      &END MIXING
+      EPS_SCF 1.0E-6
+      SCF_GUESS ATOMIC
+      MAX_SCF  50
+      ADDED_MOS 50
+    &END SCF
+    &PRINT
+      &MULLIKEN OFF
+      &END
+      &HIRSHFELD OFF
+      &END
+      &MO ON
+        FILENAME SiH_GeH_A
+        EIGENVECTORS F
+        EIGENVALUES F
+        NDIGITS 8
+      &END
+      &PDOS
+        APPEND T
+        COMPONENTS T
+        FILENAME SiH_GeH_A
+      &END
+      &MO_MOLDEN ON
+        FILENAME
+        NDIGITS 8
+        GTO_KIND SPHERICAL
+      &END
+      !&MO_CUBES
+      !  NHOMO 1
+      !  NLUMO 1
+      !  STRIDE 1 1 1
+      !  WRITE_CUBE T
+      !&END
+    &END PRINT
+
+  &END DFT
+
+  &SUBSYS
+
+    &CELL
+      A    15.92750000     0.00000000     0.00000000
+      B    -7.96450770    13.78648425     0.00000000
+      C    -0.00010396     0.00006001    29.78360000
+      PERIODIC XYZ #Direction of applied PBC (geometry aspect)
+    &END CELL
+
+    &TOPOLOGY
+      COORD_FILE_NAME SiGe_hetero_4x4.xyz
+      COORD_FILE_FORMAT XYZ
+      ! Only in case you use cif file
+      !&GENERATE
+      !  REORDER T
+      !&END
+    &END
+    &KIND Si
+      ELEMENT Si
+      BASIS_SET DZVP-MOLOPT-SR-GTH-q4
+      BASIS_SET AUX_FIT cFIT3
+      POTENTIAL GTH-PBE
+    &END KIND
+    &KIND H
+      ELEMENT H
+      BASIS_SET DZVP-MOLOPT-SR-GTH-q1
+      BASIS_SET AUX_FIT cFIT3
+      POTENTIAL GTH-PBE
+    &END KIND
+    &KIND Ge
+      ELEMENT Ge
+      BASIS_SET DZVP-MOLOPT-SR-GTH-q4
+      BASIS_SET AUX_FIT cFIT6
+      POTENTIAL GTH-PBE
+    &END KIND
+  &END SUBSYS
+ &END FORCE_EVAL

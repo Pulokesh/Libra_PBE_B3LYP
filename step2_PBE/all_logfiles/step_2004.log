@@ -1,0 +1,2404 @@
+ DBCSR| CPU Multiplication driver                                           XSMM
+ DBCSR| Multrec recursion limit                                              512
+ DBCSR| Multiplication stack size                                           1000
+ DBCSR| Maximum elements for images                                    UNLIMITED
+ DBCSR| Multiplicative factor virtual images                                   1
+ DBCSR| Use multiplication densification                                       T
+ DBCSR| Multiplication size stacks                                             3
+ DBCSR| Number of 3D layers                                               SINGLE
+ DBCSR| Use MPI memory allocation                                              T
+ DBCSR| Use RMA algorithm                                                      F
+ DBCSR| Use Communication thread                                               T
+ DBCSR| Communication thread load                                             87
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2024-10-12 10:02:43.491
+ ***** ** ***  *** **   PROGRAM STARTED ON                  nia0271.scinet.local
+ **    ****   ******    PROGRAM STARTED BY                              ekadashi
+ ***** **    ** ** **   PROGRAM PROCESS ID                                253046
+  **** **  *******  **  PROGRAM STARTED IN /gpfs/fs0/scratch/t/tzeng/ekadashi/Li
+                                           bra_CP2K/SiGe_Hetero/step2/job1
+
+ CP2K| version string:                                          CP2K version 7.1
+ CP2K| source code revision number:                                  git:e635599
+ CP2K| cp2kflags: libint fftw3 libxc parallel mpi3 scalapack xsmm plumed2       
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                       Tue 15 Sep 2020 05:43:08 PM -00
+ CP2K| Program compiled on                          build-node2.computecanada.ca
+ CP2K| Program compiled for                                   Linux-x86-64-iomkl
+ CP2K| Data directory path    /cvmfs/soft.computecanada.ca/easybuild/software/20
+ CP2K| Input file name                                       Diag_libra-2004.inp
+ 
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                        BASIS_MOLOPT
+ GLOBAL| Potential file name                                           POTENTIAL
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                     coord-2004.xyz
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                            Diag_libra-2004
+ GLOBAL| Preferred FFT library                                             FFTW3
+ GLOBAL| Preferred diagonalization lib.                                       SL
+ GLOBAL| Run type                                                         ENERGY
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| FFTs using library dependent lengths                                  F
+ GLOBAL| Global print level                                               MEDIUM
+ GLOBAL| MPI I/O enabled                                                       T
+ GLOBAL| Total number of message passing processes                            40
+ GLOBAL| Number of threads for this process                                    1
+ GLOBAL| This output is from process                                           0
+ GLOBAL| CPU model name                 Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz
+ GLOBAL| CPUID                                                              1003
+ GLOBAL| Compiled for CPUID                                                 1002
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal            197718156     197718156     197718156     197718156
+ MEMORY| MemFree              33241112      33241112      33241732      33241670
+ MEMORY| Buffers                     0             0             0             0
+ MEMORY| Cached              143353004     143353004     143353004     143353004
+ MEMORY| Slab                  2168912       2168912       2168912       2168912
+ MEMORY| SReclaimable          1703424       1703424       1703424       1703424
+ MEMORY| MemLikelyFree       178297540     178297540     178298160     178298098
+
+
+ *** Fundamental physical constants (SI units) ***
+
+ *** Literature: B. J. Mohr and B. N. Taylor,
+ ***             CODATA recommended values of the fundamental physical
+ ***             constants: 2006, Web Version 5.1
+ ***             http://physics.nist.gov/constants
+
+ Speed of light in vacuum [m/s]                             2.99792458000000E+08
+ Magnetic constant or permeability of vacuum [N/A**2]       1.25663706143592E-06
+ Electric constant or permittivity of vacuum [F/m]          8.85418781762039E-12
+ Planck constant (h) [J*s]                                  6.62606896000000E-34
+ Planck constant (h-bar) [J*s]                              1.05457162825177E-34
+ Elementary charge [C]                                      1.60217648700000E-19
+ Electron mass [kg]                                         9.10938215000000E-31
+ Electron g factor [ ]                                     -2.00231930436220E+00
+ Proton mass [kg]                                           1.67262163700000E-27
+ Fine-structure constant                                    7.29735253760000E-03
+ Rydberg constant [1/m]                                     1.09737315685270E+07
+ Avogadro constant [1/mol]                                  6.02214179000000E+23
+ Boltzmann constant [J/K]                                   1.38065040000000E-23
+ Atomic mass unit [kg]                                      1.66053878200000E-27
+ Bohr radius [m]                                            5.29177208590000E-11
+
+ *** Conversion factors ***
+
+ [u] -> [a.u.]                                              1.82288848426455E+03
+ [Angstrom] -> [Bohr] = [a.u.]                              1.88972613288564E+00
+ [a.u.] = [Bohr] -> [Angstrom]                              5.29177208590000E-01
+ [a.u.] -> [s]                                              2.41888432650478E-17
+ [a.u.] -> [fs]                                             2.41888432650478E-02
+ [a.u.] -> [J]                                              4.35974393937059E-18
+ [a.u.] -> [N]                                              8.23872205491840E-08
+ [a.u.] -> [K]                                              3.15774647902944E+05
+ [a.u.] -> [kJ/mol]                                         2.62549961709828E+03
+ [a.u.] -> [kcal/mol]                                       6.27509468713739E+02
+ [a.u.] -> [Pa]                                             2.94210107994716E+13
+ [a.u.] -> [bar]                                            2.94210107994716E+08
+ [a.u.] -> [atm]                                            2.90362800883016E+08
+ [a.u.] -> [eV]                                             2.72113838565563E+01
+ [a.u.] -> [Hz]                                             6.57968392072181E+15
+ [a.u.] -> [1/cm] (wave numbers)                            2.19474631370540E+05
+ [a.u./Bohr**2] -> [1/cm]                                   5.14048714338585E+03
+ 
+
+ CELL_TOP| Volume [angstrom^3]:                                         6540.009
+ CELL_TOP| Vector a [angstrom    15.928     0.000     0.000    |a| =      15.928
+ CELL_TOP| Vector b [angstrom    -7.965    13.786     0.000    |b| =      15.922
+ CELL_TOP| Vector c [angstrom    -0.000     0.000    29.784    |c| =      29.784
+ CELL_TOP| Angle (b,c), alpha [degree]:                                   90.000
+ CELL_TOP| Angle (a,c), beta  [degree]:                                   90.000
+ CELL_TOP| Angle (a,b), gamma [degree]:                                  120.015
+ CELL_TOP| Numerically orthorhombic:                                          NO
+ 
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ CELL| Volume [angstrom^3]:                                             6540.009
+ CELL| Vector a [angstrom]:      15.928     0.000     0.000    |a| =      15.928
+ CELL| Vector b [angstrom]:      -7.965    13.786     0.000    |b| =      15.922
+ CELL| Vector c [angstrom]:      -0.000     0.000    29.784    |c| =      29.784
+ CELL| Angle (b,c), alpha [degree]:                                       90.000
+ CELL| Angle (a,c), beta  [degree]:                                       90.000
+ CELL| Angle (a,b), gamma [degree]:                                      120.015
+ CELL| Numerically orthorhombic:                                              NO
+
+ CELL_REF| Volume [angstrom^3]:                                         6540.009
+ CELL_REF| Vector a [angstrom    15.928     0.000     0.000    |a| =      15.928
+ CELL_REF| Vector b [angstrom    -7.965    13.786     0.000    |b| =      15.922
+ CELL_REF| Vector c [angstrom    -0.000     0.000    29.784    |c| =      29.784
+ CELL_REF| Angle (b,c), alpha [degree]:                                   90.000
+ CELL_REF| Angle (a,c), beta  [degree]:                                   90.000
+ CELL_REF| Angle (a,b), gamma [degree]:                                  120.015
+ CELL_REF| Numerically orthorhombic:                                          NO
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000 - 2019)           **
+ **                                                                           **
+ *******************************************************************************
+
+ DFT| Spin restricted Kohn-Sham (RKS) calculation                            RKS
+ DFT| Multiplicity                                                             1
+ DFT| Number of spin states                                                    1
+ DFT| Charge                                                                   0
+ DFT| Self-interaction correction (SIC)                                       NO
+ DFT| Cutoffs: density                                              1.000000E-10
+ DFT|          gradient                                             1.000000E-10
+ DFT|          tau                                                  1.000000E-10
+ DFT|          cutoff_smoothing_range                               0.000000E+00
+ DFT| XC density smoothing                                                  NONE
+ DFT| XC derivatives                                                          PW
+ FUNCTIONAL| ROUTINE=NEW
+ FUNCTIONAL| PBE:
+ FUNCTIONAL| J.P.Perdew, K.Burke, M.Ernzerhof, Phys. Rev. Letter, vol. 77, n 18,
+ FUNCTIONAL|  pp. 3865-3868, (1996){spin unpolarized}                           
+ vdW POTENTIAL|                                                   Pair Potential
+ vdW POTENTIAL|          DFT-D3 (Version 3.1)
+ vdW POTENTIAL|          Potential Form: S. Grimme et al, JCP 132: 154104 (2010)
+ vdW POTENTIAL|          Zero Damping
+ vdW POTENTIAL|          Cutoff Radius [Bohr]:                             30.24
+ vdW POTENTIAL|          s6 Scaling Factor:                               1.0000
+ vdW POTENTIAL|          sr6 Scaling Factor:                              1.2170
+ vdW POTENTIAL|          s8 Scaling Factor:                               0.7220
+ vdW POTENTIAL|          Cutoff for CN calculation:                   0.1000E-05
+
+ QS| Method:                                                                 GPW
+ QS| Density plane wave grid type                        NON-SPHERICAL FULLSPACE
+ QS| Number of grid levels:                                                   16
+ QS| Density cutoff [a.u.]:                                                250.0
+ QS| Multi grid cutoff [a.u.]: 1) grid level                               250.0
+ QS|                           2) grid level                                83.3
+ QS|                           3) grid level                                27.8
+ QS|                           4) grid level                                 9.3
+ QS|                           5) grid level                                 3.1
+ QS|                           6) grid level                                 1.0
+ QS|                           7) grid level                                 0.3
+ QS|                           8) grid level                                 0.1
+ QS|                           9) grid level                                 0.0
+ QS|                          10) grid level                                 0.0
+ QS|                          11) grid level                                 0.0
+ QS|                          12) grid level                                 0.0
+ QS|                          13) grid level                                 0.0
+ QS|                          14) grid level                                 0.0
+ QS|                          15) grid level                                 0.0
+ QS|                          16) grid level                                 0.0
+ QS| Grid level progression factor:                                          3.0
+ QS| Relative density cutoff [a.u.]:                                        25.0
+ QS| Consistent realspace mapping and integration 
+ QS| Interaction thresholds: eps_pgf_orb:                                1.0E-07
+ QS|                         eps_filter_matrix:                          0.0E+00
+ QS|                         eps_core_charge:                            1.0E-16
+ QS|                         eps_rho_gspace:                             1.0E-14
+ QS|                         eps_rho_rspace:                             1.0E-14
+ QS|                         eps_gvg_rspace:                             1.0E-07
+ QS|                         eps_ppl:                                    1.0E-02
+ QS|                         eps_ppnl:                                   1.0E-09
+
+
+ ATOMIC KIND INFORMATION
+
+  1. Atomic kind: Si                                    Number of atoms:      32
+
+     Orbital Basis Set                                     DZVP-MOLOPT-SR-GTH-q4
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               5
+       Number of primitive Cartesian functions:                                4
+       Number of Cartesian basis functions:                                   14
+       Number of spherical basis functions:                                   13
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s                1.256768       0.294045
+                                                         0.506394      -0.015884
+                                                         0.238884      -0.207657
+                                                         0.087337      -0.036225
+
+                          1       2    3s                1.256768      -1.532347
+                                                         0.506394       0.524539
+                                                         0.238884       0.025013
+                                                         0.087337      -0.052203
+
+                          1       3    3px               1.256768       0.152274
+                                                         0.506394      -0.154145
+                                                         0.238884      -0.115581
+                                                         0.087337      -0.028372
+                          1       3    3py               1.256768       0.152274
+                                                         0.506394      -0.154145
+                                                         0.238884      -0.115581
+                                                         0.087337      -0.028372
+                          1       3    3pz               1.256768       0.152274
+                                                         0.506394      -0.154145
+                                                         0.238884      -0.115581
+                                                         0.087337      -0.028372
+
+                          1       4    4px               1.256768       0.313378
+                                                         0.506394      -0.415360
+                                                         0.238884      -0.022539
+                                                         0.087337       0.078473
+                          1       4    4py               1.256768       0.313378
+                                                         0.506394      -0.415360
+                                                         0.238884      -0.022539
+                                                         0.087337       0.078473
+                          1       4    4pz               1.256768       0.313378
+                                                         0.506394      -0.415360
+                                                         0.238884      -0.022539
+                                                         0.087337       0.078473
+
+                          1       5    4dx2              1.256768       0.325879
+                                                         0.506394       0.163831
+                                                         0.238884       0.044076
+                                                         0.087337       0.010608
+                          1       5    4dxy              1.256768       0.564439
+                                                         0.506394       0.283764
+                                                         0.238884       0.076342
+                                                         0.087337       0.018373
+                          1       5    4dxz              1.256768       0.564439
+                                                         0.506394       0.283764
+                                                         0.238884       0.076342
+                                                         0.087337       0.018373
+                          1       5    4dy2              1.256768       0.325879
+                                                         0.506394       0.163831
+                                                         0.238884       0.044076
+                                                         0.087337       0.010608
+                          1       5    4dyz              1.256768       0.564439
+                                                         0.506394       0.283764
+                                                         0.238884       0.076342
+                                                         0.087337       0.018373
+                          1       5    4dz2              1.256768       0.325879
+                                                         0.506394       0.163831
+                                                         0.238884       0.044076
+                                                         0.087337       0.010608
+
+     GTH Potential information for                                       GTH-PBE
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:               2.582645
+       Electronic configuration (s p d ...):                               2   2
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.440000   -6.269288
+
+       Parameters of the non-local part of the GTH pseudopotential:
+
+                   l      r(l)      h(i,j,l)
+
+                   0    0.435634    8.951742   -2.706271
+                                   -2.706271    3.493781
+                   1    0.497942    2.431277
+
+  2. Atomic kind: H                                     Number of atoms:      64
+
+     Orbital Basis Set                                     DZVP-MOLOPT-SR-GTH-q1
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               3
+       Number of primitive Cartesian functions:                                5
+       Number of Cartesian basis functions:                                    5
+       Number of spherical basis functions:                                    5
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s               10.068468      -0.133023
+                                                         2.680223      -0.177618
+                                                         0.791502      -0.258419
+                                                         0.239116      -0.107525
+                                                         0.082193      -0.014019
+
+                          1       2    3s               10.068468       0.344673
+                                                         2.680223       1.819821
+                                                         0.791502      -0.999069
+                                                         0.239116       0.017430
+                                                         0.082193       0.082660
+
+                          1       3    3px              10.068468       0.155326
+                                                         2.680223       0.367157
+                                                         0.791502       0.311480
+                                                         0.239116       0.080105
+                                                         0.082193       0.033440
+                          1       3    3py              10.068468       0.155326
+                                                         2.680223       0.367157
+                                                         0.791502       0.311480
+                                                         0.239116       0.080105
+                                                         0.082193       0.033440
+                          1       3    3pz              10.068468       0.155326
+                                                         2.680223       0.367157
+                                                         0.791502       0.311480
+                                                         0.239116       0.080105
+                                                         0.082193       0.033440
+
+     GTH Potential information for                                       GTH-PBE
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:              12.500000
+       Electronic configuration (s p d ...):                                   1
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.200000   -4.178900    0.724463
+
+  3. Atomic kind: Ge                                    Number of atoms:      32
+
+     Orbital Basis Set                                     DZVP-MOLOPT-SR-GTH-q4
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               5
+       Number of primitive Cartesian functions:                                4
+       Number of Cartesian basis functions:                                   14
+       Number of spherical basis functions:                                   13
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s                3.751626      -0.120003
+                                                         1.419172       0.428185
+                                                         0.322428      -0.228255
+                                                         0.110740      -0.068975
+
+                          1       2    3s                3.751626       0.273885
+                                                         1.419172      -0.836040
+                                                         0.322428       0.584240
+                                                         0.110740      -0.261045
+
+                          1       3    3px               3.751626       0.064521
+                                                         1.419172       0.216179
+                                                         0.322428      -0.253385
+                                                         0.110740      -0.035002
+                          1       3    3py               3.751626       0.064521
+                                                         1.419172       0.216179
+                                                         0.322428      -0.253385
+                                                         0.110740      -0.035002
+                          1       3    3pz               3.751626       0.064521
+                                                         1.419172       0.216179
+                                                         0.322428      -0.253385
+                                                         0.110740      -0.035002
+
+                          1       4    4px               3.751626      -0.201632
+                                                         1.419172      -0.391570
+                                                         0.322428       0.486065
+                                                         0.110740      -0.127990
+                          1       4    4py               3.751626      -0.201632
+                                                         1.419172      -0.391570
+                                                         0.322428       0.486065
+                                                         0.110740      -0.127990
+                          1       4    4pz               3.751626      -0.201632
+                                                         1.419172      -0.391570
+                                                         0.322428       0.486065
+                                                         0.110740      -0.127990
+
+                          1       5    4dx2              3.751626      -0.158822
+                                                         1.419172       0.193543
+                                                         0.322428       0.178643
+                                                         0.110740       0.009408
+                          1       5    4dxy              3.751626      -0.275088
+                                                         1.419172       0.335227
+                                                         0.322428       0.309418
+                                                         0.110740       0.016296
+                          1       5    4dxz              3.751626      -0.275088
+                                                         1.419172       0.335227
+                                                         0.322428       0.309418
+                                                         0.110740       0.016296
+                          1       5    4dy2              3.751626      -0.158822
+                                                         1.419172       0.193543
+                                                         0.322428       0.178643
+                                                         0.110740       0.009408
+                          1       5    4dyz              3.751626      -0.275088
+                                                         1.419172       0.335227
+                                                         0.322428       0.309418
+                                                         0.110740       0.016296
+                          1       5    4dz2              3.751626      -0.158822
+                                                         1.419172       0.193543
+                                                         0.322428       0.178643
+                                                         0.110740       0.009408
+
+     GTH Potential information for                                       GTH-PBE
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:               1.714678
+       Electronic configuration (s p d ...):                               2   2
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.540000
+
+       Parameters of the non-local part of the GTH pseudopotential:
+
+                   l      r(l)      h(i,j,l)
+
+                   0    0.421865    7.510241   -0.588108   -1.447976
+                                   -0.588108   -1.595888    3.738657
+                                   -1.447976    3.738657   -2.967467
+                   1    0.567529    0.913860    0.546875
+                                    0.546875   -0.647072
+                   2    0.813914    0.197177
+
+
+ MOLECULE KIND INFORMATION
+
+
+ All atoms are their own molecule, skipping detailed information
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   3
+                             - Atoms:                                        128
+                             - Shell sets:                                   128
+                             - Shells:                                       512
+                             - Primitive Cartesian functions:                576
+                             - Cartesian basis functions:                   1216
+                             - Spherical basis functions:                   1152
+
+  Maximum angular momentum of- Orbital basis functions:                        2
+                             - Local part of the GTH pseudopotential:          2
+                             - Non-local part of the GTH pseudopotential:      4
+
+
+ MODULE QUICKSTEP:  ATOMIC COORDINATES IN angstrom
+
+  Atom  Kind  Element       X           Y           Z          Z(eff)       Mass
+
+       1     1 Si  14    0.279544    2.355381    1.879111      4.00      28.0855
+       2     1 Si  14    2.213879    1.114863    2.346573      4.00      28.0855
+       3     1 Si  14    4.048883    2.243519    1.523291      4.00      28.0855
+       4     1 Si  14    6.009052    1.162173    2.338096      4.00      28.0855
+       5     1 Si  14   -1.879686    5.698008    1.871530      4.00      28.0855
+       6     1 Si  14    0.089522    4.533179    2.650259      4.00      28.0855
+       7     1 Si  14    1.971503    5.809171    1.827627      4.00      28.0855
+       8     1 Si  14    4.104514    4.589387    2.321147      4.00      28.0855
+       9     2 H    1    0.609648    2.400017    0.461127      1.00       1.0079
+      10     2 H    1    2.268656    0.868003    3.811820      1.00       1.0079
+      11     2 H    1    1.790317    3.542938    5.258662      1.00       1.0079
+      12     2 H    1    3.687507    2.269299    8.949785      1.00       1.0079
+      13     2 H    1    4.016040    2.305102    0.076551      1.00       1.0079
+      14     2 H    1    5.826579    0.944845    3.819648      1.00       1.0079
+      15     2 H    1   -1.720766    3.523302    5.059081      1.00       1.0079
+      16     2 H    1   -0.260549    2.890239    9.321881      1.00       1.0079
+      17     2 H    1   -1.642483    5.639937    0.438482      1.00       1.0079
+      18     2 H    1    0.088557    4.450506    4.137518      1.00       1.0079
+      19     2 H    1    3.975253    0.007053    5.164243      1.00       1.0079
+      20     2 H    1    1.772569    5.995994    9.093130      1.00       1.0079
+      21     2 H    1    1.683282    5.869062    0.339385      1.00       1.0079
+      22     2 H    1    4.281871    4.328646    3.843994      1.00       1.0079
+      23     2 H    1    0.151613    0.247937    5.572262      1.00       1.0079
+      24     2 H    1   -2.263758    6.016821    8.781156      1.00       1.0079
+      25     3 Ge  32    1.875624    3.657060    6.846630      4.00      72.6400
+      26     3 Ge  32    3.877404    2.380529    7.402081      4.00      72.6400
+      27     3 Ge  32   -1.940357    3.416480    6.541470      4.00      72.6400
+      28     3 Ge  32   -0.100230    2.616382    7.797700      4.00      72.6400
+      29     3 Ge  32    3.953092    0.060076    6.656519      4.00      72.6400
+      30     3 Ge  32    1.772089    5.980528    7.565627      4.00      72.6400
+      31     3 Ge  32    0.049401    0.262281    7.145182      4.00      72.6400
+      32     3 Ge  32   -2.207049    5.779971    7.242795      4.00      72.6400
+      33     1 Si  14    8.034448    2.272984    1.780122      4.00      28.0855
+      34     1 Si  14   10.073303    1.110005    2.291399      4.00      28.0855
+      35     1 Si  14   12.171600    2.284007    1.796566      4.00      28.0855
+      36     1 Si  14   14.242545    1.210199    2.414458      4.00      28.0855
+      37     1 Si  14    6.170491    5.740757    1.674720      4.00      28.0855
+      38     1 Si  14    8.181220    4.623628    2.472006      4.00      28.0855
+      39     1 Si  14   10.031604    5.741311    1.629071      4.00      28.0855
+      40     1 Si  14   11.984839    4.544755    2.263851      4.00      28.0855
+      41     2 H    1    7.967150    2.554771    0.337804      1.00       1.0079
+      42     2 H    1    9.992279    0.972816    3.768662      1.00       1.0079
+      43     2 H    1    9.546888    3.272976    5.114243      1.00       1.0079
+      44     2 H    1   12.054858    2.045401    8.807863      1.00       1.0079
+      45     2 H    1   12.104868    2.293028    0.338917      1.00       1.0079
+      46     2 H    1   14.189028    0.846906    3.834021      1.00       1.0079
+      47     2 H    1    6.222085    3.491442    5.280405      1.00       1.0079
+      48     2 H    1    7.884898    2.293457    9.122898      1.00       1.0079
+      49     2 H    1    6.379703    5.689069    0.194024      1.00       1.0079
+      50     2 H    1    8.064246    4.709730    4.011095      1.00       1.0079
+      51     2 H    1   12.386515   -0.815821    5.361570      1.00       1.0079
+      52     2 H    1   10.140387    5.776633    8.721192      1.00       1.0079
+      53     2 H    1    9.904160    5.533071    0.110998      1.00       1.0079
+      54     2 H    1   12.030345    4.668328    3.779705      1.00       1.0079
+      55     2 H    1    7.944532    0.221122    5.226662      1.00       1.0079
+      56     2 H    1    5.910369    5.916975    9.025650      1.00       1.0079
+      57     3 Ge  32    9.981657    3.234094    6.611644      4.00      72.6400
+      58     3 Ge  32   12.110921    2.095952    7.214665      4.00      72.6400
+      59     3 Ge  32    6.066922    3.260278    6.738735      4.00      72.6400
+      60     3 Ge  32    8.060273    2.253619    7.618824      4.00      72.6400
+      61     3 Ge  32   12.195809   -0.348154    6.820853      4.00      72.6400
+      62     3 Ge  32    9.744501    5.625527    7.274029      4.00      72.6400
+      63     3 Ge  32    7.931538   -0.003184    6.687385      4.00      72.6400
+      64     3 Ge  32    5.870268    5.676083    7.492622      4.00      72.6400
+      65     1 Si  14   -3.830087    9.154348    1.487239      4.00      28.0855
+      66     1 Si  14   -1.797082    8.092870    2.298889      4.00      28.0855
+      67     1 Si  14    0.197104    9.196616    1.541734      4.00      28.0855
+      68     1 Si  14    2.237076    8.263901    2.123643      4.00      28.0855
+      69     1 Si  14   -5.848188   12.659980    1.435498      4.00      28.0855
+      70     1 Si  14   -3.936224   11.436469    2.102048      4.00      28.0855
+      71     1 Si  14   -1.811599   12.726722    1.525401      4.00      28.0855
+      72     1 Si  14    0.168381   11.564409    2.237177      4.00      28.0855
+      73     2 H    1   -4.098794    8.833153    0.038590      1.00       1.0079
+      74     2 H    1   -2.030311    8.139500    3.795905      1.00       1.0079
+      75     2 H    1   -1.661704   10.472159    5.113921      1.00       1.0079
+      76     2 H    1   -0.400484    8.939633    9.157372      1.00       1.0079
+      77     2 H    1   -0.088449    9.312938    0.074253      1.00       1.0079
+      78     2 H    1    2.082748    8.318477    3.595397      1.00       1.0079
+      79     2 H    1   -6.698239   10.615966    5.450618      1.00       1.0079
+      80     2 H    1   -3.892794    8.815294    8.741726      1.00       1.0079
+      81     2 H    1   -5.809135   12.902194   -0.137937      1.00       1.0079
+      82     2 H    1   -4.028818   11.148214    3.593250      1.00       1.0079
+      83     2 H    1   -0.039807    7.552837    5.003282      1.00       1.0079
+      84     2 H    1   -2.126597   12.680589    8.868014      1.00       1.0079
+      85     2 H    1   -1.990782   12.660994   -0.002019      1.00       1.0079
+      86     2 H    1    0.178962   11.681589    3.789149      1.00       1.0079
+      87     2 H    1   -4.115159    6.616177    4.791837      1.00       1.0079
+      88     2 H    1   -5.465381   12.768419    9.184141      1.00       1.0079
+      89     3 Ge  32   -2.058643   10.310259    6.587639      4.00      72.6400
+      90     3 Ge  32   -0.251290    9.103948    7.574469      4.00      72.6400
+      91     3 Ge  32   -6.208811   10.224210    6.935762      4.00      72.6400
+      92     3 Ge  32   -4.080098    9.044617    7.190188      4.00      72.6400
+      93     3 Ge  32   -0.259844    6.994292    6.456529      4.00      72.6400
+      94     3 Ge  32   -2.040878   12.689842    7.362526      4.00      72.6400
+      95     3 Ge  32   -4.191955    6.812315    6.314977      4.00      72.6400
+      96     3 Ge  32   -5.926900   12.732372    7.709114      4.00      72.6400
+      97     1 Si  14    4.187346    9.253674    1.301065      4.00      28.0855
+      98     1 Si  14    6.050833    8.038361    2.183208      4.00      28.0855
+      99     1 Si  14    8.107715    9.051987    1.480544      4.00      28.0855
+     100     1 Si  14   10.130174    8.078765    2.253036      4.00      28.0855
+     101     1 Si  14    2.081608   12.639176    1.415566      4.00      28.0855
+     102     1 Si  14    4.201942   11.530539    1.994018      4.00      28.0855
+     103     1 Si  14    6.223692   12.655475    1.403899      4.00      28.0855
+     104     1 Si  14    8.117513   11.321677    1.970735      4.00      28.0855
+     105     2 H    1    4.040370    9.232904   -0.186246      1.00       1.0079
+     106     2 H    1    5.860591    8.281164    3.646168      1.00       1.0079
+     107     2 H    1    6.282342   10.235494    5.797625      1.00       1.0079
+     108     2 H    1    7.997685    9.077485    9.736272      1.00       1.0079
+     109     2 H    1    8.027666    8.839381   -0.031203      1.00       1.0079
+     110     2 H    1   10.164914    8.116217    3.735097      1.00       1.0079
+     111     2 H    1    1.864773   10.148183    5.319408      1.00       1.0079
+     112     2 H    1    3.604306    8.978240    9.184310      1.00       1.0079
+     113     2 H    1    1.935780   12.786856   -0.052970      1.00       1.0079
+     114     2 H    1    4.357155   11.332767    3.452424      1.00       1.0079
+     115     2 H    1    8.160088    7.524565    5.530288      1.00       1.0079
+     116     2 H    1    6.247530   12.836321    9.575059      1.00       1.0079
+     117     2 H    1    6.444349   12.968857   -0.038601      1.00       1.0079
+     118     2 H    1    8.066692   11.244841    3.464603      1.00       1.0079
+     119     2 H    1    3.987883    6.779537    5.367072      1.00       1.0079
+     120     2 H    1    2.161873   12.734123    9.016582      1.00       1.0079
+     121     3 Ge  32    6.018016   10.347780    7.394897      4.00      72.6400
+     122     3 Ge  32    7.900890    8.998905    8.223015      4.00      72.6400
+     123     3 Ge  32    1.784975   10.176774    6.919998      4.00      72.6400
+     124     3 Ge  32    3.863991    9.089863    7.714938      4.00      72.6400
+     125     3 Ge  32    7.778347    6.922413    6.831503      4.00      72.6400
+     126     3 Ge  32    6.233530   12.641254    8.012294      4.00      72.6400
+     127     3 Ge  32    3.868384    6.879564    6.860206      4.00      72.6400
+     128     3 Ge  32    2.062334   12.603152    7.489385      4.00      72.6400
+
+
+
+
+ SCF PARAMETERS         Density guess:                                   RESTART
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-06
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                                 0.00
+                        added MOs                                        50    0
+                        --------------------------------------------------------
+                        Mixing method:                            BROYDEN_MIXING
+                                                charge density mixing in g-space
+                        --------------------------------------------------------
+                        No outer SCF
+
+ PW_GRID| Information for grid number                                          1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                    250.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1           -108     107                Points:         216
+ PW_GRID|   Bounds   2           -108     107                Points:         216
+ PW_GRID|   Bounds   3           -202     202                Points:         405
+ PW_GRID| Volume element (a.u.^3)  0.2336E-02     Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                           472392.0      472392      472392
+ PW_GRID|   G-Rays                                2187.0        2187        2187
+ PW_GRID|   Real Space Points                   472392.0      524880      437400
+
+ PW_GRID| Information for grid number                                          2
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     83.3
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -62      62                Points:         125
+ PW_GRID|   Bounds   2            -62      62                Points:         125
+ PW_GRID|   Bounds   3           -120     119                Points:         240
+ PW_GRID| Volume element (a.u.^3)  0.1177E-01     Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                            93750.0       94250       92750
+ PW_GRID|   G-Rays                                 750.0         754         742
+ PW_GRID|   Real Space Points                    93750.0      120000       90000
+
+ PW_GRID| Information for grid number                                          3
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     27.8
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -36      35                Points:          72
+ PW_GRID|   Bounds   2            -36      35                Points:          72
+ PW_GRID|   Bounds   3            -67      67                Points:         135
+ PW_GRID| Volume element (a.u.^3)  0.6306E-01     Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                            17496.0       17784       17208
+ PW_GRID|   G-Rays                                 243.0         247         239
+ PW_GRID|   Real Space Points                    17496.0       19440        9720
+
+ PW_GRID| Information for grid number                                          4
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      9.3
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -22      22                Points:          45
+ PW_GRID|   Bounds   2            -22      22                Points:          45
+ PW_GRID|   Bounds   3            -40      39                Points:          80
+ PW_GRID| Volume element (a.u.^3)  0.2724         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                             4050.0        4320        3690
+ PW_GRID|   G-Rays                                  90.0          96          82
+ PW_GRID|   Real Space Points                     4050.0        7200        3600
+
+ PW_GRID| Information for grid number                                          5
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      3.1
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -12      11                Points:          24
+ PW_GRID|   Bounds   2            -12      11                Points:          24
+ PW_GRID|   Bounds   3            -22      22                Points:          45
+ PW_GRID| Volume element (a.u.^3)   1.703         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                              648.0         696         600
+ PW_GRID|   G-Rays                                  27.0          29          25
+ PW_GRID|   Real Space Points                      648.0         675         540
+
+ PW_GRID| Information for grid number                                          6
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      1.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -7       7                Points:          15
+ PW_GRID|   Bounds   2             -7       7                Points:          15
+ PW_GRID|   Bounds   3            -12      12                Points:          25
+ PW_GRID| Volume element (a.u.^3)   7.846         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                              140.6         195         105
+ PW_GRID|   G-Rays                                   9.4          13           7
+ PW_GRID|   Real Space Points                      140.6         150          75
+
+ PW_GRID| Information for grid number                                          7
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.3
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -4       3                Points:           8
+ PW_GRID|   Bounds   2             -4       3                Points:           8
+ PW_GRID|   Bounds   3             -7       7                Points:          15
+ PW_GRID| Volume element (a.u.^3)   45.97         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                               24.0          48          16
+ PW_GRID|   G-Rays                                   3.0           6           2
+ PW_GRID|   Real Space Points                       24.0          30          15
+
+ PW_GRID| Information for grid number                                          8
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.1
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -3       2                Points:           6
+ PW_GRID|   Bounds   2             -3       2                Points:           6
+ PW_GRID|   Bounds   3             -4       4                Points:           9
+ PW_GRID| Volume element (a.u.^3)   136.2         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                8.1          18           0
+ PW_GRID|   G-Rays                                   1.4           3           0
+ PW_GRID|   Real Space Points                        8.1          18           0
+
+ PW_GRID| Information for grid number                                          9
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -2       1                Points:           4
+ PW_GRID|   Bounds   2             -2       1                Points:           4
+ PW_GRID|   Bounds   3             -3       2                Points:           6
+ PW_GRID| Volume element (a.u.^3)   459.7         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                2.4           4           0
+ PW_GRID|   G-Rays                                   0.6           1           0
+ PW_GRID|   Real Space Points                        2.4           6           0
+
+ PW_GRID| Information for grid number                                         10
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -2       1                Points:           4
+ PW_GRID| Volume element (a.u.^3)   2758.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.4           2           0
+ PW_GRID|   G-Rays                                   0.2           1           0
+ PW_GRID|   Real Space Points                        0.4           4           0
+
+ PW_GRID| Information for grid number                                         11
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         12
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         13
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         14
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         15
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         16
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ POISSON| Solver                                                        PERIODIC
+ POISSON| Periodicity                                                        XYZ
+
+ RS_GRID| Information for grid number                                          1
+ RS_GRID|   Bounds   1           -108     107                Points:         216
+ RS_GRID|   Bounds   2           -108     107                Points:         216
+ RS_GRID|   Bounds   3           -202     202                Points:         405
+ RS_GRID| Real space distribution over                                  5 groups
+ RS_GRID| Real space distribution along direction                              2
+ RS_GRID| Border size                                                         53
+ RS_GRID| Real space distribution over                                  8 groups
+ RS_GRID| Real space distribution along direction                              3
+ RS_GRID| Border size                                                         53
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 149.2         150         149
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 156.6         157         156
+
+ RS_GRID| Information for grid number                                          2
+ RS_GRID|   Bounds   1            -62      62                Points:         125
+ RS_GRID|   Bounds   2            -62      62                Points:         125
+ RS_GRID|   Bounds   3           -120     119                Points:         240
+ RS_GRID| Real space distribution over                                  5 groups
+ RS_GRID| Real space distribution along direction                              2
+ RS_GRID| Border size                                                         41
+ RS_GRID| Real space distribution over                                  8 groups
+ RS_GRID| Real space distribution along direction                              3
+ RS_GRID| Border size                                                         41
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 107.0         107         107
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 112.0         112         112
+
+ RS_GRID| Information for grid number                                          3
+ RS_GRID|   Bounds   1            -36      35                Points:          72
+ RS_GRID|   Bounds   2            -36      35                Points:          72
+ RS_GRID|   Bounds   3            -67      67                Points:         135
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          4
+ RS_GRID|   Bounds   1            -22      22                Points:          45
+ RS_GRID|   Bounds   2            -22      22                Points:          45
+ RS_GRID|   Bounds   3            -40      39                Points:          80
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          5
+ RS_GRID|   Bounds   1            -12      11                Points:          24
+ RS_GRID|   Bounds   2            -12      11                Points:          24
+ RS_GRID|   Bounds   3            -22      22                Points:          45
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          6
+ RS_GRID|   Bounds   1             -7       7                Points:          15
+ RS_GRID|   Bounds   2             -7       7                Points:          15
+ RS_GRID|   Bounds   3            -12      12                Points:          25
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          7
+ RS_GRID|   Bounds   1             -4       3                Points:           8
+ RS_GRID|   Bounds   2             -4       3                Points:           8
+ RS_GRID|   Bounds   3             -7       7                Points:          15
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          8
+ RS_GRID|   Bounds   1             -3       2                Points:           6
+ RS_GRID|   Bounds   2             -3       2                Points:           6
+ RS_GRID|   Bounds   3             -4       4                Points:           9
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          9
+ RS_GRID|   Bounds   1             -2       1                Points:           4
+ RS_GRID|   Bounds   2             -2       1                Points:           4
+ RS_GRID|   Bounds   3             -3       2                Points:           6
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         10
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -2       1                Points:           4
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         11
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         12
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         13
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         14
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         15
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         16
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ Number of electrons:                                                        320
+ Number of occupied orbitals:                                                160
+ Number of molecular orbitals:                                               210
+
+ Number of orbital functions:                                               1152
+ Number of independent orbital functions:                                   1152
+
+ Extrapolation method: initial_guess
+
+ *** WARNING in qs_initial_guess.F:280 :: User requested to restart the    ***
+ *** wavefunction from the file named: Diag_libra-2004-RESTART.wfn. This   ***
+ *** file does not exist. Please check the existence of the file or change ***
+ *** properly the value of the keyword WFN_RESTART_FILE_NAME. Calculation  ***
+ *** continues using ATOMIC GUESS.                                         ***
+
+
+ Atomic guess: The first density matrix is obtained in terms of atomic orbitals
+               and electronic configurations assigned to each atomic kind
+
+ Guess for atomic kind: Si
+
+ Electronic structure
+    Total number of core electrons                                         10.00
+    Total number of valence electrons                                       4.00
+    Total number of electrons                                              14.00
+    Multiplicity                                                   not specified
+    S   [  2.00  2.00] 2.00
+    P   [  6.00] 2.00
+ 
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.526541E-01                  -3.659692963728
+                          2        0.125823E-01                  -3.661785675622
+                          3        0.408986E-04                  -3.661911567360
+                          4        0.675570E-07                  -3.661911568709
+
+ Energy components [Hartree]           Total Energy ::           -3.661911568709
+                                        Band Energy ::           -0.941881516273
+                                     Kinetic Energy ::            1.409736465412
+                                   Potential Energy ::           -5.071648034121
+                                      Virial (-V/T) ::            3.597585902439
+                                        Core Energy ::           -5.690149137281
+                                          XC Energy ::           -0.992569238249
+                                     Coulomb Energy ::            3.020806806821
+                       Total Pseudopotential Energy ::           -7.143143335066
+                       Local Pseudopotential Energy ::           -8.006124475851
+                    Nonlocal Pseudopotential Energy ::            0.862981140786
+                                        Confinement ::            0.432577323720
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          2.000      -0.357276           -9.721984
+ 
+                       1     1          2.000      -0.113664           -3.092965
+ 
+
+ Total Electron Density at R=0:                                         0.000026
+
+ Guess for atomic kind: H
+
+ Electronic structure
+    Total number of core electrons                                          0.00
+    Total number of valence electrons                                       1.00
+    Total number of electrons                                               1.00
+    Multiplicity                                                   not specified
+    S      1.00
+ 
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.250972E-02                  -0.375256815885
+                          2        0.570752E-04                  -0.375258666164
+                          3        0.832405E-09                  -0.375258667122
+
+ Energy components [Hartree]           Total Energy ::           -0.375258667122
+                                        Band Energy ::           -0.076317618391
+                                     Kinetic Energy ::            0.771356566341
+                                   Potential Energy ::           -1.146615233463
+                                      Virial (-V/T) ::            1.486491829455
+                                        Core Energy ::           -0.456090715790
+                                          XC Energy ::           -0.314218627334
+                                     Coulomb Energy ::            0.395050676003
+                       Total Pseudopotential Energy ::           -1.238482237174
+                       Local Pseudopotential Energy ::           -1.238482237174
+                    Nonlocal Pseudopotential Energy ::            0.000000000000
+                                        Confinement ::            0.110349550431
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          1.000      -0.076318           -2.076708
+ 
+
+ Total Electron Density at R=0:                                         0.425022
+
+ Guess for atomic kind: Ge
+
+ Electronic structure
+    Total number of core electrons                                         28.00
+    Total number of valence electrons                                       4.00
+    Total number of electrons                                              32.00
+    Multiplicity                                                   not specified
+    S   [  2.00  2.00  2.00] 2.00
+    P   [  6.00  6.00] 2.00
+    D   [ 10.00]
+ 
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.142477                      -3.665020885375
+                          2        0.333385E-01                  -3.682999499719
+                          3        0.499538E-04                  -3.684051331963
+                          4        0.344208E-05                  -3.684051332980
+                          5        0.159010E-05                  -3.684051332987
+                          6        0.102819E-05                  -3.684051332989
+                          7        0.106004E-08                  -3.684051332989
+
+ Energy components [Hartree]           Total Energy ::           -3.684051332989
+                                        Band Energy ::           -0.985028586798
+                                     Kinetic Energy ::            1.448605884040
+                                   Potential Energy ::           -5.132657217029
+                                      Virial (-V/T) ::            3.543170211842
+                                        Core Energy ::           -5.693491271488
+                                          XC Energy ::           -0.989286183849
+                                     Coulomb Energy ::            2.998726122348
+                       Total Pseudopotential Energy ::           -7.189564045507
+                       Local Pseudopotential Energy ::           -7.626417469421
+                    Nonlocal Pseudopotential Energy ::            0.436853423914
+                                        Confinement ::            0.474668899787
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          2.000      -0.390250          -10.619249
+ 
+                       1     1          2.000      -0.102264           -2.782746
+ 
+
+ Total Electron Density at R=0:                                         0.000075
+ Re-scaling the density matrix to get the right number of electrons
+                  # Electrons              Trace(P)               Scaling factor
+                          320               320.000                        1.000
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 NoMix/Diag. 0.30E+00    2.3     1.11183243      -280.8300123196 -2.81E+02
+     2 Broy./Diag. 0.30E+00    3.2     0.03201301      -290.1916649932 -9.36E+00
+     3 Broy./Diag. 0.30E+00    3.3     0.04792898      -287.8398375119  2.35E+00
+     4 Broy./Diag. 0.30E+00    3.1     0.00948562      -288.6278303529 -7.88E-01
+     5 Broy./Diag. 0.30E+00    3.1     0.00630181      -288.4971183626  1.31E-01
+     6 Broy./Diag. 0.30E+00    3.0     0.00095936      -288.4751118382  2.20E-02
+     7 Broy./Diag. 0.30E+00    3.1     0.00055287      -288.4358297919  3.93E-02
+     8 Broy./Diag. 0.30E+00    3.0     0.00076267      -288.4342681080  1.56E-03
+     9 Broy./Diag. 0.30E+00    3.5     0.00063253      -288.4522733363 -1.80E-02
+    10 Broy./Diag. 0.30E+00    3.4     0.00056489      -288.4779342593 -2.57E-02
+    11 Broy./Diag. 0.30E+00    3.2     0.00020009      -288.4865545184 -8.62E-03
+    12 Broy./Diag. 0.30E+00    3.1     0.00010313      -288.4850800271  1.47E-03
+    13 Broy./Diag. 0.30E+00    3.0     0.00011388      -288.4835336212  1.55E-03
+    14 Broy./Diag. 0.30E+00    3.1     0.00004503      -288.4842478470 -7.14E-04
+    15 Broy./Diag. 0.30E+00    3.1     0.00002928      -288.4861054023 -1.86E-03
+    16 Broy./Diag. 0.30E+00    3.3     0.00003693      -288.4883402465 -2.23E-03
+    17 Broy./Diag. 0.30E+00    3.4     0.00001157      -288.4882621012  7.81E-05
+    18 Broy./Diag. 0.30E+00    3.5     0.00001128      -288.4872828516  9.79E-04
+    19 Broy./Diag. 0.30E+00    3.1     0.00001119      -288.4868060973  4.77E-04
+    20 Broy./Diag. 0.30E+00    3.1     0.00000377      -288.4869796827 -1.74E-04
+    21 Broy./Diag. 0.30E+00    3.0     0.00000293      -288.4872014647 -2.22E-04
+    22 Broy./Diag. 0.30E+00    3.1     0.00000364      -288.4872105849 -9.12E-06
+    23 Broy./Diag. 0.30E+00    3.1     0.00000162      -288.4871286721  8.19E-05
+    24 Broy./Diag. 0.30E+00    3.0     0.00000175      -288.4870671297  6.15E-05
+    25 Broy./Diag. 0.30E+00    3.0     0.00000075      -288.4870338438  3.33E-05
+
+  *** SCF run converged in    25 steps ***
+
+
+  Electronic density on regular grids:       -320.0000000000        0.0000000000
+  Core density on regular grids:              320.0000000000       -0.0000000000
+  Total charge density on r-space grids:       -0.0000000000
+  Total charge density g-space grids:          -0.0000000000
+
+  Overlap energy of the core charge distribution:               0.00002267838257
+  Self energy of the core charge distribution:               -685.99374549079380
+  Core Hamiltonian energy:                                    163.25300801658227
+  Hartree energy:                                             331.99582950606248
+  Exchange-correlation energy:                                -97.47528283090837
+  Dispersion energy:                                           -0.26686572311960
+
+  Total energy:                                              -288.48703384379445
+
+   Calculate PDOS at iteration step                                  0
+
+              ---- PDOS: start iteration on the KS states --- 
+
+ PW_GRID| Information for grid number                                         17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     50.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -48      47                Points:          96
+ PW_GRID|   Bounds   2            -48      47                Points:          96
+ PW_GRID|   Bounds   3            -90      89                Points:         180
+ PW_GRID| Volume element (a.u.^3)  0.2660E-01     Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                            41472.0       41472       41472
+ PW_GRID|   G-Rays                                 432.0         432         432
+ PW_GRID|   Real Space Points                    41472.0       51840       34560
+
+ PW_GRID| Information for grid number                                         18
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                    40    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     16.7
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -30      29                Points:          60
+ PW_GRID|   Bounds   2            -30      29                Points:          60
+ PW_GRID|   Bounds   3            -54      53                Points:         108
+ PW_GRID| Volume element (a.u.^3)  0.1135         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                             9720.0       10200        9000
+ PW_GRID|   G-Rays                                 162.0         170         150
+ PW_GRID|   Real Space Points                     9720.0       12960        6480
+
+ PW_GRID| Information for grid number                                         19
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      5.6
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -16      15                Points:          32
+ PW_GRID|   Bounds   2            -16      15                Points:          32
+ PW_GRID|   Bounds   3            -30      29                Points:          60
+ PW_GRID| Volume element (a.u.^3)  0.7183         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                             1536.0        1664        1376
+ PW_GRID|   G-Rays                                  48.0          52          43
+ PW_GRID|   Real Space Points                     1536.0        1680        1440
+
+ PW_GRID| Information for grid number                                         20
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      1.9
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -10       9                Points:          20
+ PW_GRID|   Bounds   2            -10       9                Points:          20
+ PW_GRID|   Bounds   3            -18      17                Points:          36
+ PW_GRID| Volume element (a.u.^3)   3.065         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                              360.0         420         300
+ PW_GRID|   G-Rays                                  18.0          21          15
+ PW_GRID|   Real Space Points                      360.0         432         288
+
+ PW_GRID| Information for grid number                                         21
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.6
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -6       5                Points:          12
+ PW_GRID|   Bounds   2             -6       5                Points:          12
+ PW_GRID|   Bounds   3            -10       9                Points:          20
+ PW_GRID| Volume element (a.u.^3)   15.32         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                               72.0          96          48
+ PW_GRID|   G-Rays                                   6.0           8           4
+ PW_GRID|   Real Space Points                       72.0         120          40
+
+ PW_GRID| Information for grid number                                         22
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.2
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -4       3                Points:           8
+ PW_GRID|   Bounds   2             -4       3                Points:           8
+ PW_GRID|   Bounds   3             -6       5                Points:          12
+ PW_GRID| Volume element (a.u.^3)   57.47         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                               19.2          32           8
+ PW_GRID|   G-Rays                                   2.4           4           1
+ PW_GRID|   Real Space Points                       19.2          24          12
+
+ PW_GRID| Information for grid number                                         23
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.1
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -2       1                Points:           4
+ PW_GRID|   Bounds   2             -2       1                Points:           4
+ PW_GRID|   Bounds   3             -4       3                Points:           8
+ PW_GRID| Volume element (a.u.^3)   344.8         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                3.2           8           0
+ PW_GRID|   G-Rays                                   0.8           2           0
+ PW_GRID|   Real Space Points                        3.2           8           0
+
+ PW_GRID| Information for grid number                                         24
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -2       1                Points:           4
+ PW_GRID|   Bounds   2             -2       1                Points:           4
+ PW_GRID|   Bounds   3             -2       1                Points:           4
+ PW_GRID| Volume element (a.u.^3)   689.6         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                1.6           4           0
+ PW_GRID|   G-Rays                                   0.4           1           0
+ PW_GRID|   Real Space Points                        1.6           4           0
+
+ PW_GRID| Information for grid number                                         25
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -2       1                Points:           4
+ PW_GRID| Volume element (a.u.^3)   2758.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.4           2           0
+ PW_GRID|   G-Rays                                   0.2           1           0
+ PW_GRID|   Real Space Points                        0.4           4           0
+
+ PW_GRID| Information for grid number                                         26
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         27
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         28
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         29
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         30
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         31
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         32
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         33
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         34
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         35
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         36
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         37
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         38
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         39
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         40
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ PW_GRID| Information for grid number                                         41
+ PW_GRID| Number of the reference grid                                        17
+ PW_GRID| Grid distributed over                                    40 processors
+ PW_GRID| Real space group dimensions                                     5    8
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      0.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1             -1       0                Points:           2
+ PW_GRID|   Bounds   2             -1       0                Points:           2
+ PW_GRID|   Bounds   3             -1       0                Points:           2
+ PW_GRID| Volume element (a.u.^3)   5517.         Volume (a.u.^3)     44134.1676
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                                0.2           2           0
+ PW_GRID|   G-Rays                                   0.1           1           0
+ PW_GRID|   Real Space Points                        0.2           2           0
+
+ POISSON| Solver                                                        PERIODIC
+ POISSON| Periodicity                                                        XYZ
+
+ RS_GRID| Information for grid number                                         17
+ RS_GRID|   Bounds   1            -48      47                Points:          96
+ RS_GRID|   Bounds   2            -48      47                Points:          96
+ RS_GRID|   Bounds   3            -90      89                Points:         180
+ RS_GRID| Real space distribution over                                 40 groups
+ RS_GRID| Real space distribution along direction                              3
+ RS_GRID| Border size                                                         40
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                  84.5          85          84
+
+ RS_GRID| Information for grid number                                         18
+ RS_GRID|   Bounds   1            -30      29                Points:          60
+ RS_GRID|   Bounds   2            -30      29                Points:          60
+ RS_GRID|   Bounds   3            -54      53                Points:         108
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         19
+ RS_GRID|   Bounds   1            -16      15                Points:          32
+ RS_GRID|   Bounds   2            -16      15                Points:          32
+ RS_GRID|   Bounds   3            -30      29                Points:          60
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         20
+ RS_GRID|   Bounds   1            -10       9                Points:          20
+ RS_GRID|   Bounds   2            -10       9                Points:          20
+ RS_GRID|   Bounds   3            -18      17                Points:          36
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         21
+ RS_GRID|   Bounds   1             -6       5                Points:          12
+ RS_GRID|   Bounds   2             -6       5                Points:          12
+ RS_GRID|   Bounds   3            -10       9                Points:          20
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         22
+ RS_GRID|   Bounds   1             -4       3                Points:           8
+ RS_GRID|   Bounds   2             -4       3                Points:           8
+ RS_GRID|   Bounds   3             -6       5                Points:          12
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         23
+ RS_GRID|   Bounds   1             -2       1                Points:           4
+ RS_GRID|   Bounds   2             -2       1                Points:           4
+ RS_GRID|   Bounds   3             -4       3                Points:           8
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         24
+ RS_GRID|   Bounds   1             -2       1                Points:           4
+ RS_GRID|   Bounds   2             -2       1                Points:           4
+ RS_GRID|   Bounds   3             -2       1                Points:           4
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         25
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -2       1                Points:           4
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         26
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         27
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         28
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         29
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         30
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         31
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         32
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         33
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         34
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         35
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         36
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         37
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         38
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         39
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         40
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                         41
+ RS_GRID|   Bounds   1             -1       0                Points:           2
+ RS_GRID|   Bounds   2             -1       0                Points:           2
+ RS_GRID|   Bounds   3             -1       0                Points:           2
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+                     TDDFPT initial guess
+ ------------------------------------------------------------
+     State       Occupied    ->    Virtual        Excitation
+     number       orbital          orbital        energy (eV)
+ ------------------------------------------------------------
+        1          160              161               0.87354
+        2          160              162               0.96437
+        3          159              161               1.01982
+        4          160              163               1.02189
+        5          160              164               1.08502
+        6          159              162               1.11066
+        7          160              165               1.14327
+        8          159              163               1.16818
+        9          159              164               1.23131
+       10          159              165               1.28956
+       11          160              166               1.30768
+       12          160              167               1.34232
+       13          160              168               1.45142
+       14          159              166               1.45396
+       15          160              169               1.48287
+       16          159              167               1.48861
+       17          160              170               1.52425
+       18          160              171               1.53822
+       19          159              168               1.59770
+       20          160              172               1.61252
+
+ Number of active states:                      158720
+
+ TDDFPT WAVEFUNCTION OPTIMIZATION
+
+     Step     Time     Convergence     Conv. states
+ --------------------------------------------------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       0.8754692             1.9342E-03
+        2       0.9652781             9.0909E-04
+        3       1.0216886             1.8667E-03
+        4       1.0232420             1.3486E-03
+        5       1.0868600             1.8415E-03
+        6       1.1117245             1.0686E-03
+        7       1.1692879             2.6014E-02
+        8       1.1752571             7.0769E-03
+        9       1.2330336             1.7282E-03
+       10       1.3091500             1.9589E-02
+       11       1.3212134             1.3536E-02
+       12       1.3437017             1.3803E-03
+       13       1.4523070             8.9176E-04
+       14       1.4550512             1.0868E-03
+       15       1.4855158             2.6452E-03
+       16       1.4892393             6.3104E-04
+       17       1.5367018             1.2448E-02
+       18       1.5677423             2.9525E-02
+       19       1.5991455             1.4434E-03
+       20       1.6506884             3.8166E-02
+ 
+        1     38.5      1.4026E-03              0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       0.8749639            -5.0530E-04
+        2       0.9649883            -2.8987E-04
+        3       1.0212125            -4.7604E-04
+        4       1.0228563            -3.8570E-04
+        5       1.0863220            -5.3799E-04
+        6       1.1113404            -3.8405E-04
+        7       1.1672008            -2.0871E-03
+        8       1.1689811            -6.2760E-03
+        9       1.2325380            -4.9560E-04
+       10       1.3086259            -5.2405E-04
+       11       1.3134183            -7.7951E-03
+       12       1.3430464            -6.5533E-04
+       13       1.4519773            -3.2974E-04
+       14       1.4546596            -3.9161E-04
+       15       1.4848195            -6.9633E-04
+       16       1.4890009            -2.3843E-04
+       17       1.5359294            -7.7244E-04
+       18       1.5534509            -1.4291E-02
+       19       1.5985065            -6.3895E-04
+       20       1.6368312            -1.3857E-02
+ 
+        2     38.2      5.2520E-04              0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       0.8749142            -4.9759E-05
+        2       0.9649694            -1.8871E-05
+        3       1.0211602            -5.2320E-05
+        4       1.0228323            -2.3916E-05
+        5       1.0862940            -2.7993E-05
+        6       1.1113150            -2.5409E-05
+        7       1.1662894            -9.1136E-04
+        8       1.1689569            -2.4223E-05
+        9       1.2325063            -3.1663E-05
+       10       1.3085956            -3.0331E-05
+       11       1.3124030            -1.0153E-03
+       12       1.3430113            -3.5042E-05
+       13       1.4519557            -2.1584E-05
+       14       1.4546332            -2.6452E-05
+       15       1.4847773            -4.2160E-05
+       16       1.4889842            -1.6642E-05
+       17       1.5358778            -5.1599E-05
+       18       1.5529078            -5.4316E-04
+       19       1.5984631            -4.3440E-05
+       20       1.6327885            -4.0427E-03
+ 
+        3     38.4      1.4857E-04              0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       0.8749126            -1.5760E-06
+        2       0.9649688            -5.8860E-07
+        3       1.0211588            -1.4220E-06
+        4       1.0228313            -1.0486E-06
+        5       1.0862932            -8.6917E-07
+        6       1.1113142            -8.2609E-07
+        7       1.1662527            -3.6686E-05
+        8       1.1689559            -9.7537E-07
+        9       1.2325049            -1.3949E-06
+       10       1.3085940            -1.6049E-06
+       11       1.3123748            -2.8207E-05
+       12       1.3430097            -1.6359E-06
+       13       1.4519545            -1.2002E-06
+       14       1.4546319            -1.2293E-06
+       15       1.4847758            -1.5568E-06
+       16       1.4889834            -8.4361E-07
+       17       1.5358757            -2.1220E-06
+       18       1.5528865            -2.1241E-05
+       19       1.5984609            -2.1583E-06
+       20       1.6325839            -2.0461E-04
+ 
+        4     38.5      7.5193E-06             16
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       0.8749125            -6.6462E-08
+        2       0.9649688            -2.3968E-08
+        3       1.0211587            -6.5485E-08
+        4       1.0228312            -5.5554E-08
+        5       1.0862931            -4.4406E-08
+        6       1.1113142            -2.7850E-08
+        7       1.1662509            -1.7700E-06
+        8       1.1689558            -5.1500E-08
+        9       1.2325048            -7.9723E-08
+       10       1.3085939            -5.7224E-08
+       11       1.3123735            -1.3187E-06
+       12       1.3430096            -7.4025E-08
+       13       1.4519544            -5.9025E-08
+       14       1.4546319            -5.9233E-08
+       15       1.4847757            -6.1301E-08
+       16       1.4889834            -3.1974E-08
+       17       1.5358755            -1.3280E-07
+       18       1.5528853            -1.2131E-06
+       19       1.5984608            -1.0136E-07
+       20       1.6325750            -8.8222E-06
+ 
+        5     37.8      3.2421E-07             20
+ ---------- Restart Davidson iterations -----------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       0.8749125            -1.1140E-14
+        2       0.9649688             0.0000E+00
+        3       1.0211587            -2.0770E-15
+        4       1.0228312             1.5105E-15
+        5       1.0862931             5.6645E-16
+        6       1.1113142             2.6434E-15
+        7       1.1662509            -7.9303E-15
+        8       1.1689558             7.5527E-16
+        9       1.2325048            -3.3987E-15
+       10       1.3085939             3.0211E-15
+       11       1.3123735             1.6994E-15
+       12       1.3430096            -3.0211E-15
+       13       1.4519544             2.8323E-15
+       14       1.4546319             1.8882E-15
+       15       1.4847757            -1.8882E-16
+       16       1.4889834            -1.5105E-15
+       17       1.5358755             1.5105E-15
+       18       1.5528853             5.6645E-16
+       19       1.5984608            -2.2658E-15
+       20       1.6325750            -2.6434E-15
+ 
+        6     38.0      4.0939E-16             20
+
+ *** TDDFPT run converged in 6 iteration(s) ***
+
+ R-TDDFPT states of multiplicity 1
+
+         State    Excitation        Transition dipole (a.u.)        Oscillator
+         number   energy (eV)       x           y           z     strength (a.u.)
+         ------------------------------------------------------------------------
+ TDDFPT|      1       0.87491  -2.2981E-01  4.9940E+00  2.0582E-02   5.35732E-01
+ TDDFPT|      2       0.96497  -1.0954E-02 -1.6091E+00 -6.4995E-03   6.12180E-02
+ TDDFPT|      3       1.02116   4.2542E+00  1.4801E-02  1.7519E-02   4.52796E-01
+ TDDFPT|      4       1.02283  -1.3860E-02  1.9574E+00 -2.0592E-02   9.60270E-02
+ TDDFPT|      5       1.08629  -1.2395E-02  2.0501E+00  3.7504E-02   1.11897E-01
+ TDDFPT|      6       1.11131   1.3276E+00 -2.8345E-02 -4.8845E-03   4.80070E-02
+ TDDFPT|      7       1.16625   6.6098E-01 -1.7058E+01  4.8692E-03   8.32610E+00
+ TDDFPT|      8       1.16896   1.8387E+00 -3.3170E-01  8.6651E-03   9.99713E-02
+ TDDFPT|      9       1.23250   1.8068E+00  2.2514E-02  3.1613E-02   9.86218E-02
+ TDDFPT|     10       1.30859   4.0157E-02  1.0793E+00 -8.8966E-03   3.73989E-02
+ TDDFPT|     11       1.31237  -1.5467E+01 -3.1949E-01 -2.4796E-02   7.69541E+00
+ TDDFPT|     12       1.34301  -1.9323E-01 -6.8255E-02  3.2211E-02   1.41590E-03
+ TDDFPT|     13       1.45195   1.0270E-01 -1.5194E-01 -2.9637E-02   1.22760E-03
+ TDDFPT|     14       1.45463   1.1664E+00  1.5533E-01  1.2293E-02   4.93507E-02
+ TDDFPT|     15       1.48478   1.7339E-01 -7.4792E-01 -6.4156E-03   2.14437E-02
+ TDDFPT|     16       1.48898   2.3877E-02 -3.2979E-02 -6.9904E-03   6.22569E-05
+ TDDFPT|     17       1.53588   1.4939E-01 -9.4799E-01 -6.4237E-03   3.46571E-02
+ TDDFPT|     18       1.55289  -4.9463E-01  2.5905E+00  4.5367E-03   2.64620E-01
+ TDDFPT|     19       1.59846  -4.6716E-02  6.2008E-02  1.7327E-03   2.36156E-04
+ TDDFPT|     20       1.63258  -5.2789E-01 -5.9937E-01  1.1890E-02   2.55205E-02
+
+ Excitation analysis
+
+   State        Occupied         Virtual        Excitation
+   number        orbital         orbital        amplitude
+ ---------------------------------------------------------
+        1
+                  160             161             0.999792
+        2
+                  160             162            -0.999905
+        3
+                  159             161            -0.999724
+        4
+                  160             163            -0.999575
+        5
+                  160             164             0.998571
+                  160             165            -0.050103
+        6
+                  159             162            -0.999879
+        7
+                  160             165            -0.997608
+        8
+                  159             163             0.999450
+        9
+                  159             164            -0.998605
+                  159             165             0.050579
+       10
+                  160             166            -0.999808
+       11
+                  159             165             0.997661
+                  159             164             0.050163
+       12
+                  160             167             0.999898
+       13
+                  160             168             0.999717
+       14
+                  159             166             0.999588
+       15
+                  160             169             0.993915
+                  160             170            -0.102434
+       16
+                  159             167             0.999886
+       17
+                  160             171             0.815896
+                  160             170             0.576598
+       18
+                  160             170            -0.802729
+                  160             171             0.574964
+                  160             169            -0.097094
+                  160             174             0.069745
+                  160             172             0.066675
+       19
+                  159             168             0.999734
+       20
+                  160             172            -0.965412
+                  160             173             0.199146
+                  159             170            -0.118882
+                  159             172             0.072748
+                  160             170            -0.053628
+
+ -------------------------------------------------------------------------------
+ ----                             MULTIGRID INFO                            ----
+ -------------------------------------------------------------------------------
+ count for grid        1:        2293054          cutoff [a.u.]           50.00
+ count for grid        2:         695497          cutoff [a.u.]           16.67
+ count for grid        3:         204746          cutoff [a.u.]            5.56
+ count for grid        4:              0          cutoff [a.u.]            1.85
+ count for grid        5:              0          cutoff [a.u.]            0.62
+ count for grid        6:              0          cutoff [a.u.]            0.21
+ count for grid        7:              0          cutoff [a.u.]            0.07
+ count for grid        8:              0          cutoff [a.u.]            0.02
+ count for grid        9:              0          cutoff [a.u.]            0.01
+ count for grid       10:              0          cutoff [a.u.]            0.00
+ count for grid       11:              0          cutoff [a.u.]            0.00
+ count for grid       12:              0          cutoff [a.u.]            0.00
+ count for grid       13:              0          cutoff [a.u.]            0.00
+ count for grid       14:              0          cutoff [a.u.]            0.00
+ count for grid       15:              0          cutoff [a.u.]            0.00
+ count for grid       16:              0          cutoff [a.u.]            0.00
+ count for grid       17:              0          cutoff [a.u.]            0.00
+ count for grid       18:              0          cutoff [a.u.]            0.00
+ count for grid       19:              0          cutoff [a.u.]            0.00
+ count for grid       20:              0          cutoff [a.u.]            0.00
+ count for grid       21:              0          cutoff [a.u.]            0.00
+ count for grid       22:              0          cutoff [a.u.]            0.00
+ count for grid       23:              0          cutoff [a.u.]            0.00
+ count for grid       24:              0          cutoff [a.u.]            0.00
+ count for grid       25:              0          cutoff [a.u.]            0.00
+ total gridlevel count  :        3193297
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):             -288.487033843794450
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBCSR STATISTICS                             -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ COUNTER                                    TOTAL       BLAS       SMM       ACC
+ flops     5 x     5 x    18             46800000       0.0%    100.0%      0.0%
+ flops     5 x    13 x    18            119808000       0.0%    100.0%      0.0%
+ flops    13 x     5 x    18            119808000       0.0%    100.0%      0.0%
+ flops    13 x    13 x    18            316368000       0.0%    100.0%      0.0%
+ flops     5 x     5 x    32            499200000       0.0%    100.0%      0.0%
+ flops     5 x    13 x    32           1277952000       0.0%    100.0%      0.0%
+ flops    13 x     5 x    32           1277952000       0.0%    100.0%      0.0%
+ flops    13 x    13 x    32           3374592000       0.0%    100.0%      0.0%
+ flops     5 x    32 x     5          15610675200       0.0%    100.0%      0.0%
+ flops     5 x    32 x    13          40587755520       0.0%    100.0%      0.0%
+ flops    13 x    32 x     5          40587755520       0.0%    100.0%      0.0%
+ flops    13 x    32 x    13         105528164352       0.0%    100.0%      0.0%
+ flops inhomo. stacks                           0       0.0%      0.0%      0.0%
+ flops total                       209.346831E+09       0.0%    100.0%      0.0%
+ flops max/rank                     10.439924E+09       0.0%    100.0%      0.0%
+ matmuls inhomo. stacks                         0       0.0%      0.0%      0.0%
+ matmuls total                           40471488       0.0%    100.0%      0.0%
+ number of processed stacks                776800       0.0%    100.0%      0.0%
+ average stack size                                     0.0      52.1       0.0
+ marketing flops                   212.931183E+09
+ -------------------------------------------------------------------------------
+ # multiplications                            491
+ max memory usage/rank             712.523776E+06
+ # max total images/rank                        5
+ # max 3D layers                                1
+ # MPI messages exchanged                  648120
+ MPI messages size (bytes):
+  total size                        47.213380E+09
+  min size                           0.000000E+00
+  max size                         177.000000E+03
+  average size                      72.846664E+03
+ MPI breakdown and total messages size (bytes):
+             size <=      128              160650                        0
+       128 < size <=     8192                   0                        0
+      8192 < size <=    32768              144450               2197739520
+     32768 < size <=   131072              175260              21053122560
+    131072 < size <=  4194304              167760              23964180480
+   4194304 < size <= 16777216                   0                        0
+  16777216 < size                               0                        0
+ -------------------------------------------------------------------------------
+
+ *** WARNING in dbcsr_mm.F:295 :: Using a non-square number of MPI ranks ***
+ *** might lead to poor performance. Used ranks: 40 Suggested: 36 81     ***
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                      DBCSR MESSAGE PASSING PERFORMANCE                      -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Group              497
+ MP_Bcast               13                     12.
+ MP_Allreduce         1617                      8.
+ MP_Alltoall         12221                  34169.
+ MP_Wait             35352
+ MP_ISend            37266                  36149.
+ MP_IRecv            39180                  33884.
+ MP_Memory           61870
+ -------------------------------------------------------------------------------
+ 
+ MEMORY| Estimated peak process memory [MiB]                                 680
+
+ -------------------------------------------------------------------------------
+ ----                             MULTIGRID INFO                            ----
+ -------------------------------------------------------------------------------
+ count for grid        1:         596016          cutoff [a.u.]          250.00
+ count for grid        2:         693773          cutoff [a.u.]           83.33
+ count for grid        3:         493082          cutoff [a.u.]           27.78
+ count for grid        4:         293306          cutoff [a.u.]            9.26
+ count for grid        5:           8320          cutoff [a.u.]            3.09
+ count for grid        6:              0          cutoff [a.u.]            1.03
+ count for grid        7:              0          cutoff [a.u.]            0.34
+ count for grid        8:              0          cutoff [a.u.]            0.11
+ count for grid        9:              0          cutoff [a.u.]            0.04
+ count for grid       10:              0          cutoff [a.u.]            0.01
+ count for grid       11:              0          cutoff [a.u.]            0.00
+ count for grid       12:              0          cutoff [a.u.]            0.00
+ count for grid       13:              0          cutoff [a.u.]            0.00
+ count for grid       14:              0          cutoff [a.u.]            0.00
+ count for grid       15:              0          cutoff [a.u.]            0.00
+ count for grid       16:              0          cutoff [a.u.]            0.00
+ total gridlevel count  :        2084497
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                         MESSAGE PASSING PERFORMANCE                         -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Group               41
+ MP_Bcast              158                3554451.
+ MP_Allreduce        12948                    474.
+ MP_Sync             10734
+ MP_Alltoall         15783                1079324.
+ MP_ISendRecv       253422                   6258.
+ MP_Wait            287472
+ MP_comm_split          33
+ MP_ISend            31379                 136458.
+ MP_IRecv            32253                 132773.
+ MP_Recv               198                 151645.
+ -------------------------------------------------------------------------------
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                           R E F E R E N C E S                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ 
+ CP2K version 7.1, the CP2K developers group (2019).
+ CP2K is freely available from https://www.cp2k.org/ .
+
+ Schuett, Ole; Messmer, Peter; Hutter, Juerg; VandeVondele, Joost. 
+ Electronic Structure Calculations on Graphics Processing Units, John
+ Wiley & Sons, Ltd, 173-190 (2016). 
+ GPU-Accelerated Sparse Matrix-Matrix Multiplication for
+ Linear Scaling Density Functional Theory.
+ https://dx.doi.org/10.1002/9781118670712.ch8
+
+ Borstnik, U; VandeVondele, J; Weber, V; Hutter, J. 
+ PARALLEL COMPUTING, 40 (5-6), 47-58 (2014). 
+ Sparse matrix multiplication: The distributed block-compressed sparse
+ row library.
+ https://dx.doi.org/10.1016/j.parco.2014.03.012
+
+ Hutter, J; Iannuzzi, M; Schiffmann, F; VandeVondele, J. 
+ WIREs Comput Mol Sci., 4 (1), 15-25 (2014). 
+ CP2K: atomistic simulations of condensed matter systems.
+ https://dx.doi.org/10.1002/wcms.1159
+
+ Grimme, S; Ehrlich, S; Goerigk, L. 
+ JOURNAL OF COMPUTATIONAL CHEMISTRY, 32, 1456 (2011). 
+ Effect of the damping function in dispersion corrected density functional theory.
+ https://dx.doi.org/10.1002/jcc.21759
+
+ Grimme, S; Antony, J; Ehrlich, S; Krieg, H. 
+ JOURNAL OF CHEMICAL PHYSICS, 132 (15), 154104 (2010). 
+ A consistent and accurate ab initio parametrization of density
+ functional dispersion correction (DFT-D) for the 94 elements H-Pu.
+ https://dx.doi.org/10.1063/1.3382344
+
+ VandeVondele, J; Hutter, J. 
+ JOURNAL OF CHEMICAL PHYSICS, 127 (11), 114105 (2007). 
+ Gaussian basis sets for accurate calculations on molecular systems in
+ gas and condensed phases.
+ https://dx.doi.org/10.1063/1.2770708
+
+ Krack, M. 
+ THEORETICAL CHEMISTRY ACCOUNTS, 114 (1-3), 145-152 (2005). 
+ Pseudopotentials for H to Kr optimized for gradient-corrected
+ exchange-correlation functionals.
+ https://dx.doi.org/10.1007/s00214-005-0655-y
+
+ VandeVondele, J; Krack, M; Mohamed, F; Parrinello, M; Chassaing, T;
+ Hutter, J. COMPUTER PHYSICS COMMUNICATIONS, 167 (2), 103-128 (2005). 
+ QUICKSTEP: Fast and accurate density functional calculations using a
+ mixed Gaussian and plane waves approach.
+ https://dx.doi.org/10.1016/j.cpc.2004.12.014
+
+ Frigo, M; Johnson, SG. 
+ PROCEEDINGS OF THE IEEE, 93 (2), 216-231 (2005). 
+ The design and implementation of FFTW3.
+ https://dx.doi.org/10.1109/JPROC.2004.840301
+
+ Iannuzzi, M; Chassaing, T; Wallman, T; Hutter, J. 
+ CHIMIA, 59 (7-8), 499-503 (2005). 
+ Ground and excited state density functional calculations with the
+ Gaussian and augmented-plane-wave method.
+ https://dx.doi.org/10.2533/000942905777676164
+
+ Hartwigsen, C; Goedecker, S; Hutter, J. 
+ PHYSICAL REVIEW B, 58 (7), 3641-3662 (1998). 
+ Relativistic separable dual-space Gaussian pseudopotentials from H to Rn.
+ https://dx.doi.org/10.1103/PhysRevB.58.3641
+
+ Lippert, G; Hutter, J; Parrinello, M. 
+ MOLECULAR PHYSICS, 92 (3), 477-487 (1997). 
+ A hybrid Gaussian and plane wave density functional scheme.
+ https://dx.doi.org/10.1080/002689797170220
+
+ Perdew, JP; Burke, K; Ernzerhof, M. 
+ PHYSICAL REVIEW LETTERS, 77 (18), 3865-3868 (1996). 
+ Generalized gradient approximation made simple.
+ https://dx.doi.org/10.1103/PhysRevLett.77.3865
+
+ Goedecker, S; Teter, M; Hutter, J. 
+ PHYSICAL REVIEW B, 54 (3), 1703-1710 (1996). 
+ Separable dual-space Gaussian pseudopotentials.
+ https://dx.doi.org/10.1103/PhysRevB.54.1703
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                T I M I N G                                  -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ SUBROUTINE                       CALLS  ASD         SELF TIME        TOTAL TIME
+                                MAXIMUM       AVERAGE  MAXIMUM  AVERAGE  MAXIMUM
+ CP2K                                 1  1.0    0.044    0.072  314.543  314.548
+ qs_energies                          1  2.0    0.000    0.001  313.985  313.991
+ qs_energies_properties               1  3.0    0.000    0.000  231.457  231.461
+ tddfpt                               1  4.0    0.001    0.003  231.457  231.461
+ tddfpt_davidson_solver               2  5.0    0.001    0.003  229.667  229.669
+ tddfpt_compute_Aop_evects            6  6.0    0.008    0.023  227.011  227.013
+ qs_rho_update_rho                  147  6.6    0.001    0.002  140.385  140.389
+ calculate_rho_elec                 147  7.6   60.340  119.948  140.384  140.388
+ integrate_v_rspace                 145  7.3   54.427  111.433  128.098  128.230
+ rs_pw_transfer                    6842  9.5    0.020    0.032   80.923   97.764
+ density_rs2pw                      147  8.6    0.020    0.021   77.517   94.391
+ mp_waitany                       19404 11.5   66.992   83.966   66.992   83.966
+ scf_env_do_scf                       1  3.0    0.000    0.002   79.166   79.168
+ scf_env_do_scf_inner_loop           25  4.0    0.002    0.004   79.165   79.167
+ rs_pw_transfer_RS2PW_50            121 11.0    0.662    0.721   61.395   77.584
+ mp_alltoall_d11v                  5535 10.3   60.182   75.969   60.182   75.969
+ rs_distribute_matrix               292  8.5    0.168    0.421   60.055   75.701
+ qs_ks_update_qs_env                 25  5.0    0.000    0.000   42.269   42.275
+ rebuild_ks_matrix                   25  6.0    0.000    0.000   42.257   42.264
+ qs_ks_build_kohn_sham_matrix        25  7.0    0.006    0.012   42.257   42.264
+ pw_transfer                       8707  9.4    0.496    0.526   31.272   31.620
+ fft_wrap_pw1pw2                   8417 10.4    0.031    0.033   30.484   30.801
+ fft3d_ps                          8417 12.4   10.429   11.365   24.151   24.635
+ sum_up_and_integrate                25  8.0    0.160    0.212   22.863   22.867
+ fft_wrap_pw1pw2_250                302 11.5    1.709    1.978   20.699   20.996
+ qs_vxc_create                       25  8.0    0.001    0.001   16.581   16.673
+ xc_vxc_pw_create                    25  9.0    0.198    0.235   16.580   16.673
+ potential_pw2rs                    145  8.3    0.039    0.042   14.438   14.558
+ mp_alltoall_z22v                  8417 14.4    8.709   10.018    8.709   10.018
+ xc_rho_set_and_dset_create          26  9.9    0.094    0.111    8.600    8.949
+ rs_pw_transfer_RS2PW_250            27  8.9    2.758    3.092    5.812    6.737
+ gspace_mixing                       24  5.0    0.060    0.067    6.644    6.644
+ x_to_yz                           1334 12.9    2.017    2.347    6.319    6.549
+ fft_wrap_pw1pw2_50                1566 10.8    0.480    0.536    6.281    6.328
+ -------------------------------------------------------------------------------
+
+ The number of warnings for this run is : 2
+ 
+ -------------------------------------------------------------------------------
+  **** **** ******  **  PROGRAM ENDED AT                 2024-10-12 10:08:01.259
+ ***** ** ***  *** **   PROGRAM RAN ON                      nia0271.scinet.local
+ **    ****   ******    PROGRAM RAN BY                                  ekadashi
+ ***** **    ** ** **   PROGRAM PROCESS ID                                253046
+  **** **  *******  **  PROGRAM STOPPED IN /gpfs/fs0/scratch/t/tzeng/ekadashi/Li
+                                           bra_CP2K/SiGe_Hetero/step2/job1
